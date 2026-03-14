@@ -1,4 +1,4 @@
-# Baseline All - Key Metrics (Timing + Power)
+# Key Metrics (Timing + Power)
 
 Run folder: **project_ee**  
 Run path: `/home/nfs/rlongomalinski/project_ee`
