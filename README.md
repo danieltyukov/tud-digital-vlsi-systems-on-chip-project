@@ -6,4 +6,4 @@ idx_u is already base + k, so idx_v was recomputing that sum unnecessarily. Usin
 3. Register files removed from the reset clause
 
 v2:
-Pipelining added
+Pipelining added, improved slack, tested at clk period 12.5
