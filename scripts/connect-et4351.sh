@@ -3,7 +3,8 @@
 # SSH with X11 forwarding for GUI applications (QuestaSim, etc.)
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CRED_FILE="$SCRIPT_DIR/credentials.txt"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+CRED_FILE="$PROJECT_ROOT/credentials.txt"
 
 SERVER="et4351.ewi.tudelft.nl"
 USERNAME="datyukov"
