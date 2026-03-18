@@ -219,10 +219,38 @@ Ideas explored:
 |------|-------------|
 | `src/design/accelerator_fft.v` | FFT core RTL |
 | `src/design/accelerator.v` | Wrapper with CSR/SRAM interface |
-| `src/design/accelerator_mem.v` | SRAM module |
+| `src/design/accelerator_mem.v` | Accelerator data memory (flip-flop array, NOT SRAM macro) |
 | `src/design/et4351.v` | Top-level SoC |
 | `firmware/accel_audio.c` | C firmware |
 | `src/testbench/tb_et4351.sv` | Testbench (DO NOT MODIFY) |
+
+### 4.5 Memory Architecture (Three Separate Storage Blocks)
+
+Understanding the memory hierarchy is critical for optimization. The SoC has **three distinct storage blocks**:
+
+| Block | Location | Type | Size | Who accesses it |
+|-------|----------|------|------|-----------------|
+| **PicoSoC SRAM** | `picosoc.v` (`picosoc_mem`) | 4x `SRAM1RW256x8` macros | 1 KB (0x000-0x3FF) | CPU only |
+| **CSR registers** | `accelerator.v` (`iomem_accel[0..34]`) | `reg [31:0]` flip-flops | 35 words | CPU writes, HW reads |
+| **Accelerator memory** | `accelerator_mem.v` | `reg [31:0] mem[]` flip-flops | 64 words (v3) | CPU + FFT core (muxed) |
+
+**Key insight:** `accelerator_mem` is **not** an SRAM macro -- it's a register file synthesized into flip-flops by Genus. Unlike the fixed `SRAM1RW256x8` macros, its interface is fully customizable: dual-port reads, wider datapaths, separate read/write ports are all possible. The only constraints are area and timing.
+
+**Data flow per chunk:**
+1. CPU writes input data: Flash -> QSPI -> PicoRV32 -> iomem bus -> `accelerator_mem`
+2. FFT core loads: `accelerator_mem` -> internal `data_re[]/data_im[]` registers (64 cycles)
+3. FFT compute: entirely on internal registers (accelerator_mem idle)
+4. FFT stores back: internal registers -> `accelerator_mem` (64 cycles)
+5. CPU reads results: `accelerator_mem` -> iomem bus -> PicoRV32 -> UART
+
+**Why LOAD/STORE phases exist:** The FFT butterfly needs random access to any pair of data elements simultaneously (for 2x parallel units). `accelerator_mem` has a single address port (one word/cycle). The LOAD phase copies data into the multi-read internal register file; STORE copies it back.
+
+**Optimization opportunities (D5):**
+- Dual-port reads: load 2 words/cycle, cut LOAD_DATA from 64 to 32 cycles
+- Wider datapaths: bank storage (even/odd) to output 2-4 words/cycle
+- Separate CPU write port + FFT read port: enables double-buffering (CPU writes next chunk while FFT reads current)
+
+See `docs/memory_architecture.md` for full technical details.
 
 ---
 
@@ -289,7 +317,7 @@ Ideas explored:
 ### MEDIUM (Potential additional improvements)
 
 #### Design Exploration
-- [ ] **D5 -- Wider memory bus**: Explore burst memory access for further latency reduction (HP)
+- [ ] **D5 -- Wider memory bus**: Explore dual-port reads, banked storage, or separate CPU/FFT ports to cut LOAD/STORE from 128 to 32-64 cycles (see `docs/memory_architecture.md` for full analysis)
 - [ ] **D7 -- Radix-4 FFT**: Could reduce stage count from 5 to 3 (significant cycle savings)
 - [ ] **D8 -- Physical design exploration**: Explore placement/routing strategies, clock tree options
 - [ ] **D4 revisit**: Investigate whether 2048-bit bus routing pressure can be resolved with floorplan changes
