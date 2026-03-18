@@ -175,6 +175,14 @@ Failing any of these results in a failing grade regardless of other work.
 
 **Action required:** Must proceed with physical implementation steps (synthesis, PnR, signoff) and produce validated results/outputs for the report. The back-end flow is now the critical path.
 
+**Key examiner guidance:**
+
+1. **Explanation is the main goal, not necessarily the best performance.** The report should prioritize *why* each design decision was made over raw speedup numbers. A well-reasoned design with clear justification scores higher than a fast design with no explanation.
+
+2. **HP progress should be presented incrementally (bottleneck-driven).** Structure like a table: identify the current bottleneck → solve it → re-profile → identify the next bottleneck → solve → etc. Each optimization step should clearly show what bottleneck it addresses and what becomes the new bottleneck after the fix.
+
+3. **Questions can be modified, but decisions must be explained in the report. Optimizations should be done at the end.** The team may adapt the project questions to their design choices, but every modification and design decision needs documented rationale. Tool/flow optimizations (aggressive clock targets, synthesis effort levels, etc.) should come after the base flow produces clean results.
+
 **Next steps:** Study grading rubric and report template to understand expectations for later stages, then split remaining tasks across the team.
 
 ### 4.1 HP Design Progress
