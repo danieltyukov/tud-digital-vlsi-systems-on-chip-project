@@ -2,43 +2,40 @@
 
 ## Strategy
 
-### HP Design Choice: D3 (SW Twiddle Preload) with D2 parallel butterflies
-- **Why not D6 (pipeline)?** 457 hold violations, 988 max_tran DRVs, 0% power annotation coverage. Not PnR-clean.
-- **Why D3?** 170 cycles at 12 MHz = 14.17 $\mu s$ (4.31x speedup). Synthesis-verified. 15.6% smaller area than D1/D2. Clean 5-state FSM.
-- **Fallback:** If D3 doesn't close timing at higher frequency, use baseline clock (12 MHz) — still meets < 61 $\mu s$ requirement easily.
+### HP Design: D1 (Register-File Architecture)
+- **Originally tried D3** (SW twiddle preload, 170 cycles) — structural sim TIMEOUT (accelerator hangs in post-synthesis netlist)
+- **Fell back to D1** (register-file, 220 cycles) — simpler, uses baseline firmware, no CSR interface changes
+- **Result:** 220 cycles at 12 MHz = 18.33 $\mu s$ (3.33x speedup). All sims pass.
+- Hold violations exist (462, WNS=-0.165ns) but don't cause functional failure.
 
-### EE Design Choice: Romeu's `no_recursive_twiddle` variant
-- **Why?** Best energy result: 23.795 nJ (3.20% reduction from baseline 24.6 nJ). Passes verification.
-- **Combination opportunity:** Stack with `no_twiddle_mem_reads` and `fastpaths` for further gains.
-
-### Workflow
-1. **Baseline** — reproduce baseline results, establish reference numbers
-2. **HP Design** — integrate D3 RTL, run full flow, extract PPA
-3. **EE Design** — integrate Romeu's best variant, run full flow, extract PPA
-4. **Documentation** — capture all results, create report sections
+### EE Design: Romeu's `no_recursive_twiddle` variant
+- Replaces recursive twiddle update with hardcoded LUT
+- Same cycle count as baseline, but reduces switching activity ($\alpha$) → lower $P_{sw}$ → lower energy
+- All signoff reports clean. All sims pass.
 
 ## Results Summary
 
-| Metric | Baseline | HP Design (D3) | EE Design |
-|--------|----------|-----------------|-----------|
+| Metric | Baseline | HP (D1) | EE (no_recursive_tw) |
+|--------|----------|---------|----------------------|
 | Clock period | 83.33 ns | 83.33 ns | 83.33 ns |
 | Clock frequency | 12 MHz | 12 MHz | 12 MHz |
-| Cycles/chunk | 732 | 170 | 732 |
-| Latency | 61.00 $\mu s$ | 14.17 $\mu s$ | 61.00 $\mu s$ |
-| Post-layout power | TBD (need VCD) | TBD | TBD |
-| Energy | TBD | TBD | TBD |
-| SoC area (post-PnR) | 242,796 $\mu m^2$ | TBD | TBD |
-| Synth area | 194,968 $\mu m^2$ | 259,890 $\mu m^2$ | 170,575 $\mu m^2$ |
-| Setup WNS (post-PnR) | +33.845 ns | TBD | TBD |
-| Hold WNS (post-PnR) | +0.057 ns | TBD | TBD |
-| max_tran DRVs | 109 nets | TBD | TBD |
-| DRC | Clean | TBD | TBD |
-| Connectivity | Clean | TBD | TBD |
-| Antenna | Clean | TBD | TBD |
+| Cycles/chunk | 732 | **220** | 732 |
+| Latency | 61.00 $\mu s$ | **18.33 $\mu s$** | 61.00 $\mu s$ |
+| Power (0% annot.) | 0.626 mW | 0.851 mW | 0.610 mW |
+| SoC area (post-PnR) | 242,796 | 300,906 | 217,831 $\mu m^2$ |
+| Accel area | 111,300 | 181,432 | 84,974 $\mu m^2$ |
+| Density | 66.4% | 85.0% | 58.5% |
+| Setup WNS | +33.845 ns | +34.108 ns | +34.148 ns |
+| Hold WNS | +0.057 ns | -0.165 ns (462 viol.) | +0.076 ns |
+| max_tran DRVs | 109 nets | 988 nets | 47 nets |
+| DRC | Clean | Clean | Clean |
+| Connectivity | Clean | Clean | Clean |
+| Antenna | Clean | Clean | Clean |
 | Behav sim | PASS | PASS | PASS |
-| Struct sim | PASS | **FAIL** (investigating) | PASS |
-| Phys sim (setup) | PASS | TBD | TBD |
-| Phys sim (hold) | Running | TBD | TBD |
+| Struct sim | PASS | PASS | PASS |
+| Phys sim (setup) | PASS | PASS | PASS |
+| Phys sim (hold) | PASS | PASS | PASS |
+| `finaldesign` packaged | N/A | YES | YES |
 
 ---
 
