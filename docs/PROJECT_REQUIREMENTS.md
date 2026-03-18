@@ -169,6 +169,14 @@ Failing any of these results in a failing grade regardless of other work.
 
 ## 4. Current Status (as of 2026-03-18, Midterm)
 
+### Midterm Oral Feedback (2026-03-18)
+
+**Positive:** Microarchitecture explorations are strong — no dedicated comments or concerns from examiners on the design exploration work done so far.
+
+**Action required:** Must proceed with physical implementation steps (synthesis, PnR, signoff) and produce validated results/outputs for the report. The back-end flow is now the critical path.
+
+**Next steps:** Study grading rubric and report template to understand expectations for later stages, then split remaining tasks across the team.
+
 ### 4.1 HP Design Progress
 
 | ID | Optimization | Cycles | Speedup vs Baseline | Status |
