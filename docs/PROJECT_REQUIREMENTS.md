@@ -15,17 +15,17 @@ Design a hardware FFT accelerator integrated into a PicoRV32 RISC-V SoC. Two dis
 | **High-Performance (HP)** | Minimize latency | Latency < 61.00 us (baseline) |
 | **Energy-Efficient (EE)** | Minimize energy | Energy < 24.6 nJ (baseline), clock >= 10 MHz |
 
-Both designs share a **fixed core area of 596.4 um x 596.4 um** and must implement a correct N=32 FFT (5 stages, radix-2 DIT) that handles any audio input with a variable number of chunks.
+Both designs share a **fixed core area of $596.4 \mu m \times 596.4 \mu m$** and must implement a correct N=32 FFT (5 stages, radix-2 DIT) that handles any audio input with a variable number of chunks.
 
 ### Baseline Reference
 
 | Metric | Value |
 |--------|-------|
-| Core area | 596.4 um x 596.4 um |
+| Core area | $596.4 \mu m \times 596.4 \mu m$ |
 | Clock period | 83.33 ns (12 MHz) |
-| Latency | 732 cycles = 61.00 us |
-| Post-layout total power | 0.403 mW |
-| Energy (E = P x T) | 24.6 nJ |
+| Latency | $N = 732$ cycles $= 61.00 \mu s$ |
+| Post-layout total power | $P = 0.403$ mW |
+| Energy ($E = P \times T$) | 24.6 nJ |
 
 Source code and scripts must originate from `/data/labs/2026/project`.
 
@@ -37,7 +37,7 @@ Failing any of these results in a failing grade regardless of other work.
 
 ### 2.1 Design Constraints
 
-- [ ] **Fixed core area**: 596.4 um x 596.4 um -- no changes allowed
+- [ ] **Fixed core area**: $596.4 \mu m \times 596.4 \mu m$ -- no changes allowed
 - [ ] **Timing clean**: Setup and Hold timing reports must be clean (no violations)
 - [ ] **DRV clean**: Design Rule Violations must be zero (max_tran violations are technically acceptable but risky -- avoid if possible)
 - [ ] **Connectivity report**: Must be clean (zero errors)
@@ -256,10 +256,10 @@ See `docs/memory_architecture.md` for full technical details.
 
 Key formulas and concepts from course lectures relevant to design decisions:
 
-- **Setup slack** = t_clk - t_cq - t_pd - t_setup > 0 (frequency-dependent)
-- **Hold slack** = t_cq + t_cd - t_hold > 0 (frequency-INDEPENDENT — violations are fatal)
-- **Switching power**: P_sw ∝ α · f_clk · V_DD² · C_L
-- **Energy per task**: E = P_total x N_cycles x T_clk
+- **Setup slack** $= t_{clk} - t_{cq} - t_{pd} - t_{setup} > 0$ (frequency-dependent)
+- **Hold slack** $= t_{cq} + t_{cd} - t_{hold} > 0$ (frequency-INDEPENDENT — violations are fatal)
+- **Switching power**: $P_{sw} \sim \alpha \cdot f_{clk} \cdot V_{DD}^2 \cdot C_L$
+- **Energy per task**: $E = P_{total} \times N_{cycles} \times T_{clk}$
 - **DRVs present → timing analysis untrustworthy** (must fix before signoff)
 - **Clock tree = ~30% of power** (CTS also fixes hold violations)
 - **Congestion is your enemy. Setup slack is your exchange currency.**
@@ -471,11 +471,11 @@ Run through this checklist before submitting. Every item must be checked.
 
 ## Quick Reference: Key Formulas
 
-- **Latency:** L = N_cycles x T_clk
-- **Energy:** E = P_total x L = P_total x N_cycles x T_clk
+- **Latency:** $L = N_{cycles} \times T_{clk}$
+- **Energy:** $E = P_{total} \times L = P_{total} \times N_{cycles} \times T_{clk}$
 - **Power:** From post-layout power report with activity annotation
-- **Speedup:** S = L_baseline / L_design = 61.00 us / L_design
-- **Energy reduction:** R = E_baseline / E_design = 24.6 nJ / E_design
+- **Speedup:** $S = \frac{L_{baseline}}{L_{design}} = \frac{61.00 \mu s}{L_{design}}$
+- **Energy reduction:** $R = \frac{E_{baseline}}{E_{design}} = \frac{24.6 \text{ nJ}}{E_{design}}$
 
 ---
 

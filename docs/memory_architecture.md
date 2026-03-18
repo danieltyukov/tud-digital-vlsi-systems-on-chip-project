@@ -95,4 +95,4 @@ Since `accelerator_mem` is a synthesized register file (`reg [31:0] mem [0:MEM_D
 
 **Separate read/write ports** -- You could give the CPU a dedicated write-only port and the FFT core a dedicated read-only port, avoiding the mux contention entirely. This would even allow overlapping: the CPU could start writing the next chunk while the FFT core is still reading the current one (double-buffering).
 
-The only real constraints you face are area (more ports means more mux logic and flip-flops, all of which must fit in the ~596x596 um^2 core) and timing (wider/more complex muxing adds combinational delay, which must still meet your clock period). But those are synthesis-level trade-offs you can evaluate with Genus, not hard architectural limits imposed by the technology.
+The only real constraints you face are area (more ports means more mux logic and flip-flops, all of which must fit in the $\sim596 \times 596 \mu m^2$ core) and timing (wider/more complex muxing adds combinational delay, which must still meet your clock period). But those are synthesis-level trade-offs you can evaluate with Genus, not hard architectural limits imposed by the technology.

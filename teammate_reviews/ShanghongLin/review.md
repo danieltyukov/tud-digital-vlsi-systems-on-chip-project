@@ -89,7 +89,7 @@ parallel butterfly savings. The LOAD/STORE phases still dominate (62%).
 ### D3: SW Twiddle Preload via CSR (`ShanghongLin-HP-D3-twiddle_preload`)
 
 **Core idea:** Move ALL twiddle factor computation to firmware. Pre-compute
-N/2 = 16 global twiddle factors W_N^k and load them into CSR registers
+N/2 = 16 global twiddle factors $W_N^k$ and load them into CSR registers
 BEFORE asserting `enable_accel`. This completely removes both the
 LOAD_TWIDDLE state and the per-stage FILL sub-phase from the timed window.
 
@@ -103,7 +103,7 @@ LOAD_TWIDDLE state and the per-stage FILL sub-phase from the timed window.
 - FSM simplified to 5 states: INIT -> LOAD_DATA -> COMPUTE -> STORE_DATA -> FINISH
 - SRAM no longer stores twiddle factors -- only data. SRAM address space halved.
 - Global twiddle indexing: `tw_idx = k_loc << (fft_stages - stage)`
-  maps per-stage needs into the global W_N^k table
+  maps per-stage needs into the global $W_N^k$ table
 - Wrapper (`accelerator.v`) expanded with 35 CSR registers:
   `iomem_accel[0..2]` = config, `iomem_accel[3..34]` = twiddle re/im pairs
 - SRAM base address shifts from `0x03000010` to `0x0300008C`

@@ -9,7 +9,7 @@ Extracted from course lectures. Covers timing, power, synthesis, PnR, and optimi
 All design criteria are application-dependent — "no free lunch":
 - **Power** — energy per operation/task, static vs dynamic
 - **Performance** — throughput, latency, clock frequency
-- **Area** — core area (fixed at 596.4 um x 596.4 um for this project)
+- **Area** — core area (fixed at $596.4 \mu m \times 596.4 \mu m$ for this project)
 
 Key question: which criteria are **constraints** vs **free optimization targets**?
 - **HP design**: area is constraint, latency is optimization target
@@ -20,34 +20,30 @@ Key question: which criteria are **constraints** vs **free optimization targets*
 ## 2. Timing in Synchronous Circuits
 
 ### Key Parameters (Reg A → combinational logic → Reg B)
-- **t_cq** — clock-to-Q delay of source register
-- **t_pd** — propagation delay (worst-case, slowest path)
-- **t_cd** — contamination delay (best-case, fastest path)
-- **t_setup** — data must be stable BEFORE clock edge
-- **t_hold** — data must remain stable AFTER clock edge
+- $t_{cq}$ — clock-to-Q delay of source register
+- $t_{pd}$ — propagation delay (worst-case, slowest path)
+- $t_{cd}$ — contamination delay (best-case, fastest path)
+- $t_{setup}$ — data must be stable BEFORE clock edge
+- $t_{hold}$ — data must remain stable AFTER clock edge
 
 ### Setup Time Constraint (frequency-dependent)
 
-```
-  t_cq + t_pd + t_setup  ≤  t_clk
+$$t_{cq} + t_{pd} + t_{setup} \leq t_{clk}$$
 
-  Setup slack = t_clk - t_cq - t_pd - t_setup  >  0
-```
+$$\text{Setup slack} = t_{clk} - t_{cq} - t_{pd} - t_{setup} > 0$$
 
-**Project relevance:** D6 targets ~60 MHz (t_clk = 16.67 ns). The 4-stage pipeline splits the butterfly's combinational path into ~1/4 depth, enabling this higher frequency. If setup slack is negative → must reduce t_pd (split logic further) or increase t_clk (lower frequency).
+**Project relevance:** D6 targets ~60 MHz ($t_{clk}$ = 16.67 ns). The 4-stage pipeline splits the butterfly's combinational path into ~1/4 depth, enabling this higher frequency. If setup slack is negative → must reduce $t_{pd}$ (split logic further) or increase $t_{clk}$ (lower frequency).
 
 ### Hold Time Constraint (frequency-INDEPENDENT)
 
-```
-  t_cq + t_cd  ≥  t_hold
+$$t_{cq} + t_{cd} \geq t_{hold}$$
 
-  Hold slack = t_cq + t_cd - t_hold  >  0
-```
+$$\text{Hold slack} = t_{cq} + t_{cd} - t_{hold} > 0$$
 
 **Project relevance:** D6 has 457 hold violations (WNS = -0.165 ns). Hold violations are **unacceptable** — they cause functional failures regardless of clock speed. Fixed during CTS/routing by inserting delay buffers.
 
 ### Clock Skew and Jitter
-- **Skew**: t_skew = t_cA - t_cB (clock arrival difference at two registers)
+- **Skew**: $t_{skew} = t_{cA} - t_{cB}$ (clock arrival difference at two registers)
   - Skew on source (early) → reduces setup slack
   - Skew on destination (late) → reduces hold slack
 - **Jitter**: random cycle-to-cycle variation
@@ -61,56 +57,52 @@ Key question: which criteria are **constraints** vs **free optimization targets*
 
 **Switching power:**
 
-```
-  P_sw  ∝  α · f_clk · V_DD² · C_L
-```
+$$P_{sw} \sim \alpha \cdot f_{clk} \cdot V_{DD}^2 \cdot C_L$$
 
 Where:
-- **α** = switching activity factor (fraction of cycles output transitions)
-- **f_clk** = clock frequency
-- **V_DD** = supply voltage (quadratic effect — most powerful knob)
-- **C_L** = load capacitance
+- $\alpha$ = switching activity factor (fraction of cycles output transitions)
+- $f_{clk}$ = clock frequency
+- $V_{DD}$ = supply voltage (quadratic effect — most powerful knob)
+- $C_L$ = load capacitance
 
-**Short-circuit power:** P_sc ∝ α · f_clk · t_sc · I_sc · V_DD (typically < 10% of P_sw)
+**Short-circuit power:** $P_{sc} \sim \alpha \cdot f_{clk} \cdot t_{sc} \cdot I_{sc} \cdot V_{DD}$ (typically < 10% of $P_{sw}$)
 
 ### Static Power (leakage — always present)
-- **Subthreshold leakage** (usually dominant): exponential in V_gs - V_th
+- **Subthreshold leakage** (usually dominant): exponential in $V_{gs} - V_{th}$
 - **Gate leakage**: tunneling through thin oxide
 - At 45nm/32nm (our PDK), leakage is significant
 
 ### Energy per Task
 
-```
-  E = P_total × T_task = P_total × N_cycles × T_clk
-```
+$$E = P_{total} \times T_{task} = P_{total} \times N_{cycles} \times T_{clk}$$
 
-**Project relevance for EE design:** E = P × T, so reducing EITHER power OR time reduces energy.
-- Reducing f_clk: P drops (linear in f), but T increases (linear in 1/f) → net effect depends on P_leakage
-- Reducing α (switching activity): reduces P_sw without affecting T → pure energy win
-- Reducing V_DD: P drops quadratically, T increases → **minimum energy point (MEP)** exists
+**Project relevance for EE design:** $E = P \times T$, so reducing EITHER power OR time reduces energy.
+- Reducing $f_{clk}$: P drops (linear in f), but T increases (linear in 1/f) → net effect depends on $P_{leakage}$
+- Reducing $\alpha$ (switching activity): reduces $P_{sw}$ without affecting T → pure energy win
+- Reducing $V_{DD}$: P drops quadratically, T increases → **minimum energy point (MEP)** exists
 
 ### Design Knobs for Energy Reduction
 
 | Knob | Effect on Power | Effect on Time | Net Energy Effect |
 |------|----------------|----------------|-------------------|
-| Lower α (clock gating, data gating, fewer toggles) | P_sw ↓ | No change | E ↓ (pure win) |
-| Lower f_clk | P_sw ↓ (linear) | T ↑ (linear) | Depends on P_leak share |
-| Lower V_DD | P ↓ (quadratic) | T ↑ | E ↓ until MEP, then ↑ |
-| Higher V_th (HVT cells) | P_leak ↓ | t_pd ↑ | E ↓ if timing allows |
-| Fewer cycles (algorithmic) | P_sw ↓ slightly | T ↓ | E ↓ (big win) |
+| Lower $\alpha$ (clock gating, data gating, fewer toggles) | $P_{sw}$ ↓ | No change | $E$ ↓ (pure win) |
+| Lower $f_{clk}$ | $P_{sw}$ ↓ (linear) | $T$ ↑ (linear) | Depends on $P_{leak}$ share |
+| Lower $V_{DD}$ | $P$ ↓ (quadratic) | $T$ ↑ | $E$ ↓ until MEP, then ↑ |
+| Higher $V_{th}$ (HVT cells) | $P_{leak}$ ↓ | $t_{pd}$ ↑ | $E$ ↓ if timing allows |
+| Fewer cycles (algorithmic) | $P_{sw}$ ↓ slightly | $T$ ↓ | $E$ ↓ (big win) |
 
 **EE strategy implications:**
-- Trivial-twiddle fast paths: reduces α (multiplier doesn't toggle) → P_sw ↓ → E ↓
-- No twiddle memory reads: reduces α on memory read path → P_sw ↓ → E ↓
-- Remove recursive twiddle: removes multiply hardware toggling → P_sw ↓ → E ↓
-- Clock gating idle pipeline stages: α → 0 when gated → P_sw ↓ → E ↓
-- Radix-4: fewer stages (5→3) → fewer cycles → T ↓ → E ↓
+- Trivial-twiddle fast paths: reduces $\alpha$ (multiplier doesn't toggle) → $P_{sw}$ ↓ → $E$ ↓
+- No twiddle memory reads: reduces $\alpha$ on memory read path → $P_{sw}$ ↓ → $E$ ↓
+- Remove recursive twiddle: removes multiply hardware toggling → $P_{sw}$ ↓ → $E$ ↓
+- Clock gating idle pipeline stages: $\alpha \to 0$ when gated → $P_{sw}$ ↓ → $E$ ↓
+- Radix-4: fewer stages (5→3) → fewer cycles → $T$ ↓ → $E$ ↓
 
 ---
 
 ## 4. Clock Gating
 
-Most registers don't update every cycle. Disabling their clock reduces α to 0 for those cycles.
+Most registers don't update every cycle. Disabling their clock reduces $\alpha$ to 0 for those cycles.
 
 Tool detects `if (EN) Q <= D` patterns → inserts **Integrated Clock Gating (ICG)** cells (glitch-free, special library cell).
 
@@ -125,9 +117,9 @@ Types:
 ## 5. Multi-Threshold Libraries
 
 Standard cells come in flavors:
-- **HVT** (High V_th): slow but very low leakage
-- **SVT** (Standard V_th): balanced
-- **LVT** (Low V_th): fast but high leakage
+- **HVT** (High $V_{th}$): slow but very low leakage
+- **SVT** (Standard $V_{th}$): balanced
+- **LVT** (Low $V_{th}$): fast but high leakage
 
 Synthesis tool uses LVT **only on critical path**, HVT everywhere else → minimizes leakage while meeting timing.
 
