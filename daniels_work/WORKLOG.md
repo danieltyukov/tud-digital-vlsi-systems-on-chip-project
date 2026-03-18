@@ -44,6 +44,11 @@
 
 ## Log
 
+### 2026-03-18 — Midterm Oral Feedback (Additional)
+- **Explanation > performance**: Report should prioritize *why* over raw numbers
+- **HP progress = incremental bottleneck table**: identify bottleneck → fix → re-profile → next bottleneck → fix
+- **Questions modifiable**: Can adapt project questions, but must explain all decisions. Optimizations should come at the end (after base flow works)
+
 ### 2026-03-18 — Session Start
 - Repository organized, teammate branches reviewed
 - Baseline project copied to server at `~/project`
@@ -90,7 +95,22 @@
 - All signoff reports clean (DRC, connectivity, antenna)
 - Power needs re-annotation with physical VCD (0% coverage in current report)
 
+### 2026-03-18 — EE Design FULLY COMPLETE
+- PnR: Setup WNS +34.148 ns, Hold WNS +0.076 ns — both clean
+- DRC/Connectivity/Antenna: all clean
+- max_tran: 47 nets (much better than baseline 109)
+- Phys sim (setup): PASS
+- Phys sim (hold): PASS
+- Area: 217,831 $\mu m^2$ (−10.3% vs baseline)
+- Power: 0.610 mW (−2.6% vs baseline, but 0% annotation — needs physical VCD)
+
+### 2026-03-18 — HP D3 Structural Sim FAILED (Timeout)
+- Post-synthesis netlist hangs — accelerator never completes
+- Root cause: likely CSR twiddle preload path broken by synthesis optimization
+- **Decision: Fall back to D1 (register-file, 220 cycles = 18.33 $\mu s$)**
+- D1 uses baseline firmware (no CSR changes) — much more robust
+- D1 behavioral sim: PASS, 220 cycles, 3.33× speedup
+
 ### 2026-03-18 — Currently Running
-- HP struct sim: running (SDF sim is ~100x slower than behavioral — still computing)
-- HP PnR: in optimization (WNS = 0.000 ns — meeting timing)
-- EE PnR: in optimization (WNS = +0.100 ns — clean positive slack)
+- HP D1 synthesis: running
+- HP D3 PnR: running (for comparison data, but D1 is now the primary HP candidate)

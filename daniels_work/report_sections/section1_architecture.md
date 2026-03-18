@@ -69,14 +69,16 @@ The baseline accelerator processes each butterfly sequentially through 9 FSM sta
 
 ## 1.5 HP Accelerator Architecture
 
-### Optimization Journey
+### Optimization Journey (Incremental Bottleneck Analysis)
 
-| Step | Change | Cycles | Speedup |
-|------|--------|--------|---------|
-| Baseline | Sequential SRAM butterflies | 732 | 1.00× |
-| D1: Register file | Bulk LOAD/COMPUTE/STORE | 220 | 3.33× |
-| D2: 2× parallel BF | Dual butterfly datapaths | 206 | 3.55× |
-| **D3: SW twiddle preload** | **Twiddles via CSR, SRAM halved** | **170** | **4.31×** |
+*Per midterm feedback: present progress as an incremental bottleneck-driven process — identify bottleneck, solve it, re-profile, find next bottleneck.*
+
+| Step | Bottleneck Identified | Optimization Applied | Cycles | New Bottleneck After Fix |
+|------|----------------------|---------------------|--------|--------------------------|
+| Baseline | Memory access dominates: 650/732 cycles (88.8%) are SRAM reads/writes due to single-ported sequential access | — | 732 | — |
+| D1: Register file | ↑ Same: sequential SRAM access for every butterfly | Bulk LOAD into register file → compute all stages in registers → bulk STORE back. Eliminates inter-stage SRAM round-trips | 220 | LOAD/STORE still 128 cycles (58%); compute 80 cycles (36%); LOAD_TWIDDLE overhead 10 cycles (4.5%) |
+| D2: 2× parallel BF | Compute phase: 80 cycles for 80 serial butterflies | Dual butterfly datapaths process 2 butterflies/cycle | 206 | LOAD/STORE still 128 cycles (62%); twiddle overhead persists |
+| **D3: SW twiddle preload** | Twiddle loading overhead: LOAD_TWIDDLE state + per-stage FILL sub-phase; SRAM 128 words (half is twiddle data) | Move twiddle computation to firmware via CSR; halve SRAM to 64 words | **170** | **LOAD/STORE now 128/170 = 75% — memory transfer is the remaining bottleneck** |
 
 ### D3 Architecture Details
 
