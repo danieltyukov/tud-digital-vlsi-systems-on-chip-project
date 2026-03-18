@@ -252,6 +252,20 @@ Understanding the memory hierarchy is critical for optimization. The SoC has **t
 
 See `docs/memory_architecture.md` for full technical details.
 
+### 4.6 Theory Quick Reference
+
+Key formulas and concepts from course lectures relevant to design decisions:
+
+- **Setup slack** = t_clk - t_cq - t_pd - t_setup > 0 (frequency-dependent)
+- **Hold slack** = t_cq + t_cd - t_hold > 0 (frequency-INDEPENDENT — violations are fatal)
+- **Switching power**: P_sw ∝ α · f_clk · V_DD² · C_L
+- **Energy per task**: E = P_total x N_cycles x T_clk
+- **DRVs present → timing analysis untrustworthy** (must fix before signoff)
+- **Clock tree = ~30% of power** (CTS also fixes hold violations)
+- **Congestion is your enemy. Setup slack is your exchange currency.**
+
+See `docs/theory_reference.md` for full theory reference with project-specific annotations.
+
 ---
 
 ## 5. Remaining TODO Items
