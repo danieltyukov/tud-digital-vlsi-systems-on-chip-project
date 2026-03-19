@@ -266,6 +266,8 @@ module accelerator_fft #(
   /*========================================================================================
         STATE REGISTER + SEQUENTIAL DATAPATH
     ========================================================================================*/
+  integer i;
+
   always @(posedge clk) begin
     if (!resetn || reset_accel) begin
       state_reg    <= S_INIT;
@@ -273,6 +275,13 @@ module accelerator_fft #(
       stage        <= 'b1;
       bf_cnt       <= '0;
       fft_finished <= 1'b0;
+
+      // Zero-initialise register files — prevents X-propagation through
+      // the combinational butterfly datapaths during gate-level simulation
+      for (i = 0; i < MAX_FFT_N; i = i + 1) begin
+        data_re[i] <= 32'sd0;
+        data_im[i] <= 32'sd0;
+      end
     end else begin
       state_reg <= next_state;
 
