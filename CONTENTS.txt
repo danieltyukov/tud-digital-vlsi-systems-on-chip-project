@@ -1,0 +1,8 @@
+Included in this upload bundle:
+- Final EE RTL and project sources
+- Firmware/software sources
+- Synth/PnR/simulation scripts
+- Final signoff reports under pnr/finalReports and pnr/verifyReports
+- Final deliverables under finaldesign
+Excluded:
+- logs, transcripts, work libraries, VCDs, checkpoints, and duplicate PnR outputs
