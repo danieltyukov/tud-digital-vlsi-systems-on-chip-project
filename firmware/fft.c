@@ -50,6 +50,40 @@ int bit_reverse(int x, int bits)
     return rev;
 }
 
+int digit_reverse_mixed(int x, int bits)
+{
+    // For mixed radix-4/2: extract base-4 digits (2 bits each) greedily,
+    // with a possible base-2 digit (1 bit) if bits is odd.
+    // Then reconstruct with digits in reversed order.
+    int digits[8];
+    int widths[8];
+    int n_digits = 0;
+    int remaining = bits;
+
+    while (remaining >= 2) {
+        digits[n_digits] = x & 3;
+        widths[n_digits] = 2;
+        x >>= 2;
+        remaining -= 2;
+        n_digits++;
+    }
+    if (remaining == 1) {
+        digits[n_digits] = x & 1;
+        widths[n_digits] = 1;
+        n_digits++;
+    }
+
+    // Reconstruct in reverse digit order
+    int result = 0;
+    int shift = 0;
+    for (int i = n_digits - 1; i >= 0; i--) {
+        result |= digits[i] << shift;
+        shift += widths[i];
+    }
+
+    return result;
+}
+
 void bit_reverse_array(int input[], Complex output[], int n, int bits)
 {
     for (int i = 0; i < n; i++) {

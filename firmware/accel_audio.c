@@ -64,8 +64,8 @@ static void accelerated_fft(int n, int chunks, int bits) {
 			// i * 4 because each entry (signed 32-bit integer) is 4 bytes
 			uint32_t sram_address = ACCEL_SRAM_START_ADDR + (2 * bits + 2 * i) * 4;
 
-			int bit_reverse_i = bit_reverse(i, bits);
-			(*(volatile int*)(sram_address)) = read_dec_entry_from_flash(flash_offset + bit_reverse_i);
+			int rev_i = digit_reverse_mixed(i, bits);
+			(*(volatile int*)(sram_address)) = read_dec_entry_from_flash(flash_offset + rev_i);
 			
 			// As the algorithm is in-place, we set the imaginary part to 0.
 			sram_address += 4;

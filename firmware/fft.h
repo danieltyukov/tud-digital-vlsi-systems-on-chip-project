@@ -17,6 +17,8 @@ int flog2(int x);
 
 int bit_reverse(int x, int bits);
 
+int digit_reverse_mixed(int x, int bits);
+
 void bit_reverse_array(int input[], Complex output[], int n, int bits);
 
 void fft(Complex array[], Complex twiddles[], int n, int bits);
