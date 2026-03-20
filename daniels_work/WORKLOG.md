@@ -173,5 +173,8 @@
 - Rebuilt all firmware from D3 branch files
 - Behavioral sim: **PASS** — 170 cycles/chunk, 14.17 $\mu s$
 - Structural sim: **PASS** — no timeout, normal completion
-- This confirms ALL of Shanghong's designs work when built properly from branch files
-- D3 PnR + phys sim: running (for report comparison data)
+- Lynn confirmed D3 struct sim timeout was a real bug on his side too (not just our firmware issue)
+- He pushed fixes (zero-init + other) on March 19 — our March 20 rebuild pulled the fixed code
+- So D3 failure had TWO causes: (1) firmware build mismatch (our side) + (2) missing data reg init (his side, now fixed)
+- D3 PnR: Setup +33.9 ns, Hold -0.160 ns (630 violations), DRC/conn clean
+- D3 Phys sim: **PASS** (both setup and hold)
