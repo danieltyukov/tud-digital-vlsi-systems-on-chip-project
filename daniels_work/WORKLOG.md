@@ -154,5 +154,16 @@
 - Lynn suggested zero-init for data regs — applied but didn't fix the computation bug
 - **Root cause found**: firmware build mismatch. D5's `prepare_fft.py` generates `fft_data.hex` for the wide memory layout. Our earlier attempt used baseline firmware build artifacts with D5 RTL.
 - **Fix**: Rebuild firmware entirely from D5 branch files (not just overlay RTL)
-- D5 behavioral sim: **PASS** — 121 cycles/chunk, 10.08 $\mu s$ first chunk latency
-- D5 synthesis: running
+- **Lesson**: always rebuild firmware from teammate's branch, don't just copy RTL
+
+### 2026-03-20 — D5 Full Flow COMPLETE
+- Behavioral sim: **PASS** — 121 cycles/chunk, 10.08 $\mu s$ first chunk latency
+- Synthesis: WNS +2.76 ns at 48 MHz, 297,791 $\mu m^2$ area, 0 violations
+- Structural sim: **PASS** (with VCD)
+- PnR: Setup WNS +0.113 ns (tight!), Hold WNS -0.230 ns (4,133 violations)
+  - DRC/Connectivity/Antenna: all clean
+  - Density: 94.9% — extremely congested
+  - max_tran: 1,489 nets
+- Physical sim (setup): **PASS**
+- Physical sim (hold): **PASS** (despite hold violations)
+- `finaldesign_hp/` updated with D5 files
