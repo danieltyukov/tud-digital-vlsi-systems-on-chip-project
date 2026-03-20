@@ -167,3 +167,11 @@
 - Physical sim (setup): **PASS**
 - Physical sim (hold): **PASS** (despite hold violations)
 - `finaldesign_hp/` updated with D5 files
+
+### 2026-03-20 — D3 Retested (firmware rebuild fix)
+- **Same root cause as D5**: earlier D3 failure was firmware build mismatch, not RTL bug
+- Rebuilt all firmware from D3 branch files
+- Behavioral sim: **PASS** — 170 cycles/chunk, 14.17 $\mu s$
+- Structural sim: **PASS** — no timeout, normal completion
+- This confirms ALL of Shanghong's designs work when built properly from branch files
+- D3 PnR + phys sim: running (for report comparison data)
