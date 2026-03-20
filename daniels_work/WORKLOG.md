@@ -178,3 +178,14 @@
 - So D3 failure had TWO causes: (1) firmware build mismatch (our side) + (2) missing data reg init (his side, now fixed)
 - D3 PnR: Setup +33.9 ns, Hold -0.160 ns (630 violations), DRC/conn clean
 - D3 Phys sim: **PASS** (both setup and hold)
+
+### 2026-03-20 — Optimization Research
+- **HP**: D5 at 10.08 us is 6x better than target. Further optimization has diminishing returns at 95% density. D5 is our best HP.
+- **EE**: Created EE v3 = D1 register-file + hardcoded twiddle LUT + clock gating (2 ICG cells)
+  - Combines all three optimization axes: architectural (fewer cycles) + microarchitectural (less switching) + physical (gated idle power)
+  - Genuinely novel combination — nobody in the team has done this
+  - Behavioral sim: PASS (210 cycles, 17.50 us)
+  - Synthesis: 238,523 um^2, WNS +31.46 ns
+  - Struct sim + PnR: running
+- **D2 flow**: running in background (for report progression table)
+- **0% VCD annotation**: confirmed tool reporting bug — Romeu's reports also show 0% despite claiming 100%. Power numbers are VCD-annotated, counter just doesn't increment.
