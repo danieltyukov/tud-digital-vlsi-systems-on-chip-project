@@ -146,4 +146,13 @@
 - Behavioral sim: PASS — **210 cycles** (10 fewer than D1's 220, since no LOAD_TWIDDLE)
 - Latency: 17.50 $\mu s$ (3.49x speedup)
 - Synthesis: area 238,482 $\mu m^2$ (67% util, down from D1's 75%), WNS +31.46 ns, 0 violations
-- Struct sim + PnR: running
+- PnR: Setup +33.75 ns, Hold -0.153 ns (192 violations), DRC/conn/antenna clean
+- Phys sim: PASS (both setup and hold)
+
+### 2026-03-20 — D5 Debugging and Fix
+- Initial D5 attempt failed: behavioral sim timeout, all imaginary parts = 0
+- Lynn suggested zero-init for data regs — applied but didn't fix the computation bug
+- **Root cause found**: firmware build mismatch. D5's `prepare_fft.py` generates `fft_data.hex` for the wide memory layout. Our earlier attempt used baseline firmware build artifacts with D5 RTL.
+- **Fix**: Rebuild firmware entirely from D5 branch files (not just overlay RTL)
+- D5 behavioral sim: **PASS** — 121 cycles/chunk, 10.08 $\mu s$ first chunk latency
+- D5 synthesis: running
