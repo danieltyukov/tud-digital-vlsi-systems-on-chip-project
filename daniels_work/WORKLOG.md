@@ -187,5 +187,18 @@
   - Behavioral sim: PASS (210 cycles, 17.50 us)
   - Synthesis: 238,523 um^2, WNS +31.46 ns
   - Struct sim + PnR: running
-- **D2 flow**: running in background (for report progression table)
-- **0% VCD annotation**: confirmed tool reporting bug — Romeu's reports also show 0% despite claiming 100%. Power numbers are VCD-annotated, counter just doesn't increment.
+- **D2 flow**: completed (for report progression table) — 206 cycles, all sims pass
+- **0% VCD annotation**: confirmed tool reporting bug — only 12 of 78,157 signals unmapped. Actual annotation ~99.98%.
+
+### 2026-03-21 — All Optimization Analysis Complete
+- **RFFT**: Analyzed — only 15% energy gain, bottleneck is SRAM I/O not compute. Not worth implementing.
+- **Bit-width reduction**: Analyzed — 3.5% max improvement, FFT core is only 5% of total power. Not worth it.
+- **Fastpaths (EE v4)**: Implemented and verified — 46% of butterflies skip multiply. Behav sim PASS.
+  - Synthesis: 15% smaller FFT core (Genus optimized away unused multiply paths)
+  - PnR: more hold violations (188 vs v3's 59), same power. **EE v3 remains better submission.**
+
+### 2026-03-21 — Final Optimization Conclusions
+- **HP: D5 is maxed.** 121 cycles @ 48 MHz = 10.08 us (6x better than target). No further gains possible at 95% density.
+- **EE: v3 is our best.** 210 cycles @ 12 MHz, 0.492 mW, 8.6 nJ (65% under target). v4 (fastpaths) adds marginal area reduction but worse hold closure.
+- **Every optimization from the project requirements has been explored**: D1-D5 implemented, D7 analyzed, clock gating done, LUT twiddle done, fastpaths done, RFFT analyzed, bit-width analyzed.
+- **Remaining work: THE REPORT.**
