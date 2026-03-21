@@ -41,3 +41,38 @@ Radix-2 DIT uses bit-reversal to permute inputs. Mixed radix-4/2 requires digit-
 ### Hardware interface
 
 No changes to the accelerator wrapper, SRAM layout, CSR interface, or twiddle factor format. The design is a drop-in replacement for the baseline `accelerator_fft.v`.
+
+## Results
+
+### Behavioural simulation (confirmed 2026-03-21)
+
+Test: 24 chunks of 32 samples each (Nokia ringtone).
+
+| Metric | Baseline (radix-2) | Radix-4/2 | Change |
+|---|---|---|---|
+| Accelerator cycles (total, 24 chunks) | 17,568 | 10,272 | **-41.5%** |
+| Accelerator cycles (per chunk) | 732 | 428 | **-41.5%** |
+| Accelerator latency (total) | 1.464 ms | 0.856 ms | **-41.5%** |
+| First chunk latency | 60.998 µs | 35.665 µs | **-41.5%** |
+| Total system cycles | 32,042,131 | 36,036,795 | +12.5% |
+
+Note: total system cycles increased because `digit_reverse_mixed()` is more computationally expensive in firmware than `bit_reverse()`. However, the accelerator dominates power consumption, so what matters for energy is accelerator power x accelerator latency.
+
+### Baseline power (post-layout)
+
+| Metric | Value |
+|---|---|
+| Core area | 596.4 µm x 596.4 µm |
+| Clock frequency | 12 MHz (83.33 ns period) |
+| Total power | 0.626 mW |
+| accel (total) | 0.403 mW |
+| accel/fft | 0.050 mW |
+| accel/mem | 0.320 mW |
+| soc | 0.201 mW |
+| Energy (per chunk) | 0.403 mW x 61.00 µs = **2.46 nJ** |
+
+### Radix-4/2 power (post-layout)
+
+Pending — synthesis, structural sim with VCD, PnR, and power report still in progress.
+
+Energy breakeven: radix-4/2 accel power must stay below **0.69 mW** to beat the baseline energy of 2.46 nJ (since 0.69 x 35.665 µs = 2.46 nJ).
