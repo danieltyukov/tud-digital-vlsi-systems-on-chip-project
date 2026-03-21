@@ -2,7 +2,7 @@
 
 ## Design Approach
 
-| Aspect | Romeu comb_3_gc | Our EE v3 |
+| Aspect | Romeu comb_3_gc | My EE v3 |
 |--------|----------------|-----------|
 | **Base architecture** | Baseline FSM (9-state per-butterfly) | D1 register-file (5-state bulk) |
 | **Cycles/chunk** | 732 | **210** |
@@ -15,7 +15,7 @@
 
 ## Results
 
-| Metric | Romeu comb_3_gc | Our EE v3 |
+| Metric | Romeu comb_3_gc | My EE v3 |
 |--------|----------------|-----------|
 | **Accel power** | 0.019 mW | 0.271 mW |
 | **Total chip power** | 0.231 mW | 0.492 mW |
