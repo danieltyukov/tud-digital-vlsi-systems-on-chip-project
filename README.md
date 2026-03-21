@@ -11,7 +11,7 @@ The FFT accelerator's compute engine was redesigned from pure radix-2 to mixed r
 | `project/src/design/accelerator_fft.v` | Rewrote FSM for mixed radix-4/2 butterfly (SRAM-based, no register file) |
 | `project/firmware/fft.c` | Added `digit_reverse_mixed()` function for mixed-radix input permutation |
 | `project/firmware/fft.h` | Declared `digit_reverse_mixed()` |
-| `project/firmware/accel_audio.c` | Changed input permutation from `bit_reverse()` to `digit_reverse_mixed()` |
+| `project/firmware/accel_audio.c` | Changed input permutation from `bit_reverse()` to `digit_reverse_mixed()` (scatter form) |
 | `project/firmware/fft.py` | Updated golden reference to use radix-4/2 FFT with digit reversal |
 
 ### Why radix-4/2?
@@ -25,7 +25,9 @@ N=32 is not a power of 4, so pure radix-4 is impossible. The mixed approach gree
 
 ### Why digit reversal instead of bit reversal?
 
-Radix-2 DIT uses bit-reversal to permute inputs. Mixed radix-4/2 requires digit-reversal: the index is decomposed into base-4 digits (2 bits) with a possible base-2 digit (1 bit), and the digit order is reversed. For N=32, some indices differ between the two (e.g. index 5 maps to 10 with digit reversal vs 20 with bit reversal).
+Radix-2 DIT uses bit-reversal to permute inputs. Mixed radix-4/2 requires digit-reversal: the index is decomposed into mixed-radix digits (1-bit radix-2 digit first if log2(N) is odd, then 2-bit radix-4 digits), and the digit order is reversed.
+
+Important: `digit_reverse_mixed()` is **not self-inverse** (unlike `bit_reverse()`), so the firmware must use scatter form (`SRAM[perm(i)] = input[i]`) rather than gather form.
 
 ### Cycle count comparison (SRAM-based)
 
@@ -44,35 +46,40 @@ No changes to the accelerator wrapper, SRAM layout, CSR interface, or twiddle fa
 
 ## Results
 
-### Behavioural simulation (confirmed 2026-03-21)
+### Behavioural simulation
 
-Test: 24 chunks of 32 samples each (Nokia ringtone).
+Source: behavioural RTL simulation (`sim_behav`). Test: 24 chunks of 32 samples each (Nokia ringtone).
 
 | Metric | Baseline (radix-2) | Radix-4/2 | Change |
 |---|---|---|---|
 | Accelerator cycles (total, 24 chunks) | 17,568 | 10,272 | **-41.5%** |
 | Accelerator cycles (per chunk) | 732 | 428 | **-41.5%** |
 | Accelerator latency (total) | 1.464 ms | 0.856 ms | **-41.5%** |
-| First chunk latency | 60.998 µs | 35.665 µs | **-41.5%** |
-| Total system cycles | 32,042,131 | 36,036,795 | +12.5% |
+| First chunk latency | 60.998 us | 35.665 us | **-41.5%** |
+| Total system cycles | 32,042,131 | 36,523,707 | +14.0% |
 
 Note: total system cycles increased because `digit_reverse_mixed()` is more computationally expensive in firmware than `bit_reverse()`. However, the accelerator dominates power consumption, so what matters for energy is accelerator power x accelerator latency.
 
-### Baseline power (post-layout)
+### Post-layout power
 
-| Metric | Value |
-|---|---|
-| Core area | 596.4 µm x 596.4 µm |
-| Clock frequency | 12 MHz (83.33 ns period) |
-| Total power | 0.626 mW |
-| accel (total) | 0.403 mW |
-| accel/fft | 0.050 mW |
-| accel/mem | 0.320 mW |
-| soc | 0.201 mW |
-| Energy (per chunk) | 0.403 mW x 61.00 µs = **2.46 nJ** |
+Source: Innovus power report using VCD from physical simulation (`sim_phys`). Technology: 45nm, 12 MHz clock.
 
-### Radix-4/2 power (post-layout)
+| Metric | Baseline (radix-2) | Radix-4/2 | Change |
+|---|---|---|---|
+| Total power | 0.626 mW | 0.629 mW | +0.5% |
+| accel (total) | 0.403 mW | 0.396 mW | -1.7% |
+| accel/fft | 0.050 mW | 0.090 mW | +80% |
+| accel/mem | 0.320 mW | 0.283 mW | -11.6% |
+| soc | 0.201 mW | 0.205 mW | +2.0% |
 
-Pending — synthesis, structural sim with VCD, PnR, and power report still in progress.
+### Energy comparison
 
-Energy breakeven: radix-4/2 accel power must stay below **0.69 mW** to beat the baseline energy of 2.46 nJ (since 0.69 x 35.665 µs = 2.46 nJ).
+Energy per chunk = accelerator power (from post-layout power report) x first chunk latency (from behavioural simulation).
+
+| Metric | Baseline (radix-2) | Radix-4/2 | Change |
+|---|---|---|---|
+| Accelerator power | 0.403 mW | 0.396 mW | -1.7% |
+| First chunk latency | 61.0 us | 35.7 us | -41.5% |
+| **Energy per chunk** | **24.6 nJ** | **14.1 nJ** | **-42.6%** |
+
+The radix-4/2 FFT achieves **~43% energy reduction** per chunk. The FFT logic itself uses more power (+80%) due to the more complex radix-4 butterfly, but memory power decreased (-11.6%) due to fewer SRAM accesses per FFT. The net accelerator power is nearly unchanged, so the energy saving comes almost entirely from the 41.5% cycle reduction.
