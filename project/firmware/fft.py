@@ -42,34 +42,113 @@ def bit_reverse(i: int, bits: int) -> int:
     return r
 
 
+def digit_reverse_mixed(i: int, bits: int) -> int:
+    """Mixed-radix digit reversal for radix-4/2 FFT.
+    Decomposes index into base-4 digits (2 bits each), with a possible
+    base-2 digit (1 bit) at the MSB if bits is odd, then reverses the
+    digit order."""
+    digits = []
+    widths = []
+    remaining = bits
+
+    # Extract digits from LSB: greedily take 2-bit (radix-4) digits
+    while remaining >= 2:
+        digits.append(i & 3)
+        widths.append(2)
+        i >>= 2
+        remaining -= 2
+
+    # If odd bit remains, take 1-bit (radix-2) digit
+    if remaining == 1:
+        digits.append(i & 1)
+        widths.append(1)
+
+    # Reconstruct in reverse digit order
+    result = 0
+    shift = 0
+    for j in range(len(digits) - 1, -1, -1):
+        result |= digits[j] << shift
+        shift += widths[j]
+
+    return result
+
+
 def fft(x: List[complex]) -> List[complex]:
     n = len(x)
     bits = flog2(n)
 
-    # Step 1: bit-reversal permutation
+    # Step 1: mixed-radix digit-reversal permutation
     X = [0j] * n
 
     for i in range(n):
-        X[bit_reverse(i, bits)] = x[i]
+        X[digit_reverse_mixed(i, bits)] = x[i]
 
-    # Step 2: iterative FFT stages
-    for stage in range(1, bits + 1):
-        m = 1 << stage  # m = 2, 4, 8, ..., n
+    # Step 2: mixed radix-4/2 FFT stages
+    log2_m = 0
+    while log2_m < bits:
+        if bits - log2_m >= 2:
+            # ---- Radix-4 stage: consume 2 bits ----
+            log2_m += 2
+            m = 1 << log2_m
+            q = m // 4  # butterflies per group
 
-        half = m // 2
-        w_m = TWIDDLES[stage-1]
+            w_m = TWIDDLES[log2_m - 1]  # primitive twiddle for this stage
+            tw2 = complex_mult(w_m, w_m)
+            tw3 = complex_mult(tw2, w_m)
 
-        for base in range(0, n, m):
-            w = complex(1 << SCALE, 0)
+            for base in range(0, n, m):
+                w1 = complex(1 << SCALE, 0)
+                w2 = complex(1 << SCALE, 0)
+                w3 = complex(1 << SCALE, 0)
 
-            for k in range(half):
-                t = complex_mult(w, X[base + k + half])
+                for k in range(q):
+                    x0 = X[base + k]
+                    x1 = X[base + k + q]
+                    x2 = X[base + k + 2*q]
+                    x3 = X[base + k + 3*q]
 
-                u = X[base + k]
-                X[base + k] = u + t
-                X[base + k + half] = u - t
+                    # 3 complex multiplies
+                    t1 = complex_mult(w1, x1)
+                    t2 = complex_mult(w2, x2)
+                    t3 = complex_mult(w3, x3)
 
-                w = complex_mult(w, w_m)
+                    # 4-point DFT kernel with j-rotations
+                    # X[0] = x0 + t1 + t2 + t3
+                    X[base + k]        = x0 + t1 + t2 + t3
+                    # X[1] = x0 - j*t1 - t2 + j*t3
+                    X[base + k + q]    = complex(
+                        x0.real + t1.imag - t2.real - t3.imag,
+                        x0.imag - t1.real - t2.imag + t3.real)
+                    # X[2] = x0 - t1 + t2 - t3
+                    X[base + k + 2*q]  = x0 - t1 + t2 - t3
+                    # X[3] = x0 + j*t1 - t2 - j*t3
+                    X[base + k + 3*q]  = complex(
+                        x0.real - t1.imag - t2.real + t3.imag,
+                        x0.imag + t1.real - t2.imag - t3.real)
+
+                    # Advance twiddles
+                    w1 = complex_mult(w1, w_m)
+                    w2 = complex_mult(w2, tw2)
+                    w3 = complex_mult(w3, tw3)
+        else:
+            # ---- Radix-2 stage: consume 1 bit ----
+            log2_m += 1
+            m = 1 << log2_m
+            half = m // 2
+
+            w_m = TWIDDLES[log2_m - 1]
+
+            for base in range(0, n, m):
+                w = complex(1 << SCALE, 0)
+
+                for k in range(half):
+                    t = complex_mult(w, X[base + k + half])
+                    u = X[base + k]
+
+                    X[base + k]        = u + t
+                    X[base + k + half] = u - t
+
+                    w = complex_mult(w, w_m)
 
     return X
 

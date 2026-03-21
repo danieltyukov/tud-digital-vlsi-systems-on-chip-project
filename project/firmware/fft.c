@@ -50,6 +50,44 @@ int bit_reverse(int x, int bits)
     return rev;
 }
 
+// Mixed-radix digit reversal for radix-4/2 FFT.
+// Decomposes the index into base-4 digits (2 bits each), with a possible
+// base-2 digit (1 bit) at the MSB if log2(N) is odd, then reverses the
+// digit order.  This is required because radix-4 DIT processes digits
+// in a different order than pure bit-reversal.
+int digit_reverse_mixed(int x, int bits)
+{
+    int digits[16];
+    int widths[16];
+    int n_digits = 0;
+    int remaining = bits;
+
+    // Extract digits from LSB: greedily take 2-bit (radix-4) digits
+    while (remaining >= 2) {
+        digits[n_digits] = x & 3;
+        widths[n_digits] = 2;
+        x >>= 2;
+        remaining -= 2;
+        n_digits++;
+    }
+    // If odd bit remains, take 1-bit (radix-2) digit
+    if (remaining == 1) {
+        digits[n_digits] = x & 1;
+        widths[n_digits] = 1;
+        n_digits++;
+    }
+
+    // Reconstruct in reverse digit order
+    int result = 0;
+    int shift = 0;
+    for (int i = n_digits - 1; i >= 0; i--) {
+        result |= digits[i] << shift;
+        shift += widths[i];
+    }
+
+    return result;
+}
+
 void bit_reverse_array(int input[], Complex output[], int n, int bits)
 {
     for (int i = 0; i < n; i++) {
