@@ -58,15 +58,15 @@ static void accelerated_fft(int n, int chunks, int bits) {
 		REG_CONFIG_AND_STATUS = REG_CONFIG_AND_STATUS | MASK_CSR_RESET;  // Set reset bit
 		REG_CONFIG_AND_STATUS &= ~MASK_CSR_RESET; // Clear reset bit
 
-		// Write input array to SRAM of accelerator
+		// Write input array to SRAM of accelerator (scatter form)
+		// digit_reverse_mixed is NOT self-inverse (unlike bit_reverse),
+		// so we must write input[i] to SRAM position perm(i), not read from perm(i).
 		for (int i = 0; i < entries_per_chunk; i++) {
-			// The inputs are composed of a real part only: Write the real part.
-			// i * 4 because each entry (signed 32-bit integer) is 4 bytes
-			uint32_t sram_address = ACCEL_SRAM_START_ADDR + (2 * bits + 2 * i) * 4;
-
 			int rev_i = digit_reverse_mixed(i, bits);
-			(*(volatile int*)(sram_address)) = read_dec_entry_from_flash(flash_offset + rev_i);
-			
+			uint32_t sram_address = ACCEL_SRAM_START_ADDR + (2 * bits + 2 * rev_i) * 4;
+
+			(*(volatile int*)(sram_address)) = read_dec_entry_from_flash(flash_offset + i);
+
 			// As the algorithm is in-place, we set the imaginary part to 0.
 			sram_address += 4;
 			(*(volatile int*)(sram_address)) = 0;
