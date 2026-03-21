@@ -44,24 +44,26 @@ def bit_reverse(i: int, bits: int) -> int:
 
 def digit_reverse_mixed(i: int, bits: int) -> int:
     """Mixed-radix digit reversal for radix-4/2 FFT.
-    Decomposes index into base-4 digits (2 bits each), with a possible
-    base-2 digit (1 bit) at the MSB if bits is odd, then reverses the
-    digit order."""
+    Decomposes index into digits from LSB: if bits is odd, first digit is
+    1-bit (radix-2), then remaining digits are 2-bit (radix-4).
+    The digit order is then reversed."""
     digits = []
     widths = []
     remaining = bits
 
-    # Extract digits from LSB: greedily take 2-bit (radix-4) digits
+    # If odd number of bits, extract 1-bit (radix-2) digit first from LSB
+    if remaining % 2 == 1:
+        digits.append(i & 1)
+        widths.append(1)
+        i >>= 1
+        remaining -= 1
+
+    # Extract 2-bit (radix-4) digits
     while remaining >= 2:
         digits.append(i & 3)
         widths.append(2)
         i >>= 2
         remaining -= 2
-
-    # If odd bit remains, take 1-bit (radix-2) digit
-    if remaining == 1:
-        digits.append(i & 1)
-        widths.append(1)
 
     # Reconstruct in reverse digit order
     result = 0
@@ -78,10 +80,15 @@ def fft(x: List[complex]) -> List[complex]:
     bits = flog2(n)
 
     # Step 1: mixed-radix digit-reversal permutation
-    X = [0j] * n
+    # Ensure all inputs are integer-valued complex to match hardware fixed-point
+    X = [complex(0, 0)] * n
 
     for i in range(n):
-        X[digit_reverse_mixed(i, bits)] = x[i]
+        val = x[i]
+        if isinstance(val, complex):
+            X[digit_reverse_mixed(i, bits)] = complex(int(val.real), int(val.imag))
+        else:
+            X[digit_reverse_mixed(i, bits)] = complex(int(val), 0)
 
     # Step 2: mixed radix-4/2 FFT stages
     log2_m = 0
