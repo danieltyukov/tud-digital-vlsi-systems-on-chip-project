@@ -80,6 +80,6 @@ Energy per chunk = accelerator power (from post-layout power report) x first chu
 |---|---|---|---|
 | Accelerator power | 0.403 mW | 0.396 mW | -1.7% |
 | First chunk latency | 61.0 us | 35.7 us | -41.5% |
-| **Energy per chunk** | **24.6 nJ** | **14.1 nJ** | **-42.6%** |
+| **Energy per chunk** | **24.6 nJ** | **14.12 nJ** | **-42.6%** |
 
 The radix-4/2 FFT achieves **~43% energy reduction** per chunk. The FFT logic itself uses more power (+80%) due to the more complex radix-4 butterfly, but memory power decreased (-11.6%) due to fewer SRAM accesses per FFT. The net accelerator power is nearly unchanged, so the energy saving comes almost entirely from the 41.5% cycle reduction.
