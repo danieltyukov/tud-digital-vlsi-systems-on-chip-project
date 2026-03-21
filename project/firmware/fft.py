@@ -112,19 +112,24 @@ def fft(x: List[complex]) -> List[complex]:
                     t2 = complex_mult(w2, x2)
                     t3 = complex_mult(w3, x3)
 
-                    # 4-point DFT kernel with j-rotations
+                    # 4-point DFT kernel with j-rotations (integer arithmetic)
+                    x0r = int(x0.real); x0i = int(x0.imag)
+                    t1r = int(t1.real); t1i = int(t1.imag)
+                    t2r = int(t2.real); t2i = int(t2.imag)
+                    t3r = int(t3.real); t3i = int(t3.imag)
+
                     # X[0] = x0 + t1 + t2 + t3
-                    X[base + k]        = x0 + t1 + t2 + t3
+                    X[base + k]        = complex(x0r + t1r + t2r + t3r,
+                                                 x0i + t1i + t2i + t3i)
                     # X[1] = x0 - j*t1 - t2 + j*t3
-                    X[base + k + q]    = complex(
-                        x0.real + t1.imag - t2.real - t3.imag,
-                        x0.imag - t1.real - t2.imag + t3.real)
+                    X[base + k + q]    = complex(x0r + t1i - t2r - t3i,
+                                                 x0i - t1r - t2i + t3r)
                     # X[2] = x0 - t1 + t2 - t3
-                    X[base + k + 2*q]  = x0 - t1 + t2 - t3
+                    X[base + k + 2*q]  = complex(x0r - t1r + t2r - t3r,
+                                                 x0i - t1i + t2i - t3i)
                     # X[3] = x0 + j*t1 - t2 - j*t3
-                    X[base + k + 3*q]  = complex(
-                        x0.real - t1.imag - t2.real + t3.imag,
-                        x0.imag + t1.real - t2.imag - t3.real)
+                    X[base + k + 3*q]  = complex(x0r - t1i - t2r + t3i,
+                                                 x0i + t1r - t2i - t3r)
 
                     # Advance twiddles
                     w1 = complex_mult(w1, w_m)
@@ -145,8 +150,10 @@ def fft(x: List[complex]) -> List[complex]:
                     t = complex_mult(w, X[base + k + half])
                     u = X[base + k]
 
-                    X[base + k]        = u + t
-                    X[base + k + half] = u - t
+                    ur = int(u.real); ui = int(u.imag)
+                    tr = int(t.real); ti = int(t.imag)
+                    X[base + k]        = complex(ur + tr, ui + ti)
+                    X[base + k + half] = complex(ur - tr, ui - ti)
 
                     w = complex_mult(w, w_m)
 
