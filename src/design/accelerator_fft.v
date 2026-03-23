@@ -1,28 +1,35 @@
 /*##########################################################################
 ###
-### EE v2: D1 register-file + hardcoded twiddle LUT
+### Ali EE v2: RFFT + pure Radix-4 DIT on D1 register-file architecture
 ###
-###     Based on the D1 register-file architecture but replaces the
-###     recursive twiddle update and SRAM twiddle loading with a
-###     hardcoded combinational twiddle look-up table (LUT).
+###     32-point real FFT implemented as a 16-point complex FFT followed
+###     by a Hermitian-symmetry RECOMBINE step.
 ###
 ###     FSM phases:
-###       1. LOAD_DATA – read input data from SRAM into registers
-###       2. COMPUTE   – all 5 FFT stages execute from a 32x2 register file
-###                      with twiddle factors sourced from a hardcoded LUT
-###       3. STORE     – write results back to SRAM
+###       1. LOAD_DATA  – read 32 real samples from SRAM (stride-2, real only)
+###                       imaginary registers stay 0 from reset → 32 cycles
+###       2. COMPUTE    – 16-point Radix-4 DIT FFT, register-to-register
+###                       Stage 1 (1 cycle):  4 trivial butterflies in parallel
+###                       Stage 2 (13 cycles): 4 butterflies × 3 multiply-cycles
+###                       Twiddles hardcoded inline — no LUT function needed
+###       3. RECOMBINE  – unpack Y[k] into X[k] using Hermitian symmetry
+###                       X[k] = (E[k] - j·W_32^k·D[k]) / 2
+###                       Writes results into register file → 18 cycles
+###       4. STORE_DATA – write 32 complex outputs (64 words) to SRAM → 64 cycles
+###       5. FINISH     – assert fft_finished
 ###
-###     The S_LOAD_TWIDDLE state from D1 is removed entirely since twiddle
-###     factors are now provided by the LUT function.
+###     Expected cycle count:
+###       INIT(1) + LOAD(32) + COMPUTE(14) + RECOMBINE(18) + STORE(64) + FINISH(1) = 130
 ###
-###     Expected cycle count for N=32:
-###       INIT(1) + LOAD_DATA(64) + COMPUTE(80) + STORE(64) + FINISH(1) = 210
+###     RFFT packing (combinational, 0 cycles):
+###       Firmware loads SRAM in bit-reversed order → data_re[i] = audio[BR5(i)]
+###       z[k] = data_re[BR5(2·DR4(k))] + j·data_re[BR5(2·DR4(k)+1)]
+###       Implemented as hardwired assign statements (z_re/z_im wires).
 ###
-###     SRAM layout is unchanged from baseline (twiddle data still present
-###     in SRAM[0..2*stages-1], but simply ignored). The start_input_address
-###     offset is preserved so LOAD_DATA and STORE_DATA address correctly.
+###     SRAM layout unchanged from baseline: twiddle region still present
+###     but ignored. start_input_address offset preserved for correct addressing.
 ###
-###     Interface is 100% compatible with the baseline accelerator.v wrapper.
+###     Interface 100% compatible with accelerator.v wrapper.
 ###
 ###     TU Delft ET4351 – 2026 Project
 ###
@@ -83,7 +90,10 @@ module accelerator_fft #(
   /*========================================================================================
         REGISTER FILE  (the core of the optimisation)
     ========================================================================================*/
-  // Data register file: 32 complex values = 64 x 32-bit registers
+  // Data register file: 32 entries × 2 (re+im) = 64 × 32-bit registers
+  // During LOAD:      data_re[0..31] = real audio samples (bit-reversed), data_im = 0
+  // During COMPUTE:   data_re/im[0..15] = 16-point complex FFT working registers
+  // After RECOMBINE:  data_re/im[0..31] = full 32-point RFFT output
   reg signed [MEM_WIDTH-1:0] data_re [0:MAX_FFT_N-1];
   reg signed [MEM_WIDTH-1:0] data_im [0:MAX_FFT_N-1];
 
@@ -126,9 +136,13 @@ module accelerator_fft #(
   reg [IO_CNT_W-1:0] io_cnt;    // shared counter for LOAD_DATA, STORE_DATA
 
   /*========================================================================================
-        COMPUTE STEP COUNTER  (replaces generic Radix-2 loop for Radix-4 RFFT)
-        Step 0        : Stage 1 — 4 trivial butterflies in parallel (no multiplies)
-        Steps 1..10   : Stage 2 — 4 butterflies × 3 multiply-cycles each (TBD)
+        COMPUTE STEP COUNTER  (Radix-4 RFFT)
+        Step 0         : Stage 1 — 4 trivial butterflies in parallel (no multiplies)
+        Step 1         : Stage 2, group g=0 — trivial twiddles W_16^0=1
+        Steps 2..5     : Stage 2, group g=1 — twiddles W_16^1, W_16^2, W_16^3
+        Steps 6..9     : Stage 2, group g=2 — twiddles W_16^2, W_16^4=-j, W_16^6
+        Steps 10..13   : Stage 2, group g=3 — twiddles W_16^3, W_16^6, W_16^9
+        Total: 14 cycles (steps 0..13)
     ========================================================================================*/
   localparam COMPUTE_LAST = 4'd13;  // step 0=Stage1, 1=g0, 2-5=g1, 6-9=g2, 10-13=g3
   reg [3:0] compute_step;
@@ -202,89 +216,6 @@ module accelerator_fft #(
   wire [IO_CNT_W:0]   store_total;
   assign load_total  = number_data[IDX_W:0];        // = N     (32 for N=32)
   assign store_total = number_data[IDX_W:0] << 1;   // = 2*N   (64 for N=32)
-
-  /*========================================================================================
-        HARDCODED TWIDDLE LUT    OLD TOBE ADAPTED
-        Returns {w_re, w_im} for twiddle factor W_N^k given stage span m and index k.
-        Values are Q12 fixed-point, matching Romeu's recursive computation exactly.
-    ========================================================================================*/
-  function [2*MEM_WIDTH-1:0] twiddle_lut;
-    input [LOG_MAX_N-1:0] tf_m;
-    input [LOG_MAX_N-2:0] tf_k;
-    reg signed [MEM_WIDTH-1:0] tw_r, tw_i;
-    begin
-      tw_r = 32'sd4096;   // default: W^0 = (1, 0) in Q12
-      tw_i = 32'sd0;
-
-      case (tf_m)
-        // Stage 1: m=2, only k=0
-        32'd2: begin
-          tw_r = 32'sd4096;  tw_i = 32'sd0;
-        end
-
-        // Stage 2: m=4, k=0..1
-        32'd4: begin
-          case (tf_k[0])
-            1'd0: begin tw_r =  32'sd4096; tw_i =  32'sd0;     end
-            1'd1: begin tw_r =  32'sd0;    tw_i = -32'sd4096;  end
-          endcase
-        end
-
-        // Stage 3: m=8, k=0..3
-        32'd8: begin
-          case (tf_k[1:0])
-            2'd0: begin tw_r =  32'sd4096; tw_i =  32'sd0;     end
-            2'd1: begin tw_r =  32'sd2896; tw_i = -32'sd2896;  end
-            2'd2: begin tw_r =  32'sd0;    tw_i = -32'sd4096;  end
-            2'd3: begin tw_r = -32'sd2896; tw_i = -32'sd2896;  end
-          endcase
-        end
-
-        // Stage 4: m=16, k=0..7
-        32'd16: begin
-          case (tf_k[2:0])
-            3'd0: begin tw_r =  32'sd4096; tw_i =  32'sd0;     end
-            3'd1: begin tw_r =  32'sd3784; tw_i = -32'sd1567;  end
-            3'd2: begin tw_r =  32'sd2896; tw_i = -32'sd2896;  end
-            3'd3: begin tw_r =  32'sd1567; tw_i = -32'sd3784;  end
-            3'd4: begin tw_r =  32'sd0;    tw_i = -32'sd4096;  end
-            3'd5: begin tw_r = -32'sd1567; tw_i = -32'sd3784;  end
-            3'd6: begin tw_r = -32'sd2896; tw_i = -32'sd2897;  end
-            3'd7: begin tw_r = -32'sd3784; tw_i = -32'sd1569;  end
-          endcase
-        end
-
-        // Stage 5: m=32, k=0..15
-        32'd32: begin
-          case (tf_k[3:0])
-            4'd0:  begin tw_r =  32'sd4096; tw_i =  32'sd0;     end
-            4'd1:  begin tw_r =  32'sd4017; tw_i = -32'sd799;   end
-            4'd2:  begin tw_r =  32'sd3783; tw_i = -32'sd1568;  end
-            4'd3:  begin tw_r =  32'sd3404; tw_i = -32'sd2276;  end
-            4'd4:  begin tw_r =  32'sd2894; tw_i = -32'sd2897;  end
-            4'd5:  begin tw_r =  32'sd2273; tw_i = -32'sd3406;  end
-            4'd6:  begin tw_r =  32'sd1564; tw_i = -32'sd3784;  end
-            4'd7:  begin tw_r =  32'sd795;  tw_i = -32'sd4017;  end
-            4'd8:  begin tw_r = -32'sd4;    tw_i = -32'sd4095;  end
-            4'd9:  begin tw_r = -32'sd803;  tw_i = -32'sd4016;  end
-            4'd10: begin tw_r = -32'sd1571; tw_i = -32'sd3782;  end
-            4'd11: begin tw_r = -32'sd2279; tw_i = -32'sd3403;  end
-            4'd12: begin tw_r = -32'sd2899; tw_i = -32'sd2893;  end
-            4'd13: begin tw_r = -32'sd3408; tw_i = -32'sd2272;  end
-            4'd14: begin tw_r = -32'sd3786; tw_i = -32'sd1564;  end
-            4'd15: begin tw_r = -32'sd4019; tw_i = -32'sd796;   end
-          endcase
-        end
-
-        default: begin
-          tw_r = 32'sd4096;  tw_i = 32'sd0;
-        end
-      endcase
-
-      twiddle_lut = {tw_r, tw_i};
-    end
-  endfunction
-
 
   /*========================================================================================
         FSM – STATE REGISTER
