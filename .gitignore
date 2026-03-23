@@ -1,0 +1,17 @@
+# Research notes
+RFFT_research.txt
+baseline_for_friend/
+
+# Simulation tool binaries
+sim_behav/workLib/
+
+# Python
+sw/__pycache__/
+*.pyc
+*.pyo
+
+# Generated plots
+*.png
+
+# Recovered audio output
+sw/recovered_audio.wav
