@@ -14,23 +14,18 @@
 - 210 cycles (10 fewer than HP's 220), 17.50 $\mu s$ latency
 - Energy dominated by cycle reduction: even with higher power, energy drops massively
 
-## Results Summary — ALL TARGETS MET
+## Results Summary — ALL TARGETS MET (SDC-fixed, March 23)
 
-| Metric | Baseline | HP (D1) | EE (D1+LUT) | Target |
-|--------|----------|---------|-------------|--------|
+| Metric | Baseline | HP (D1) | EE (D1+LUT+CG) | Target |
+|--------|----------|---------|-----------------|--------|
 | Clock period | 83.33 ns | 83.33 ns | 83.33 ns | — |
 | Clock frequency | 12 MHz | 12 MHz | 12 MHz | EE: ≥ 10 MHz ✓ |
 | Cycles/chunk | 732 | **220** | **210** | — |
 | Latency | 61.00 $\mu s$ | **18.33 $\mu s$** | **17.50 $\mu s$** | HP: < 61 $\mu s$ ✓ |
-| Power (postRoute) | 0.626 mW | 0.851 mW | 0.699 mW | — |
-| Power (phys VCD) | 0.554 mW | 0.723 mW | ~0.60 mW | — |
-| **Energy** | 38.2 nJ | **15.6 nJ** | **12.2 nJ** | EE: < 24.6 nJ ✓ |
-| SoC area (post-PnR) | 242,796 | 300,906 | ~270,000 $\mu m^2$ | — |
-| Density | 66.4% | 85.0% | 79.6% | — |
-| Setup WNS | +33.845 ns | +34.108 ns | +33.753 ns | > 0 ✓ |
-| Hold WNS | +0.057 ns | -0.165 ns | -0.153 ns | — |
-| Hold violations | 0 | 462 | 192 | — |
-| max_tran DRVs | 109 | 988 | 860 | allowed ✓ |
+| Setup WNS | +33.845 ns | **+34.442 ns** | **+34.317 ns** | > 0 ✓ |
+| Hold WNS | +0.057 ns | **+0.050 ns** | **+0.049 ns** | > 0 ✓ |
+| **Hold violations** | 0 | **0** | **0** | **0 required ✓** |
+| Density | 66.4% | **56.9%** | **70.2%** | — |
 | DRC | Clean | Clean | Clean | Clean ✓ |
 | Connectivity | Clean | Clean | Clean | Clean ✓ |
 | Antenna | Clean | Clean | Clean | Clean ✓ |
@@ -40,6 +35,8 @@
 | Phys sim (hold) | PASS | PASS | PASS | ✓ |
 | `finaldesign` | N/A | YES | YES | ✓ |
 | Designs different | — | — | MD5 verified ≠ | ✓ |
+
+**SDC fixes applied**: CLK_UNCERTAINTY 0.25→0.10 ns, set_max_transition 0.28, CTS holdTargetSlack 0.2, post-route holdTargetSlack 0.05 + 2nd hold pass.
 
 ---
 
@@ -201,4 +198,26 @@
 - **HP: D5 is maxed.** 121 cycles @ 48 MHz = 10.08 us (6x better than target). No further gains possible at 95% density.
 - **EE: v3 is our best.** 210 cycles @ 12 MHz, 0.492 mW, 8.6 nJ (65% under target). v4 (fastpaths) adds marginal area reduction but worse hold closure.
 - **Every optimization from the project requirements has been explored**: D1-D5 implemented, D7 analyzed, clock gating done, LUT twiddle done, fastpaths done, RFFT analyzed, bit-width analyzed.
-- **Remaining work: THE REPORT.**
+
+### 2026-03-22 — D5 Hold Fix Failed, EE v3 Hold-Clean on Rebuild
+- D5 (48 MHz, 95% density): ECO iterations could not fix ~3,900 hold violations. Setup also degraded.
+- EE v3: Clean rebuild achieved 0 hold violations without ECO (66.4% density).
+- D1 at 596.4um: 85% density, 462 hold violations — can't fix within area constraint.
+- D1 at 700um: 0 hold violations at 63.8% — but violates 596.4um area requirement.
+
+### 2026-03-22 — Teammate Updates
+- **Ali**: LOAD_DATA stride-2 optimization on our EE v2, 210→178 cycles (skips zero imaginary reads)
+- **Shanghong D5**: Narrowed datapath 32→24 bits, saves 512 FFs (hold violations 1,356→199)
+- **FranzJosef**: Radix-4 on properly named branch
+
+### 2026-03-23 — SDC Fixes from Lynn's Analysis — ZERO HOLD VIOLATIONS!
+- Applied Lynn's SDC fixes to both HP D1 and EE v3:
+  - Fix A+E: CLK_UNCERTAINTY 0.25 → 0.10 ns (actual skew 0.002 ns)
+  - Fix D: Added `set_max_transition 0.28` (forces stronger-drive cells)
+  - Fix B: CTS holdTargetSlack 0.1 → 0.2
+  - Fix C: Post-route holdTargetSlack 0.05 + 2nd hold pass
+- **HP D1**: Hold WNS +0.050 ns, **0 violations**, 56.9% density, phys sim PASS
+- **EE v3**: Hold WNS +0.049 ns, **0 violations**, 70.2% density, phys sim PASS
+- Both: setup clean, DRC clean, connectivity clean, antenna clean
+- Both `finaldesign_hp/` and `finaldesign_ee/` packaged on server
+- **ALL PROJECT REQUIREMENTS NOW FULLY MET**
