@@ -190,7 +190,7 @@ def plot(original_indices, recovered_indices):
 
 # --- 6. Write hex data to load into flash memory as well as the expected accelerator output ---
 def write_accel_io(y: List[List[float]]):
-    from fft import SCALE, MAX_N_PER_FFT, TWIDDLES, fft
+    from fft import SCALE, MAX_N_PER_FFT, TWIDDLES, rfft_radix4, fft
 
     BYTES_PER_VAL = 4
     START_ADDRESS = 0x004F0000
@@ -239,7 +239,7 @@ def write_accel_io(y: List[List[float]]):
     ground_truth = []
 
     for quant_y_chunk in chunk_list(quant_y, MAX_N_PER_FFT):
-        fft_result = fft(quant_y_chunk)
+        fft_result = rfft_radix4(quant_y_chunk)
         ground_truth.extend(fft_result)
 
     with open("expected_output.txt", "w") as file:
