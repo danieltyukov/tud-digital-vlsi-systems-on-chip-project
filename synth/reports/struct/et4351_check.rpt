@@ -380,10 +380,10 @@ No undriven port in 'et4351'
 --------------------------
 
 The following combinational pin(s) in design 'et4351' are multidriven
-/designs/et4351/instances_hier/soc/instances_comb/drc_bufs/pins_in/A
-/designs/et4351/instances_hier/soc/instances_comb/drc_bufs3111/pins_in/A
-/designs/et4351/instances_hier/soc/instances_comb/drc_bufs3112/pins_in/A
-/designs/et4351/instances_hier/soc/instances_comb/drc_bufs3113/pins_in/A
+/designs/et4351/instances_hier/soc/instances_comb/g2980/pins_in/A0
+/designs/et4351/instances_hier/soc/instances_comb/g2983/pins_in/A0
+/designs/et4351/instances_hier/soc/instances_comb/g2985/pins_in/A0
+/designs/et4351/instances_hier/soc/instances_comb/g2986/pins_in/A0
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g3388/pins_in/A0N
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g3389/pins_in/A0N
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g3392/pins_in/A0N
@@ -401,16 +401,15 @@ No multidriven unloaded nets in 'et4351'
   Constant Pin(s)
   ----------------
 design 'et4351' has the following constant input combinational pin(s)
-/designs/et4351/instances_hier/accel/instances_comb/g14573/pins_in/A0
-/designs/et4351/instances_hier/accel/instances_comb/g14574/pins_in/A0
-/designs/et4351/instances_hier/soc/instances_hier/cpu/instances_comb/g89412/pins_in/A0
+/designs/et4351/instances_hier/accel/instances_comb/g14553/pins_in/A0
+/designs/et4351/instances_hier/accel/instances_comb/g14566/pins_in/A0
 /designs/et4351/instances_hier/soc/instances_hier/cpu/instances_hier/genblk2.pcpi_div/instances_comb/g5858/pins_in/A
 /designs/et4351/instances_hier/soc/instances_hier/cpu/instances_hier/genblk1.pcpi_mul/instances_comb/g11116/pins_in/B
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g3329/pins_in/B
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g3330/pins_in/A1
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g3347/pins_in/B
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g3379/pins_in/B
-Total number of constant combinational pins in design 'et4351' : 9
+Total number of constant combinational pins in design 'et4351' : 8
 
 design 'et4351' has the following constant input sequential pin(s)
 /designs/et4351/instances_hier/soc/instances_hier/memory/instances_seq/sram_0/pins_in/CSB
@@ -1040,7 +1039,7 @@ Multidriven Leaf Pin(s)                      8
 Multidriven hierarchical Pin(s)              0
 Multidriven unloaded net(s)                  0
 Constant Port(s)                             0
-Constant Leaf Pin(s)                        25
+Constant Leaf Pin(s)                        24
 Constant hierarchical Pin(s)               462
 Preserved leaf instance(s)                   4
 Preserved hierarchical instance(s)           0

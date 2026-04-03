@@ -2,7 +2,7 @@
 *	Innovus 21.11-s130_1 (64bit) 08/19/2021 16:59 (Linux 3.10.0-693.el7.x86_64)
 *	
 *
-* 	Date & Time:	2026-Mar-22 23:03:02 (2026-Mar-22 22:03:02 GMT)
+* 	Date & Time:	2026-Apr-03 20:24:08 (2026-Apr-03 18:24:08 GMT)
 *
 *----------------------------------------------------------------------------------------
 *
@@ -23,7 +23,7 @@
 *	        ../sim_struct/vcd/et4351.struct.vcd
 *                    Vcd Window used(Start Time, Stop Time):   
 *                     Vcd Scale Factor: 1 
-* *                    Design annotation coverage: 0/74201 = 0% 
+* *                    Design annotation coverage: 0/65527 = 0% 
 *
 *       Hierarchical Global Activity: N.A.
 *
@@ -48,42 +48,42 @@
 
 Total Power 
 -----------------------------------------------------------------------------------------
-Total Internal Power:        0.41100114 	   73.6864%
-Total Switching Power:       0.11689441 	   20.9574%
-Total Leakage Power:         0.02987532 	    5.3562%
-Total Power:                 0.55777087 
+Total Internal Power:        0.40932656 	   74.3803%
+Total Switching Power:       0.11570689 	   21.0255%
+Total Leakage Power:         0.02528268 	    4.5942%
+Total Power:                 0.55031614 
 -----------------------------------------------------------------------------------------
 
 
 Group                           Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-Sequential                        0.3522   0.0005504    0.005886      0.3586        64.3 
-Macro                          2.927e-05   2.542e-05           0   5.469e-05    0.009805 
-IO                                     0           0   2.466e-07   2.466e-07   4.421e-05 
-Combinational                   0.009524    0.008864     0.02378     0.04217        7.56 
-Clock (Combinational)            0.04926      0.1075   0.0002087      0.1569       28.13 
+Sequential                        0.3518   0.0004394    0.005912      0.3582       65.09 
+Macro                          4.287e-06   1.979e-05           0   2.408e-05    0.004375 
+IO                                     0           0   2.028e-07   2.028e-07   3.685e-05 
+Combinational                   0.007094    0.006219     0.01916     0.03247         5.9 
+Clock (Combinational)             0.0504       0.109   0.0002146      0.1596       29.01 
 Clock (Sequential)                     0           0           0           0           0 
 -----------------------------------------------------------------------------------------
-Total                              0.411      0.1169     0.02988      0.5578         100 
+Total                             0.4093      0.1157     0.02528      0.5503         100 
 -----------------------------------------------------------------------------------------
 
 
 Rail                  Voltage   Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-VDD                      1.32      0.411      0.1169     0.02988      0.5578         100 
+VDD                      1.32     0.4093      0.1157     0.02528      0.5503         100 
 
 
 Clock                           Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-clk                              0.04926      0.1075   0.0002087      0.1569       28.13 
+clk                               0.0504       0.109   0.0002146      0.1596       29.01 
 -----------------------------------------------------------------------------------------
-Total (excluding duplicates)     0.04926      0.1075   0.0002087      0.1569       28.13 
+Total (excluding duplicates)      0.0504       0.109   0.0002146      0.1596       29.01 
 -----------------------------------------------------------------------------------------
 Clock: clk
-Clock Period: 0.020830 usec 
+Clock Period: 0.015100 usec 
 Clock Toggle Rate:    23.9682 Mhz 
 Clock Static Probability:  0.4997
 
@@ -91,10 +91,10 @@ Clock Static Probability:  0.4997
 
 -----------------------------------------------------------------------------------------
 *	Power Distribution Summary: 
-*                Highest Average Power: soc/cpu/CTS_ccl_a_buf_00028 (CLKBUFX20):         0.001793 
-*                Highest Leakage Power:       CTS_ccl_a_buf_00009 (CLKBUFX20):         2.21e-06 
-*          Total Cap:      2.62697e-10 F
-*          Total instances in design: 71507
+*                Highest Average Power: soc/cpu/CTS_cpc_drv_buf_00377 (CLKBUFX20):         0.001796 
+*                Highest Leakage Power: accel/fft/FE_OFC608_n_8579 (CLKBUFX20):        2.292e-06 
+*          Total Cap:      2.2372e-10 F
+*          Total instances in design: 62835
 *          Total instances in design with no power:     0
 *          Total instances in design with no activity:     0
 *          Total Fillers and Decap:     0

@@ -15,13 +15,13 @@
 #                                   #
 #####################################
 
-set CLK_PERIOD         20.83
+set CLK_PERIOD         15.1
 set QSPI_DIV           2
 
 set MAX_IO_DLY         5.0
 set MIN_IO_DLY         0.0
 
-set CLK_UNCERTAINTY    0.25
+set CLK_UNCERTAINTY    0.15
 
 
 #####################################

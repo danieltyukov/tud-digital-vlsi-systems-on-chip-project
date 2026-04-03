@@ -2,7 +2,7 @@
 *	Innovus 21.11-s130_1 (64bit) 08/19/2021 16:59 (Linux 3.10.0-693.el7.x86_64)
 *	
 *
-* 	Date & Time:	2026-Mar-22 22:52:08 (2026-Mar-22 21:52:08 GMT)
+* 	Date & Time:	2026-Apr-03 20:14:42 (2026-Apr-03 18:14:42 GMT)
 *
 *----------------------------------------------------------------------------------------
 *
@@ -23,7 +23,7 @@
 *	        ../sim_struct/vcd/et4351.struct.vcd
 *                    Vcd Window used(Start Time, Stop Time):   
 *                     Vcd Scale Factor: 1 
-* *                    Design annotation coverage: 0/48666 = 0% 
+* *                    Design annotation coverage: 0/49374 = 0% 
 *
 *       Hierarchical Global Activity: N.A.
 *
@@ -48,39 +48,39 @@
 
 Total Power 
 -----------------------------------------------------------------------------------------
-Total Internal Power:        0.34249914 	   94.1942%
-Total Switching Power:       0.00442812 	    1.2178%
-Total Leakage Power:         0.01668245 	    4.5880%
-Total Power:                 0.36360971 
+Total Internal Power:        0.34196390 	   94.0520%
+Total Switching Power:       0.00471270 	    1.2962%
+Total Leakage Power:         0.01691356 	    4.6518%
+Total Power:                 0.36359016 
 -----------------------------------------------------------------------------------------
 
 
 Group                           Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-Sequential                        0.3396    0.000733    0.005898      0.3463       95.23 
-Macro                          5.515e-06   2.533e-05           0   3.085e-05    0.008484 
-IO                                     0           0   4.056e-07   4.056e-07   0.0001115 
-Combinational                   0.002857     0.00367     0.01078     0.01731       4.761 
+Sequential                        0.3392   0.0007739    0.005919      0.3458       95.12 
+Macro                          2.671e-06   2.056e-05           0   2.323e-05    0.006389 
+IO                                     0           0    3.48e-07    3.48e-07   9.571e-05 
+Combinational                   0.002808    0.003918     0.01099     0.01772       4.874 
 Clock (Combinational)                  0           0           0           0           0 
 Clock (Sequential)                     0           0           0           0           0 
 -----------------------------------------------------------------------------------------
-Total                             0.3425    0.004428     0.01668      0.3636         100 
+Total                              0.342    0.004713     0.01691      0.3636         100 
 -----------------------------------------------------------------------------------------
 
 
 Rail                  Voltage   Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-VDD                      1.32     0.3425    0.004428     0.01668      0.3636         100 
+VDD                      1.32      0.342    0.004713     0.01691      0.3636         100 
 
 
 -----------------------------------------------------------------------------------------
 *	Power Distribution Summary: 
-*                Highest Average Power:        soc/spimemio/g7369 (CLKMX2X8):        0.0008233 
-*                Highest Leakage Power: accel/fft/FE_OFC1961_n_9472 (CLKBUFX20):        2.128e-06 
-*          Total Cap:      1.38439e-10 F
-*          Total instances in design: 45972
+*                Highest Average Power:        soc/spimemio/g9085 (CLKMX2X8):        0.0007534 
+*                Highest Leakage Power: accel/fft/FE_OFC608_n_8579 (CLKBUFX20):        2.292e-06 
+*          Total Cap:      1.53741e-10 F
+*          Total instances in design: 46682
 *          Total instances in design with no power:     0
 *          Total instances in design with no activity:     0
 *          Total Fillers and Decap:     0

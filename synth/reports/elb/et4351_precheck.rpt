@@ -470,10 +470,10 @@ No undriven port in 'et4351'
 --------------------------
 
 The following combinational pin(s) in design 'et4351' are multidriven
-/designs/et4351/instances_hier/soc/instances_comb/g1700/pins_in/in_1
-/designs/et4351/instances_hier/soc/instances_comb/g1708/pins_in/in_1
-/designs/et4351/instances_hier/soc/instances_comb/g1711/pins_in/in_1
-/designs/et4351/instances_hier/soc/instances_comb/g1712/pins_in/in_1
+/designs/et4351/instances_hier/soc/instances_comb/g1750/pins_in/in_1
+/designs/et4351/instances_hier/soc/instances_comb/g1754/pins_in/in_1
+/designs/et4351/instances_hier/soc/instances_comb/g1780/pins_in/in_1
+/designs/et4351/instances_hier/soc/instances_comb/g1797/pins_in/in_1
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g2620/pins_in/in_1
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g2624/pins_in/in_1
 /designs/et4351/instances_hier/soc/instances_hier/spimemio/instances_hier/xfer/instances_comb/g2645/pins_in/in_1
