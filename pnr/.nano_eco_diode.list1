@@ -1,0 +1,11 @@
+FORMATVERSION 1
+ADDINST ANTENNA soc/cpu/DIODE_1 1 addPortAsNeeded
+INSTTERM A soc/cpu/FE_PHN21029_cpuregs_2__8 -
+ADDINST ANTENNA accel/fft/DIODE_2 1 addPortAsNeeded
+INSTTERM A accel/fft/FE_PHN32389_data_im_6__20 -
+ADDINST ANTENNA accel/fft/DIODE_3 1 addPortAsNeeded
+INSTTERM A accel/fft/FE_PHN21676_n_5277 -
+ADDINST ANTENNA accel/fft/DIODE_4 1 addPortAsNeeded
+INSTTERM A accel/fft/FE_PHN25173_n_5433 -
+ADDINST ANTENNA accel/fft/DIODE_5 1 addPortAsNeeded
+INSTTERM A accel/fft/FE_PHN27197_compute_step_0 -

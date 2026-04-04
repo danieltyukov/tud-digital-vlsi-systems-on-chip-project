@@ -1,0 +1,24 @@
+# Research notes
+RFFT_research.txt
+baseline_for_friend/
+ali_work/
+
+# Simulation tool binaries
+sim_behav/workLib/
+sim_struct/workLib/
+sim_phys/workLib/
+
+# Large generated EDA outputs
+pnr/outputs/et4351.phys.gds
+*.gds
+
+# Python
+sw/__pycache__/
+*.pyc
+*.pyo
+
+# Generated plots
+*.png
+
+# Recovered audio output
+sw/recovered_audio.wav

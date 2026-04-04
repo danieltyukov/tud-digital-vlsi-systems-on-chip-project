@@ -1,0 +1,1496 @@
+*----------------------------------------------------------------------------------------
+*	Innovus 21.11-s130_1 (64bit) 08/19/2021 16:59 (Linux 3.10.0-693.el7.x86_64)
+*	
+*
+* 	Date & Time:	2026-Apr-03 23:09:31 (2026-Apr-03 21:09:31 GMT)
+*
+*----------------------------------------------------------------------------------------
+*
+*	Design: et4351
+*
+*	Liberty Libraries used: 
+*	        analysis_view_power: /data/Cadence/gpdk045_v60/gsclib045_svt_v4.7/gsclib045/timing/fast_vdd1v2_basicCells.lib
+*	        analysis_view_power: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram_tt1p05v125c.lib
+*
+*	Power Domain used: 
+*              Rail:        VDD      Voltage:       1.32 
+*
+*       Power View : analysis_view_power
+*
+*       User-Defined Activity : N.A.
+*
+*	Switching Activity File used: 
+*	        ../sim_struct/vcd/et4351.struct.vcd
+*                    Vcd Window used(Start Time, Stop Time):   
+*                     Vcd Scale Factor: 1 
+* *                    Design annotation coverage: 0/95891 = 0% 
+*
+*       Hierarchical Global Activity: N.A.
+*
+*       Global Activity: N.A.
+*
+*       Sequential Element Activity: N.A.
+*
+*       Primary Input Activity: N.A.
+*
+*       Default icg ratio: N.A.
+*
+*       Global Comb ClockGate Ratio: N.A.
+*
+*	Power Units = 1mW
+*
+*	Time Units = 1e-09 secs 
+*
+*       report_power -outfile finalReports/report_power.rpt -hierarchy all
+*
+-----------------------------------------------------------------------------------------
+
+
+Total Power 
+-----------------------------------------------------------------------------------------
+Total Internal Power:        0.15770171 	   61.1397%
+Total Switching Power:       0.06528794 	   25.3116%
+Total Leakage Power:         0.03494691 	   13.5486%
+Total Power:                 0.25793657 
+-----------------------------------------------------------------------------------------
+
+
+Group                           Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+Sequential                       0.05372    0.001019    0.006805     0.06154       23.86 
+Macro                          6.437e-07   1.505e-05   1.734e-11    1.57e-05    0.006086 
+IO                                     0           0   3.086e-05   3.086e-05     0.01197 
+Combinational                    0.04485     0.05798     0.02715        0.13        50.4 
+Clock (Combinational)           0.003683     0.00376   0.0003785    0.007821       3.032 
+Clock (Sequential)               0.05545    0.002511   0.0005778     0.05854       22.69 
+-----------------------------------------------------------------------------------------
+Total                             0.1577     0.06529     0.03495      0.2579         100 
+-----------------------------------------------------------------------------------------
+
+
+Clock                           Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+clk                              0.05913     0.00627   0.0009562     0.06636       25.73 
+-----------------------------------------------------------------------------------------
+Total (excluding duplicates)     0.05913     0.00627   0.0009562     0.06636       25.73 
+-----------------------------------------------------------------------------------------
+Clock: clk
+Clock Period: 0.083330 usec 
+Clock Toggle Rate:    23.9682 Mhz 
+Clock Static Probability:  0.4997
+
+
+
+Rail                  Voltage   Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+VDD                      1.32     0.1577     0.06529     0.03495      0.2579         100 
+
+
+Total Power 
+-----------------------------------------------------------------------------------------
+Total Internal Power:        0.15770171 	   61.1397%
+Total Switching Power:       0.06528794 	   25.3116%
+Total Leakage Power:         0.03494691 	   13.5486%
+Total Power:                 0.25793657 
+-----------------------------------------------------------------------------------------
+
+
+Hierarchy                       Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+soc                              0.07526     0.02278     0.01273      0.1108       42.95  
+accel                              0.082     0.04176     0.02209      0.1458       56.54  
+flash_bufs_0_                  1.526e-06   8.567e-06   1.115e-06   1.121e-05    0.004345  
+flash_bufs_1_                          0   9.851e-05   7.265e-07   9.924e-05     0.03847  
+flash_bufs_2_                          0           0   7.265e-07   7.265e-07   0.0002817  
+flash_bufs_3_                          0           0   7.265e-07   7.265e-07   0.0002817  
+soc/cpu                          0.05536     0.01326     0.01099     0.07961       30.86  
+soc/memory                     6.436e-07   1.505e-05   3.369e-07   1.603e-05    0.006217  
+soc/simpleuart                  0.008025    0.003496    0.000645     0.01217       4.717  
+accel/fft                        0.04286     0.03413     0.01532     0.09231       35.79  
+accel/mem                        0.03684    0.004386    0.006222     0.04745       18.39  
+soc/spimemio                      0.0117    0.005769   0.0007879     0.01826       7.079  
+accel/RC_CG_HIER_INST13         5.45e-05           0   1.511e-06   5.601e-05     0.02172  
+accel/RC_CG_HIER_INST16        5.522e-05   2.266e-07   1.511e-06   5.696e-05     0.02208  
+accel/RC_CG_HIER_INST0         5.514e-05   1.284e-07   7.186e-07   5.599e-05     0.02171  
+accel/RC_CG_HIER_INST1          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST2         5.472e-05    3.22e-08   7.186e-07   5.547e-05     0.02151  
+accel/RC_CG_HIER_INST3          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST4          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST5          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST6          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST7          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST8          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST9          5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST10        5.472e-05   3.132e-08   7.186e-07   5.547e-05      0.0215  
+accel/RC_CG_HIER_INST11         5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST12         5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST14         5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/RC_CG_HIER_INST15        5.472e-05   2.951e-08   7.186e-07   5.547e-05      0.0215  
+soc/cpu/genblk1.pcpi_mul          0.0157    0.001302    0.001208     0.01821       7.058  
+soc/cpu/genblk2.pcpi_div         0.01113    0.002686    0.000817     0.01463       5.672  
+soc/spimemio/xfer               0.007969    0.004841   0.0002264     0.01304       5.054  
+accel/fft/RC_CG_HIER_INST25
+                               0.0003724   2.599e-06   4.617e-06   0.0003796      0.1472  
+accel/fft/RC_CG_HIER_INST26
+                               0.0003721   1.897e-06    3.63e-06   0.0003776      0.1464  
+accel/fft/RC_CG_HIER_INST46
+                               0.0001969   3.634e-06   2.648e-06   0.0002032     0.07878  
+accel/fft/RC_CG_HIER_INST53
+                               0.0001966    3.31e-06   2.178e-06   0.0002021     0.07836  
+accel/fft/RC_CG_HIER_INST54
+                               0.0002711   3.878e-06   2.669e-06   0.0002777      0.1077  
+accel/fft/RC_CG_HIER_INST62
+                               0.0001958   2.056e-06   2.096e-06   0.0001999     0.07751  
+accel/fft/RC_CG_HIER_INST65
+                               0.0002693   1.056e-06   2.537e-06   0.0002729      0.1058  
+accel/mem/RC_CG_HIER_INST76
+                               5.485e-05   1.219e-07   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST77
+                               5.519e-05   1.173e-07   1.623e-06   5.693e-05     0.02207  
+accel/mem/RC_CG_HIER_INST78
+                                5.45e-05           0   1.429e-06   5.593e-05     0.02168  
+accel/mem/RC_CG_HIER_INST79
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST80
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST81
+                               5.526e-05   6.377e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST82
+                               5.492e-05   5.342e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST83
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST84
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST85
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST86
+                               5.492e-05    7.86e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST87
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST88
+                               5.493e-05   1.351e-07   1.623e-06   5.668e-05     0.02198  
+accel/mem/RC_CG_HIER_INST89
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST90
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST91
+                               5.527e-05   2.556e-07   1.623e-06   5.715e-05     0.02216  
+accel/mem/RC_CG_HIER_INST92
+                               5.561e-05   4.711e-07   1.623e-06    5.77e-05     0.02237  
+accel/mem/RC_CG_HIER_INST93
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST94
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST96
+                               5.595e-05   3.865e-07   1.623e-06   5.796e-05     0.02247  
+accel/mem/RC_CG_HIER_INST97
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST98
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST99
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST100
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST101
+                               5.527e-05   1.377e-07   1.623e-06   5.703e-05     0.02211  
+accel/mem/RC_CG_HIER_INST102
+                               5.595e-05   2.047e-07   1.623e-06   5.778e-05      0.0224  
+accel/mem/RC_CG_HIER_INST103
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST104
+                               5.594e-05   1.436e-07   1.623e-06   5.771e-05     0.02237  
+accel/mem/RC_CG_HIER_INST105
+                                5.45e-05           0   1.429e-06   5.593e-05     0.02168  
+accel/mem/RC_CG_HIER_INST106
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST108
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST109
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST110
+                               5.492e-05   8.304e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST111
+                               5.492e-05   4.603e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST112
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST113
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST114
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST115
+                               5.492e-05   6.007e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST116
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST117
+                               5.492e-05   5.451e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST118
+                                5.45e-05           0   1.429e-06   5.593e-05     0.02168  
+accel/mem/RC_CG_HIER_INST121
+                               5.526e-05   1.598e-07   1.623e-06   5.705e-05     0.02212  
+accel/mem/RC_CG_HIER_INST122
+                               5.493e-05   1.626e-07   1.623e-06   5.671e-05     0.02199  
+accel/mem/RC_CG_HIER_INST125
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST126
+                               5.492e-05   5.941e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST127
+                               5.527e-05   1.024e-07   1.623e-06   5.699e-05     0.02209  
+accel/mem/RC_CG_HIER_INST128
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST129
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST130
+                               0.0003713           0   3.738e-06    0.000375      0.1454  
+accel/mem/RC_CG_HIER_INST131
+                               5.527e-05   6.548e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST133
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST134
+                               5.526e-05   1.196e-07   1.623e-06   5.701e-05      0.0221  
+accel/mem/RC_CG_HIER_INST135
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST137
+                               5.492e-05   8.283e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST138
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST140
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST141
+                               5.527e-05   2.429e-07   1.623e-06   5.713e-05     0.02215  
+accel/mem/RC_CG_HIER_INST142
+                               5.642e-05   2.223e-07   2.527e-06   5.917e-05     0.02294  
+accel/mem/RC_CG_HIER_INST143
+                               5.492e-05   6.104e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST144
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST146
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST148
+                                5.45e-05           0   1.429e-06   5.593e-05     0.02168  
+accel/mem/RC_CG_HIER_INST149
+                               5.493e-05   1.903e-07   1.623e-06   5.674e-05       0.022  
+accel/mem/RC_CG_HIER_INST150
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST152
+                               5.527e-05   1.285e-07   1.623e-06   5.702e-05      0.0221  
+accel/mem/RC_CG_HIER_INST154
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST155
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST157
+                               5.527e-05   8.555e-08   1.623e-06   5.697e-05     0.02209  
+accel/mem/RC_CG_HIER_INST158
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST159
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST160
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST161
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST162
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST163
+                               5.526e-05   6.556e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST164
+                               5.514e-05   1.909e-07   1.429e-06   5.676e-05     0.02201  
+accel/mem/RC_CG_HIER_INST166
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST167
+                               5.526e-05   1.171e-07   1.623e-06     5.7e-05      0.0221  
+accel/mem/RC_CG_HIER_INST168
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST169
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST171
+                                5.45e-05           0   1.429e-06   5.593e-05     0.02168  
+accel/mem/RC_CG_HIER_INST172
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST173
+                               5.492e-05    5.87e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST174
+                               5.492e-05   9.129e-08   1.623e-06   5.664e-05     0.02196  
+accel/mem/RC_CG_HIER_INST175
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST176
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST178
+                               5.492e-05   1.024e-07   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST179
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST180
+                               5.493e-05   1.768e-07   1.623e-06   5.673e-05     0.02199  
+accel/mem/RC_CG_HIER_INST181
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST182
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST183
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST184
+                               5.492e-05   5.926e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST185
+                               5.492e-05   1.052e-07   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST187
+                               5.561e-05   1.883e-07   1.623e-06   5.742e-05     0.02226  
+accel/mem/RC_CG_HIER_INST188
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST190
+                               5.595e-05   2.358e-07   1.623e-06   5.781e-05     0.02241  
+accel/mem/RC_CG_HIER_INST191
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST192
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST194
+                               5.492e-05   5.735e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST195
+                               5.594e-05   2.009e-07   1.623e-06   5.777e-05      0.0224  
+accel/mem/RC_CG_HIER_INST196
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST197
+                               5.595e-05   2.505e-07   1.623e-06   5.782e-05     0.02242  
+accel/mem/RC_CG_HIER_INST198
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST199
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST200
+                               5.486e-05   5.829e-08   1.429e-06   5.635e-05     0.02185  
+accel/mem/RC_CG_HIER_INST202
+                               5.492e-05   5.661e-08   1.623e-06    5.66e-05     0.02195  
+accel/mem/RC_CG_HIER_INST203
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST204
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST206
+                               5.561e-05   2.718e-07   1.623e-06    5.75e-05     0.02229  
+accel/mem/RC_CG_HIER_INST207
+                               5.492e-05   7.949e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST208
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST209
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST211
+                               5.492e-05   6.205e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST212
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST213
+                               5.492e-05   6.556e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST214
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST215
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST216
+                               5.526e-05   8.055e-08   1.623e-06   5.697e-05     0.02209  
+accel/mem/RC_CG_HIER_INST217
+                               5.561e-05   1.841e-07   1.623e-06   5.741e-05     0.02226  
+accel/mem/RC_CG_HIER_INST219
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST220
+                               5.526e-05   1.148e-07   1.623e-06     5.7e-05      0.0221  
+accel/mem/RC_CG_HIER_INST221
+                               5.526e-05   6.946e-08   1.623e-06   5.696e-05     0.02208  
+accel/mem/RC_CG_HIER_INST222
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST223
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST226
+                               5.527e-05   3.426e-07   1.623e-06   5.723e-05     0.02219  
+accel/mem/RC_CG_HIER_INST227
+                               5.527e-05    1.05e-07   1.623e-06   5.699e-05      0.0221  
+accel/mem/RC_CG_HIER_INST228
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST229
+                               5.527e-05   2.072e-07   1.623e-06    5.71e-05     0.02214  
+accel/mem/RC_CG_HIER_INST230
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST231
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST232
+                               5.492e-05   4.242e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST234
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST235
+                               5.492e-05   7.224e-08   1.623e-06   5.662e-05     0.02195  
+accel/mem/RC_CG_HIER_INST236
+                               5.492e-05   4.692e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST237
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST238
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST240
+                               5.492e-05   6.721e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST241
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST242
+                               5.492e-05   8.352e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST243
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST244
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST245
+                               5.519e-05   7.816e-08   1.623e-06   5.689e-05     0.02206  
+accel/mem/RC_CG_HIER_INST246
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST248
+                               5.527e-05   9.971e-08   1.623e-06   5.699e-05     0.02209  
+accel/mem/RC_CG_HIER_INST250
+                               5.554e-05   1.611e-07   1.511e-06   5.721e-05     0.02218  
+accel/mem/RC_CG_HIER_INST252
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST253
+                               5.493e-05   7.036e-08   1.623e-06   5.662e-05     0.02195  
+accel/mem/RC_CG_HIER_INST254
+                               5.526e-05   6.365e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST255
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST256
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST257
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST258
+                               5.526e-05   9.102e-08   1.623e-06   5.698e-05     0.02209  
+accel/mem/RC_CG_HIER_INST259
+                               5.526e-05   5.589e-08   1.623e-06   5.694e-05     0.02208  
+accel/mem/RC_CG_HIER_INST260
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST262
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST263
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST264
+                               5.493e-05   1.081e-07   1.623e-06   5.666e-05     0.02197  
+accel/mem/RC_CG_HIER_INST266
+                               5.492e-05   5.533e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST267
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST269
+                               5.561e-05   1.351e-07   1.623e-06   5.736e-05     0.02224  
+accel/mem/RC_CG_HIER_INST270
+                               5.492e-05   6.189e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST271
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST272
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST273
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST274
+                               5.492e-05   4.379e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST275
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST277
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST278
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST279
+                               5.526e-05   1.114e-07   1.623e-06     5.7e-05      0.0221  
+accel/mem/RC_CG_HIER_INST281
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST282
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST283
+                               5.527e-05    1.51e-07   1.623e-06   5.704e-05     0.02211  
+accel/mem/RC_CG_HIER_INST284
+                               5.526e-05    8.27e-08   1.623e-06   5.697e-05     0.02209  
+accel/mem/RC_CG_HIER_INST285
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST286
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST287
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST288
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST289
+                               5.527e-05   1.914e-07   1.623e-06   5.708e-05     0.02213  
+accel/mem/RC_CG_HIER_INST290
+                               5.527e-05   2.537e-07   1.623e-06   5.715e-05     0.02216  
+accel/mem/RC_CG_HIER_INST291
+                               5.526e-05   1.015e-07   1.623e-06   5.699e-05     0.02209  
+accel/mem/RC_CG_HIER_INST292
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST294
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST295
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST298
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST299
+                               5.492e-05   6.899e-08   1.623e-06   5.662e-05     0.02195  
+accel/mem/RC_CG_HIER_INST300
+                               5.492e-05    5.81e-08   1.623e-06    5.66e-05     0.02195  
+accel/mem/RC_CG_HIER_INST301
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST302
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST303
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST304
+                               5.492e-05   5.087e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST305
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST308
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST309
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST310
+                               5.492e-05   6.037e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST311
+                               5.492e-05   6.324e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST312
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST313
+                               5.595e-05   3.911e-07   1.623e-06   5.796e-05     0.02247  
+accel/mem/RC_CG_HIER_INST314
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST315
+                               5.492e-05    6.47e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST318
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST319
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST320
+                               5.492e-05   4.526e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST321
+                               5.526e-05   7.754e-08   1.623e-06   5.697e-05     0.02208  
+accel/mem/RC_CG_HIER_INST322
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST325
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST326
+                               5.493e-05   1.743e-07   1.623e-06   5.672e-05     0.02199  
+accel/mem/RC_CG_HIER_INST327
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST328
+                               5.492e-05   9.819e-08   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST329
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST330
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST331
+                                5.45e-05           0   1.429e-06   5.593e-05     0.02168  
+accel/mem/RC_CG_HIER_INST332
+                               5.492e-05   6.899e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST333
+                               5.526e-05   1.131e-07   1.623e-06     5.7e-05      0.0221  
+accel/mem/RC_CG_HIER_INST334
+                               5.493e-05   9.667e-08   1.623e-06   5.664e-05     0.02196  
+accel/mem/RC_CG_HIER_INST336
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST337
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST338
+                               5.492e-05   5.411e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST339
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST340
+                               5.493e-05   1.324e-07   1.623e-06   5.668e-05     0.02197  
+accel/mem/RC_CG_HIER_INST341
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST342
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST343
+                               5.526e-05   1.394e-07   1.623e-06   5.703e-05     0.02211  
+accel/mem/RC_CG_HIER_INST345
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST346
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST348
+                               5.594e-05   1.072e-07   1.623e-06   5.767e-05     0.02236  
+accel/mem/RC_CG_HIER_INST350
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST351
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST352
+                               5.493e-05   1.104e-07   1.623e-06   5.666e-05     0.02197  
+accel/mem/RC_CG_HIER_INST353
+                               5.527e-05   3.139e-07   1.623e-06   5.721e-05     0.02218  
+accel/mem/RC_CG_HIER_INST354
+                               5.594e-05   1.263e-07   1.623e-06   5.769e-05     0.02237  
+accel/mem/RC_CG_HIER_INST355
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST356
+                               5.596e-05    4.56e-07   1.623e-06   5.803e-05      0.0225  
+accel/mem/RC_CG_HIER_INST357
+                                5.45e-05           0   1.041e-06   5.554e-05     0.02153  
+accel/mem/RC_CG_HIER_INST358
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST360
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST361
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST362
+                               5.493e-05   1.295e-07   1.623e-06   5.668e-05     0.02197  
+accel/mem/RC_CG_HIER_INST363
+                               5.492e-05   6.617e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST365
+                               5.484e-05    5.98e-08   1.623e-06   5.653e-05     0.02191  
+accel/mem/RC_CG_HIER_INST367
+                               5.492e-05   4.412e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST368
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST369
+                               5.493e-05   1.516e-07   1.623e-06    5.67e-05     0.02198  
+accel/mem/RC_CG_HIER_INST371
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST373
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST374
+                               5.526e-05   1.033e-07   1.623e-06   5.699e-05     0.02209  
+accel/mem/RC_CG_HIER_INST375
+                               5.492e-05   8.299e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST377
+                               5.561e-05   2.587e-07   1.623e-06   5.749e-05     0.02229  
+accel/mem/RC_CG_HIER_INST378
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST380
+                               5.526e-05   8.582e-08   1.623e-06   5.697e-05     0.02209  
+accel/mem/RC_CG_HIER_INST382
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST384
+                               5.526e-05   4.908e-08   1.623e-06   5.694e-05     0.02207  
+accel/mem/RC_CG_HIER_INST385
+                               5.527e-05   5.522e-08   1.623e-06   5.694e-05     0.02208  
+accel/mem/RC_CG_HIER_INST386
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST387
+                               5.527e-05   3.272e-07   1.623e-06   5.722e-05     0.02218  
+accel/mem/RC_CG_HIER_INST389
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST390
+                               5.493e-05   1.807e-07   1.623e-06   5.673e-05     0.02199  
+accel/mem/RC_CG_HIER_INST392
+                               5.492e-05   1.069e-07   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST393
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST395
+                               5.642e-05   3.969e-07   2.527e-06   5.935e-05     0.02301  
+accel/mem/RC_CG_HIER_INST396
+                               5.492e-05    4.46e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST398
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST400
+                               5.492e-05   4.102e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST401
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST402
+                               5.492e-05   6.069e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST404
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST407
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST408
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST409
+                               5.526e-05   5.399e-08   1.623e-06   5.694e-05     0.02207  
+accel/mem/RC_CG_HIER_INST410
+                               5.526e-05   8.093e-08   1.623e-06   5.697e-05     0.02209  
+accel/mem/RC_CG_HIER_INST412
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST413
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST414
+                               5.514e-05   6.639e-08   1.511e-06   5.671e-05     0.02199  
+accel/mem/RC_CG_HIER_INST415
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST416
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST418
+                               5.527e-05   1.489e-07   1.623e-06   5.704e-05     0.02211  
+accel/mem/RC_CG_HIER_INST419
+                               5.527e-05   3.258e-07   1.623e-06   5.722e-05     0.02218  
+accel/mem/RC_CG_HIER_INST420
+                               5.526e-05   1.279e-07   1.623e-06   5.701e-05      0.0221  
+accel/mem/RC_CG_HIER_INST421
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST422
+                               5.527e-05   3.094e-07   1.623e-06    5.72e-05     0.02218  
+accel/mem/RC_CG_HIER_INST424
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST425
+                               5.492e-05   7.472e-08   1.623e-06   5.662e-05     0.02195  
+accel/mem/RC_CG_HIER_INST426
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST427
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST428
+                               5.492e-05   8.415e-08   1.623e-06   5.663e-05     0.02196  
+accel/mem/RC_CG_HIER_INST429
+                               5.492e-05   1.066e-07   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST431
+                               5.492e-05   5.184e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST432
+                               5.493e-05   1.771e-07   1.623e-06   5.673e-05     0.02199  
+accel/mem/RC_CG_HIER_INST433
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST434
+                               5.492e-05   3.108e-08   1.623e-06   5.658e-05     0.02193  
+accel/mem/RC_CG_HIER_INST435
+                               5.492e-05   1.163e-07   1.623e-06   5.666e-05     0.02197  
+accel/mem/RC_CG_HIER_INST437
+                               5.492e-05   4.849e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST438
+                               5.561e-05   2.683e-07   1.623e-06    5.75e-05     0.02229  
+accel/mem/RC_CG_HIER_INST439
+                               5.492e-05   5.632e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST440
+                               5.561e-05    3.54e-07   1.623e-06   5.759e-05     0.02233  
+accel/mem/RC_CG_HIER_INST441
+                               5.493e-05     1.3e-07   1.623e-06   5.668e-05     0.02197  
+accel/mem/RC_CG_HIER_INST442
+                               5.569e-05   9.031e-07   1.784e-06   5.837e-05     0.02263  
+accel/mem/RC_CG_HIER_INST443
+                               5.527e-05   1.736e-07   1.623e-06   5.706e-05     0.02212  
+accel/mem/RC_CG_HIER_INST444
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST445
+                               5.492e-05   1.006e-07   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST447
+                               5.492e-05   4.713e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST448
+                               5.492e-05   7.016e-08   1.623e-06   5.662e-05     0.02195  
+accel/mem/RC_CG_HIER_INST449
+                               5.561e-05   1.295e-07   1.623e-06   5.736e-05     0.02224  
+accel/mem/RC_CG_HIER_INST450
+                               5.493e-05   1.393e-07   1.623e-06   5.669e-05     0.02198  
+accel/mem/RC_CG_HIER_INST451
+                               5.527e-05   6.011e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST452
+                                5.56e-05   1.293e-07   1.623e-06   5.736e-05     0.02224  
+accel/mem/RC_CG_HIER_INST453
+                               5.493e-05   1.462e-07   1.623e-06    5.67e-05     0.02198  
+accel/mem/RC_CG_HIER_INST454
+                               5.561e-05   1.905e-07   1.623e-06   5.742e-05     0.02226  
+accel/mem/RC_CG_HIER_INST455
+                               5.561e-05   1.831e-07   1.623e-06   5.741e-05     0.02226  
+accel/mem/RC_CG_HIER_INST456
+                               5.561e-05   3.015e-07   1.623e-06   5.754e-05     0.02231  
+accel/mem/RC_CG_HIER_INST457
+                               5.561e-05    2.75e-07   1.623e-06   5.751e-05      0.0223  
+accel/mem/RC_CG_HIER_INST460
+                               5.493e-05   7.616e-08   1.623e-06   5.662e-05     0.02195  
+accel/mem/RC_CG_HIER_INST461
+                               5.492e-05   6.073e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST462
+                                5.45e-05           0   1.429e-06   5.593e-05     0.02168  
+accel/mem/RC_CG_HIER_INST463
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST464
+                                5.56e-05   1.737e-07   1.623e-06    5.74e-05     0.02225  
+accel/mem/RC_CG_HIER_INST465
+                               5.492e-05   8.055e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST466
+                               5.493e-05   5.092e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST467
+                               5.527e-05   2.491e-07   1.623e-06   5.714e-05     0.02215  
+accel/mem/RC_CG_HIER_INST468
+                               5.527e-05   1.045e-07   1.623e-06   5.699e-05      0.0221  
+accel/mem/RC_CG_HIER_INST469
+                               5.492e-05   4.883e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST470
+                               5.526e-05   1.375e-07   1.623e-06   5.703e-05     0.02211  
+accel/mem/RC_CG_HIER_INST471
+                               5.493e-05   1.296e-07   1.623e-06   5.668e-05     0.02197  
+accel/mem/RC_CG_HIER_INST472
+                               5.527e-05   1.628e-07   1.623e-06   5.705e-05     0.02212  
+accel/mem/RC_CG_HIER_INST473
+                               5.493e-05   1.577e-07   1.623e-06   5.671e-05     0.02198  
+accel/mem/RC_CG_HIER_INST474
+                                5.56e-05   8.817e-08   1.623e-06   5.731e-05     0.02222  
+accel/mem/RC_CG_HIER_INST476
+                               5.493e-05   9.536e-08   1.623e-06   5.664e-05     0.02196  
+accel/mem/RC_CG_HIER_INST477
+                               5.492e-05   8.029e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST478
+                               5.561e-05   1.839e-07   1.623e-06   5.742e-05     0.02226  
+accel/mem/RC_CG_HIER_INST479
+                               5.561e-05   1.878e-07   1.623e-06   5.742e-05     0.02226  
+accel/mem/RC_CG_HIER_INST480
+                               5.492e-05   8.146e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST481
+                               5.527e-05   1.101e-07   1.623e-06     5.7e-05      0.0221  
+accel/mem/RC_CG_HIER_INST482
+                               5.527e-05   1.329e-07   1.623e-06   5.702e-05     0.02211  
+accel/mem/RC_CG_HIER_INST483
+                                5.45e-05           0   1.041e-06   5.554e-05     0.02153  
+accel/mem/RC_CG_HIER_INST485
+                                5.56e-05   1.361e-07   1.623e-06   5.736e-05     0.02224  
+accel/mem/RC_CG_HIER_INST486
+                               5.527e-05   1.183e-07   1.623e-06   5.701e-05      0.0221  
+accel/mem/RC_CG_HIER_INST487
+                               5.561e-05   2.236e-07   1.623e-06   5.746e-05     0.02228  
+accel/mem/RC_CG_HIER_INST488
+                               5.526e-05   8.833e-08   1.623e-06   5.698e-05     0.02209  
+accel/mem/RC_CG_HIER_INST489
+                               5.492e-05   1.125e-07   1.623e-06   5.666e-05     0.02197  
+accel/mem/RC_CG_HIER_INST492
+                               5.492e-05   6.369e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST493
+                               5.519e-05   1.132e-07   1.623e-06   5.692e-05     0.02207  
+accel/mem/RC_CG_HIER_INST494
+                               5.492e-05   6.369e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST496
+                               5.492e-05   6.712e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST497
+                               5.492e-05   9.801e-08   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST498
+                               0.0003726   3.383e-07   3.738e-06   0.0003767       0.146  
+accel/mem/RC_CG_HIER_INST499
+                               5.492e-05   7.957e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST500
+                               5.526e-05   1.021e-07   1.623e-06   5.699e-05     0.02209  
+accel/mem/RC_CG_HIER_INST501
+                               5.492e-05   8.122e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST502
+                               5.527e-05   6.346e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST503
+                               5.493e-05   1.526e-07   1.623e-06    5.67e-05     0.02198  
+accel/mem/RC_CG_HIER_INST504
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST506
+                               5.484e-05   2.461e-08   1.623e-06   5.649e-05      0.0219  
+accel/mem/RC_CG_HIER_INST507
+                               5.492e-05   1.018e-07   1.623e-06   5.665e-05     0.02196  
+accel/mem/RC_CG_HIER_INST509
+                               5.493e-05   1.431e-07   1.623e-06   5.669e-05     0.02198  
+accel/mem/RC_CG_HIER_INST510
+                               5.492e-05   6.645e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST511
+                               5.493e-05   9.329e-08   1.623e-06   5.664e-05     0.02196  
+accel/mem/RC_CG_HIER_INST512
+                               5.526e-05   6.185e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST513
+                               5.492e-05   6.713e-08   1.623e-06   5.661e-05     0.02195  
+accel/mem/RC_CG_HIER_INST514
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST515
+                               5.519e-05   2.365e-07   1.623e-06   5.705e-05     0.02212  
+accel/mem/RC_CG_HIER_INST517
+                               5.526e-05   6.994e-08   1.623e-06   5.695e-05     0.02208  
+accel/mem/RC_CG_HIER_INST518
+                               5.518e-05   6.775e-08   1.623e-06   5.687e-05     0.02205  
+accel/mem/RC_CG_HIER_INST520
+                               5.519e-05    6.49e-08   1.623e-06   5.688e-05     0.02205  
+accel/mem/RC_CG_HIER_INST521
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST523
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST524
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST525
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST526
+                                5.56e-05   1.006e-07   1.623e-06   5.733e-05     0.02223  
+accel/mem/RC_CG_HIER_INST527
+                               5.492e-05   3.236e-08   1.623e-06   5.658e-05     0.02193  
+accel/mem/RC_CG_HIER_INST528
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST529
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST530
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST531
+                               5.492e-05   3.385e-08   1.623e-06   5.658e-05     0.02194  
+accel/mem/RC_CG_HIER_INST532
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST534
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST535
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST536
+                               5.484e-05   7.049e-08   1.623e-06   5.654e-05     0.02192  
+accel/mem/RC_CG_HIER_INST537
+                               5.526e-05   7.989e-08   1.623e-06   5.697e-05     0.02209  
+accel/mem/RC_CG_HIER_INST538
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST540
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST542
+                               5.527e-05   9.946e-08   1.623e-06   5.699e-05     0.02209  
+accel/mem/RC_CG_HIER_INST543
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST544
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST545
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST546
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST547
+                               5.484e-05     4.2e-08   1.623e-06   5.651e-05     0.02191  
+accel/mem/RC_CG_HIER_INST548
+                               5.489e-05   6.127e-08   1.041e-06     5.6e-05     0.02171  
+accel/mem/RC_CG_HIER_INST549
+                               5.527e-05   1.236e-07   1.623e-06   5.701e-05      0.0221  
+accel/mem/RC_CG_HIER_INST550
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST552
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST553
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST555
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST556
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST557
+                               5.492e-05    5.81e-08   1.623e-06    5.66e-05     0.02195  
+accel/mem/RC_CG_HIER_INST558
+                               5.492e-05   5.352e-08   1.623e-06    5.66e-05     0.02194  
+accel/mem/RC_CG_HIER_INST559
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST560
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST561
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST562
+                               5.492e-05    4.28e-08   1.623e-06   5.659e-05     0.02194  
+accel/mem/RC_CG_HIER_INST565
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST566
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST567
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST568
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST569
+                               5.492e-05   7.517e-08   1.623e-06   5.662e-05     0.02195  
+accel/mem/RC_CG_HIER_INST570
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST573
+                               5.493e-05   8.073e-08   1.623e-06   5.663e-05     0.02195  
+accel/mem/RC_CG_HIER_INST574
+                               5.527e-05   2.138e-07   1.623e-06   5.711e-05     0.02214  
+accel/mem/RC_CG_HIER_INST575
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST576
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST577
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST578
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST579
+                               5.526e-05   1.293e-07   1.623e-06   5.702e-05      0.0221  
+accel/mem/RC_CG_HIER_INST581
+                               5.527e-05   2.921e-07   1.623e-06   5.718e-05     0.02217  
+accel/mem/RC_CG_HIER_INST582
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST583
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST585
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+accel/mem/RC_CG_HIER_INST587
+                                5.45e-05           0   1.623e-06   5.613e-05     0.02176  
+soc/cpu/RC_CG_HIER_INST592
+                               0.0002687           0    3.94e-06   0.0002727      0.1057  
+soc/cpu/RC_CG_HIER_INST593
+                                5.45e-05           0   1.864e-06   5.637e-05     0.02185  
+soc/cpu/RC_CG_HIER_INST595
+                               0.0003713           0   3.979e-06   0.0003753      0.1455  
+soc/cpu/RC_CG_HIER_INST596
+                               0.0003713           0   4.448e-06   0.0003757      0.1457  
+soc/cpu/RC_CG_HIER_INST598
+                               0.0001124           0   2.178e-06   0.0001146     0.04443  
+soc/cpu/RC_CG_HIER_INST599
+                               0.0003713           0   3.979e-06   0.0003753      0.1455  
+soc/cpu/RC_CG_HIER_INST600
+                               0.0003713           0   3.785e-06   0.0003751      0.1454  
+soc/cpu/RC_CG_HIER_INST601
+                                5.45e-05           0   1.782e-06   5.629e-05     0.02182  
+soc/cpu/RC_CG_HIER_INST602
+                               0.0001124           0   2.742e-06   0.0001152     0.04465  
+soc/cpu/RC_CG_HIER_INST604
+                               0.0003719   2.103e-07   4.448e-06   0.0003766       0.146  
+soc/cpu/RC_CG_HIER_INST605
+                               0.0003713           0   4.448e-06   0.0003757      0.1457  
+soc/cpu/RC_CG_HIER_INST607
+                                5.45e-05           0   2.765e-06   5.727e-05      0.0222  
+soc/cpu/RC_CG_HIER_INST608
+                                5.45e-05           0   1.864e-06   5.637e-05     0.02185  
+soc/cpu/RC_CG_HIER_INST610
+                                5.45e-05           0   3.538e-06   5.804e-05      0.0225  
+soc/cpu/RC_CG_HIER_INST614
+                                5.45e-05           0   2.333e-06   5.684e-05     0.02203  
+soc/cpu/RC_CG_HIER_INST615
+                               5.874e-05   4.843e-06   1.042e-06   6.463e-05     0.02506  
+soc/cpu/RC_CG_HIER_INST616
+                                5.45e-05           0   2.333e-06   5.684e-05     0.02203  
+soc/cpu/RC_CG_HIER_INST617
+                               0.0003713           0   4.935e-06   0.0003762      0.1459  
+soc/cpu/RC_CG_HIER_INST618
+                                5.45e-05           0    1.67e-06   5.617e-05     0.02178  
+soc/cpu/RC_CG_HIER_INST619
+                               0.0003713           0   4.383e-06   0.0003757      0.1456  
+soc/cpu/RC_CG_HIER_INST620
+                               0.0003713           0   3.785e-06   0.0003751      0.1454  
+soc/cpu/RC_CG_HIER_INST621
+                                5.45e-05           0   2.527e-06   5.703e-05     0.02211  
+soc/cpu/RC_CG_HIER_INST623
+                                5.45e-05           0   2.398e-06    5.69e-05     0.02206  
+soc/cpu/RC_CG_HIER_INST625
+                                5.45e-05           0   2.333e-06   5.684e-05     0.02203  
+soc/cpu/RC_CG_HIER_INST626
+                                5.45e-05           0   2.333e-06   5.684e-05     0.02203  
+soc/cpu/RC_CG_HIER_INST627
+                                6.99e-05           0   2.656e-06   7.256e-05     0.02813  
+soc/cpu/RC_CG_HIER_INST628
+                               0.0003713           0   4.788e-06   0.0003761      0.1458  
+soc/cpu/RC_CG_HIER_INST631
+                               6.588e-05   7.813e-06   3.414e-06   7.711e-05     0.02989  
+soc/cpu/RC_CG_HIER_INST643
+                               0.0001004   1.958e-05   2.853e-06   0.0001229     0.04763  
+soc/cpu/RC_CG_HIER_INST644
+                               0.0001129   3.025e-05   2.681e-06   0.0001459     0.05655  
+soc/cpu/RC_CG_HIER_INST645
+                               0.0001142   2.272e-05   1.547e-06   0.0001385     0.05368  
+soc/simpleuart/RC_CG_HIER_INST675
+                                5.45e-05           0   4.573e-06   5.908e-05      0.0229  
+soc/spimemio/RC_CG_HIER_INST684
+                               9.361e-05     1.7e-05   1.623e-06   0.0001122     0.04351  
+soc/spimemio/RC_CG_HIER_INST685
+                               0.0001383   3.851e-05   3.126e-06     0.00018     0.06977  
+accel/fft/RC_CG_HIER_INST17
+                               7.217e-05   2.526e-06   8.478e-07   7.555e-05     0.02929  
+accel/fft/RC_CG_HIER_INST18
+                               0.0001159    4.97e-06   1.228e-06   0.0001221     0.04732  
+accel/fft/RC_CG_HIER_INST19
+                               0.0001133   1.287e-06   1.227e-06   0.0001158     0.04488  
+accel/fft/RC_CG_HIER_INST20
+                               0.0003719   1.428e-06   2.834e-06   0.0003762      0.1458  
+accel/fft/RC_CG_HIER_INST21
+                               5.465e-05   8.371e-08   7.186e-07   5.545e-05      0.0215  
+accel/fft/RC_CG_HIER_INST22
+                               0.0003719   1.649e-06   2.834e-06   0.0003764      0.1459  
+accel/fft/RC_CG_HIER_INST23
+                               0.0003719    1.66e-06   2.834e-06   0.0003764      0.1459  
+accel/fft/RC_CG_HIER_INST24
+                               0.0003719   1.682e-06   2.834e-06   0.0003764      0.1459  
+accel/fft/RC_CG_HIER_INST27
+                               0.0001349   1.643e-06   1.391e-06   0.0001379     0.05346  
+accel/fft/RC_CG_HIER_INST28
+                               0.0001348   1.824e-06   1.391e-06    0.000138     0.05349  
+accel/fft/RC_CG_HIER_INST29
+                               0.0002703   3.305e-06   2.346e-06   0.0002759       0.107  
+accel/fft/RC_CG_HIER_INST30
+                               0.0001958   2.083e-06   1.855e-06   0.0001997     0.07742  
+accel/fft/RC_CG_HIER_INST31
+                               0.0001351   2.512e-06   1.391e-06    0.000139     0.05388  
+accel/fft/RC_CG_HIER_INST32
+                               0.0001352     2.2e-06   1.391e-06   0.0001388     0.05379  
+accel/fft/RC_CG_HIER_INST33
+                               0.0001963   2.782e-06   1.856e-06   0.0002009     0.07789  
+accel/fft/RC_CG_HIER_INST34
+                               8.073e-05   7.762e-07   9.307e-07   8.244e-05     0.03196  
+accel/fft/RC_CG_HIER_INST35
+                               0.0001963   3.247e-06   1.856e-06   0.0002014     0.07807  
+accel/fft/RC_CG_HIER_INST36
+                               0.0001962   3.414e-06   1.856e-06   0.0002014     0.07809  
+accel/fft/RC_CG_HIER_INST37
+                               0.0001955    1.65e-06   1.855e-06    0.000199     0.07714  
+accel/fft/RC_CG_HIER_INST38
+                               0.0001352   2.432e-06   1.391e-06    0.000139     0.05388  
+accel/fft/RC_CG_HIER_INST39
+                               0.0001955   1.422e-06   1.855e-06   0.0001987     0.07705  
+accel/fft/RC_CG_HIER_INST40
+                               0.0001963   3.062e-06   1.856e-06   0.0002012       0.078  
+accel/fft/RC_CG_HIER_INST41
+                               0.0001955   1.333e-06   1.855e-06   0.0001986     0.07701  
+accel/fft/RC_CG_HIER_INST42
+                               8.073e-05   8.858e-07   9.307e-07   8.255e-05       0.032  
+accel/fft/RC_CG_HIER_INST43
+                               7.045e-05   4.925e-07   8.474e-07   7.179e-05     0.02783  
+accel/fft/RC_CG_HIER_INST44
+                               0.0001963   3.216e-06   1.856e-06   0.0002013     0.07806  
+accel/fft/RC_CG_HIER_INST45
+                               0.0001955   1.575e-06   1.855e-06   0.0001989     0.07711  
+accel/fft/RC_CG_HIER_INST47
+                               0.0002708   3.451e-06   2.346e-06   0.0002766      0.1072  
+accel/fft/RC_CG_HIER_INST48
+                               0.0001963   3.127e-06   1.856e-06   0.0002013     0.07803  
+accel/fft/RC_CG_HIER_INST49
+                               0.0003731   4.417e-06   2.835e-06   0.0003804      0.1475  
+accel/fft/RC_CG_HIER_INST50
+                               0.0001963   2.821e-06   1.856e-06   0.0002009     0.07791  
+accel/fft/RC_CG_HIER_INST51
+                               0.0001962   2.932e-06   1.856e-06   0.0002009     0.07791  
+accel/fft/RC_CG_HIER_INST52
+                               7.045e-05   6.135e-07   8.474e-07   7.191e-05     0.02788  
+accel/fft/RC_CG_HIER_INST55
+                               0.0001963   2.715e-06   1.856e-06   0.0002008     0.07786  
+accel/fft/RC_CG_HIER_INST56
+                               0.0001955   1.556e-06   1.855e-06   0.0001989      0.0771  
+accel/fft/RC_CG_HIER_INST57
+                               0.0001955   1.201e-06   1.855e-06   0.0001985     0.07696  
+accel/fft/RC_CG_HIER_INST58
+                               0.0001955     1.6e-06   1.855e-06   0.0001989     0.07712  
+accel/fft/RC_CG_HIER_INST59
+                               0.0001955   1.684e-06   1.855e-06    0.000199     0.07715  
+accel/fft/RC_CG_HIER_INST60
+                               0.0001955   1.523e-06   1.855e-06   0.0001988     0.07709  
+accel/fft/RC_CG_HIER_INST61
+                               0.0002697    1.93e-06   2.346e-06    0.000274      0.1062  
+accel/fft/RC_CG_HIER_INST63
+                               0.0001955   1.566e-06   1.855e-06   0.0001989      0.0771  
+accel/fft/RC_CG_HIER_INST64
+                               0.0001955   1.584e-06   1.855e-06   0.0001989     0.07711  
+accel/fft/RC_CG_HIER_INST66
+                               0.0001955   1.348e-06   1.855e-06   0.0001987     0.07702  
+accel/fft/RC_CG_HIER_INST67
+                               0.0001955   1.542e-06   1.855e-06   0.0001989      0.0771  
+accel/fft/RC_CG_HIER_INST68
+                               0.0001346   9.811e-07   1.391e-06    0.000137     0.05312  
+accel/fft/RC_CG_HIER_INST69
+                               0.0001132   1.013e-06   1.227e-06   0.0001154     0.04474  
+accel/fft/RC_CG_HIER_INST70
+                               0.0001133   1.349e-06   1.227e-06   0.0001158     0.04491  
+accel/fft/RC_CG_HIER_INST71
+                               0.0001349   1.582e-06   1.391e-06   0.0001378     0.05344  
+accel/fft/RC_CG_HIER_INST72
+                               7.045e-05    6.85e-07   8.474e-07   7.198e-05     0.02791  
+accel/fft/RC_CG_HIER_INST73
+                                9.16e-05   9.182e-06   7.238e-07   0.0001015     0.03935  
+accel/fft/RC_CG_HIER_INST74
+                               8.529e-05   7.125e-06   7.229e-07   9.314e-05     0.03611  
+accel/fft/RC_CG_HIER_INST75
+                               8.498e-05   1.082e-05   7.229e-07   9.652e-05     0.03742  
+accel/mem/RC_CG_HIER_INST95
+                               5.472e-05    1.91e-08   7.186e-07   5.545e-05      0.0215  
+accel/mem/RC_CG_HIER_INST107
+                               5.465e-05   2.361e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST119
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST120
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST123
+                               5.478e-05   2.485e-08   7.186e-07   5.553e-05     0.02153  
+accel/mem/RC_CG_HIER_INST124
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST132
+                               5.472e-05   2.921e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST136
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST139
+                               5.465e-05   2.471e-08   7.186e-07   5.539e-05     0.02148  
+accel/mem/RC_CG_HIER_INST145
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST147
+                               5.465e-05   2.962e-08   7.186e-07    5.54e-05     0.02148  
+accel/mem/RC_CG_HIER_INST151
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST153
+                               5.472e-05   2.916e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST156
+                               5.472e-05   2.876e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST165
+                               5.472e-05   1.915e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST170
+                               5.465e-05   2.604e-08   7.186e-07   5.539e-05     0.02148  
+accel/mem/RC_CG_HIER_INST177
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST186
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST189
+                               5.465e-05    2.09e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST193
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST201
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST205
+                               5.465e-05   2.355e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST210
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST218
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST224
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST225
+                               5.465e-05   3.894e-08   7.186e-07   5.541e-05     0.02148  
+accel/mem/RC_CG_HIER_INST233
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST239
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST247
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST249
+                               5.465e-05   2.163e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST251
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST261
+                               5.472e-05   2.145e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST265
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST268
+                               5.472e-05   2.438e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST276
+                               5.465e-05   2.021e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST280
+                               5.472e-05   1.902e-08   7.186e-07   5.545e-05      0.0215  
+accel/mem/RC_CG_HIER_INST293
+                               5.472e-05   2.603e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST296
+                               5.465e-05   1.879e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST297
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST306
+                               5.465e-05   2.272e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST307
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST316
+                               5.471e-05   1.944e-08   7.186e-07   5.545e-05      0.0215  
+accel/mem/RC_CG_HIER_INST317
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST323
+                               5.472e-05   2.001e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST324
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST335
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST344
+                               5.478e-05   2.997e-08   7.186e-07   5.553e-05     0.02153  
+accel/mem/RC_CG_HIER_INST347
+                               5.472e-05   2.787e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST349
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST359
+                               5.465e-05   2.335e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST364
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST366
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST370
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST372
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST376
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST379
+                               5.465e-05   2.517e-08   7.186e-07   5.539e-05     0.02148  
+accel/mem/RC_CG_HIER_INST381
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST383
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST388
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST391
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST394
+                               5.472e-05   2.388e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST397
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST399
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST403
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST405
+                               5.472e-05   4.154e-08   7.186e-07   5.548e-05     0.02151  
+accel/mem/RC_CG_HIER_INST406
+                               5.472e-05   3.014e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST411
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST417
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST423
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST430
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST436
+                               5.478e-05   1.982e-08   7.186e-07   5.552e-05     0.02152  
+accel/mem/RC_CG_HIER_INST446
+                               5.486e-05   2.773e-08   7.186e-07    5.56e-05     0.02156  
+accel/mem/RC_CG_HIER_INST458
+                               5.465e-05   1.735e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST459
+                               5.465e-05   1.945e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST475
+                               5.472e-05   1.836e-08   7.186e-07   5.545e-05      0.0215  
+accel/mem/RC_CG_HIER_INST484
+                               5.478e-05   2.925e-08   7.186e-07   5.553e-05     0.02153  
+accel/mem/RC_CG_HIER_INST490
+                               5.465e-05   1.657e-08   7.186e-07   5.538e-05     0.02147  
+accel/mem/RC_CG_HIER_INST491
+                               5.465e-05   2.143e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST495
+                               5.465e-05   2.174e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST505
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST508
+                               5.478e-05   2.305e-08   7.186e-07   5.553e-05     0.02153  
+accel/mem/RC_CG_HIER_INST516
+                               5.465e-05   1.923e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST519
+                               5.472e-05   5.147e-08   7.186e-07   5.549e-05     0.02151  
+accel/mem/RC_CG_HIER_INST522
+                               5.465e-05   2.797e-08   7.186e-07    5.54e-05     0.02148  
+accel/mem/RC_CG_HIER_INST533
+                               5.465e-05   2.571e-08   7.186e-07   5.539e-05     0.02148  
+accel/mem/RC_CG_HIER_INST539
+                               5.472e-05   3.051e-08   7.186e-07   5.547e-05      0.0215  
+accel/mem/RC_CG_HIER_INST541
+                               5.472e-05   2.199e-08   7.186e-07   5.546e-05      0.0215  
+accel/mem/RC_CG_HIER_INST551
+                               5.472e-05   3.142e-08   7.186e-07   5.547e-05      0.0215  
+accel/mem/RC_CG_HIER_INST554
+                               5.465e-05    1.88e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST563
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST564
+                               5.465e-05   2.599e-08   7.186e-07   5.539e-05     0.02148  
+accel/mem/RC_CG_HIER_INST571
+                               5.479e-05   2.757e-08   7.186e-07   5.553e-05     0.02153  
+accel/mem/RC_CG_HIER_INST572
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST580
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+accel/mem/RC_CG_HIER_INST584
+                               5.465e-05   2.146e-08   7.186e-07   5.539e-05     0.02147  
+accel/mem/RC_CG_HIER_INST586
+                               5.465e-05   1.995e-08   7.186e-07   5.539e-05     0.02147  
+soc/cpu/RC_CG_HIER_INST588
+                               0.0003786   2.171e-05   2.838e-06   0.0004032      0.1563  
+soc/cpu/RC_CG_HIER_INST589
+                               0.0003786   1.929e-05   2.838e-06   0.0004007      0.1554  
+soc/cpu/RC_CG_HIER_INST590
+                               0.0002759   1.645e-05   2.349e-06   0.0002947      0.1143  
+soc/cpu/RC_CG_HIER_INST591
+                               5.465e-05    7.82e-08   7.186e-07   5.545e-05      0.0215  
+soc/cpu/RC_CG_HIER_INST594
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/cpu/RC_CG_HIER_INST597
+                               5.628e-05   5.011e-07   7.187e-07    5.75e-05     0.02229  
+soc/cpu/RC_CG_HIER_INST603
+                               0.0003713           0   2.833e-06   0.0003741       0.145  
+soc/cpu/RC_CG_HIER_INST606
+                               0.0003733   4.659e-06   2.835e-06   0.0003808      0.1476  
+soc/cpu/RC_CG_HIER_INST609
+                               0.0003755   1.004e-05   2.836e-06   0.0003883      0.1505  
+soc/cpu/RC_CG_HIER_INST611
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/cpu/RC_CG_HIER_INST612
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/cpu/RC_CG_HIER_INST613
+                                6.99e-05           0   8.473e-07   7.075e-05     0.02743  
+soc/cpu/RC_CG_HIER_INST622
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/cpu/RC_CG_HIER_INST624
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/cpu/RC_CG_HIER_INST629
+                               0.0005569   0.0006097   2.996e-06     0.00117      0.4535  
+soc/cpu/RC_CG_HIER_INST630
+                               0.0003815   9.639e-06   2.839e-06   0.0003939      0.1527  
+soc/cpu/RC_CG_HIER_INST632
+                               5.639e-05   2.527e-07   7.187e-07   5.736e-05     0.02224  
+soc/cpu/RC_CG_HIER_INST633
+                               5.788e-05   4.951e-07   7.188e-07   5.909e-05     0.02291  
+soc/cpu/RC_CG_HIER_INST634
+                               5.763e-05   6.743e-07   7.188e-07   5.902e-05     0.02288  
+soc/cpu/RC_CG_HIER_INST635
+                               6.016e-05   1.349e-06    7.19e-07   6.223e-05     0.02413  
+soc/cpu/RC_CG_HIER_INST636
+                               5.791e-05   5.767e-07   7.188e-07   5.921e-05     0.02295  
+soc/cpu/RC_CG_HIER_INST637
+                               5.791e-05   4.058e-07   7.188e-07   5.903e-05     0.02289  
+soc/cpu/RC_CG_HIER_INST638
+                               5.797e-05   4.928e-07   7.188e-07   5.918e-05     0.02294  
+soc/cpu/RC_CG_HIER_INST639
+                               9.846e-05    1.37e-05   7.247e-07   0.0001129     0.04376  
+soc/cpu/RC_CG_HIER_INST640
+                               0.0001129   1.593e-05   7.268e-07   0.0001296     0.05024  
+soc/cpu/RC_CG_HIER_INST641
+                                5.88e-05   9.676e-07   7.188e-07   6.049e-05     0.02345  
+soc/cpu/RC_CG_HIER_INST642
+                               5.788e-05    4.13e-07   7.188e-07   5.901e-05     0.02288  
+soc/cpu/RC_CG_HIER_INST646
+                               0.0001129   1.638e-05   7.268e-07     0.00013     0.05041  
+soc/simpleuart/RC_CG_HIER_INST667
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/simpleuart/RC_CG_HIER_INST668
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/simpleuart/RC_CG_HIER_INST669
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/simpleuart/RC_CG_HIER_INST670
+                               5.472e-05   2.596e-08   7.186e-07   5.546e-05      0.0215  
+soc/simpleuart/RC_CG_HIER_INST671
+                               5.539e-05   1.357e-07   7.187e-07   5.624e-05      0.0218  
+soc/simpleuart/RC_CG_HIER_INST672
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/simpleuart/RC_CG_HIER_INST673
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/simpleuart/RC_CG_HIER_INST674
+                               5.567e-05   1.561e-07   7.187e-07   5.654e-05     0.02192  
+soc/spimemio/RC_CG_HIER_INST676
+                               0.0003791   1.374e-05   2.837e-06   0.0003957      0.1534  
+soc/spimemio/RC_CG_HIER_INST677
+                               5.598e-05   2.898e-07   7.187e-07   5.699e-05     0.02209  
+soc/spimemio/RC_CG_HIER_INST678
+                               5.614e-05   2.452e-07   7.187e-07   5.711e-05     0.02214  
+soc/spimemio/RC_CG_HIER_INST679
+                               5.602e-05   2.087e-07   7.187e-07   5.695e-05     0.02208  
+soc/spimemio/RC_CG_HIER_INST680
+                               7.239e-05   6.248e-06    7.21e-07   7.936e-05     0.03077  
+soc/spimemio/RC_CG_HIER_INST681
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/spimemio/RC_CG_HIER_INST682
+                               0.0002687           0   2.345e-06   0.0002711      0.1051  
+soc/spimemio/RC_CG_HIER_INST683
+                                5.45e-05           0   7.186e-07   5.522e-05     0.02141  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST648
+                               0.0001129   2.037e-05   2.141e-06   0.0001354     0.05251  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST649
+                               0.0001129   1.853e-05   1.046e-06   0.0001325     0.05137  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST650
+                               0.0001129   1.858e-05   1.627e-06   0.0001331     0.05162  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST651
+                               0.0001129   2.333e-05   1.914e-06   0.0001382     0.05357  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST653
+                               0.0001129   1.723e-05   1.627e-06   0.0001318     0.05109  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST655
+                               0.0001129   1.885e-05   4.384e-06   0.0001362     0.05279  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST663
+                               0.0001129   1.817e-05   5.511e-06   0.0001366     0.05296  
+soc/cpu/genblk2.pcpi_div/RC_CG_HIER_INST664
+                               0.0001129    5.93e-05   1.353e-06   0.0001736      0.0673  
+soc/cpu/genblk2.pcpi_div/RC_CG_HIER_INST665
+                                0.000693    0.001073   4.338e-06    0.001771      0.6865  
+soc/cpu/genblk2.pcpi_div/RC_CG_HIER_INST666
+                               0.0001129   1.852e-05   1.046e-06   0.0001325     0.05137  
+soc/spimemio/xfer/RC_CG_HIER_INST687
+                               0.0001673   3.086e-05   1.288e-06   0.0001995     0.07734  
+soc/spimemio/xfer/RC_CG_HIER_INST688
+                               0.0001134   1.651e-05   1.512e-06   0.0001315     0.05096  
+soc/spimemio/xfer/RC_CG_HIER_INST689
+                               8.961e-05   9.717e-06   1.642e-06    0.000101     0.03914  
+soc/spimemio/xfer/RC_CG_HIER_INST690
+                                0.000113   1.842e-05   1.046e-06   0.0001325     0.05136  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST647
+                               0.0001129   1.686e-05   7.268e-07   0.0001305      0.0506  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST652
+                               0.0001129   1.675e-05   7.268e-07   0.0001304     0.05056  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST654
+                               0.0001129   2.861e-05   7.268e-07   0.0001423     0.05515  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST656
+                               0.0001129   1.686e-05   7.268e-07   0.0001305      0.0506  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST657
+                               0.0001129    1.58e-05   7.268e-07   0.0001295     0.05019  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST658
+                               0.0001129   1.538e-05   7.268e-07    0.000129     0.05003  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST659
+                               0.0001129   1.904e-05   7.268e-07   0.0001327     0.05145  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST660
+                               0.0001129    1.45e-05   7.268e-07   0.0001282     0.04968  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST661
+                               0.0001129   1.729e-05   7.268e-07   0.0001309     0.05077  
+soc/cpu/genblk1.pcpi_mul/RC_CG_HIER_INST662
+                               0.0001129   2.119e-05   7.268e-07   0.0001348     0.05228  
+soc/spimemio/xfer/RC_CG_HIER_INST686
+                               6.432e-05   1.878e-06   7.191e-07   6.692e-05     0.02594  
+
+
+-----------------------------------------------------------------------------------------
+*	Power Distribution Summary: 
+*                Highest Average Power: soc/cpu/genblk2.pcpi_div/CTS_ccl_a_buf_00004 (CLKBUFX20):         0.001994 
+*                Highest Leakage Power: soc/cpu/genblk2.pcpi_div/RC_CG_HIER_INST665/RC_CGIC_INST (TLATNTSCAX20):        3.075e-06 
+*          Total Cap:      3.8944e-10 F
+*          Total instances in design: 89635
+*          Total instances in design with no power:     0
+*          Total instances in design with no activity:     0
+*          Total Fillers and Decap:     0
+-----------------------------------------------------------------------------------------
+
