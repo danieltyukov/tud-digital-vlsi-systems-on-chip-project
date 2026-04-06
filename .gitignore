@@ -32,14 +32,10 @@ work/
 # ==========================================
 # Synthesis & Place and Route (synth, pnr)
 # ==========================================
-# PnR databases and intermediate states
-*.enc
-*.enc.dat/
 genus.cmd*
 
-# Parasitics and Timing Formats (Huge files)
+# Parasitics (Huge files)
 *.spef
-*.sdf
 
 # Synthesis/Logic databases
 *.db

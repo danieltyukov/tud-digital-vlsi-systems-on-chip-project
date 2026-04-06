@@ -95,26 +95,26 @@ For the first time, COMPUTE (45.5%) is the **dominant phase**, overtaking LOAD+S
 
 | Module | Cell Count | Total Area (µm²) |
 |---|---|---|
-| **et4351 (top)** | 65,284 | **251,291** |
-| accelerator | 41,971 | 140,130 |
-| &emsp;fft | 27,225 | 91,370 |
-| &emsp;mem (64-deep) | 9,135 | 31,330 |
-| picosoc | 23,247 | 110,751 |
+| **et4351 (top)** | 65,307 | **251,294** |
+| accelerator | 41,976 | 140,132 |
+| &emsp;fft | 27,227 | 91,371 |
+| &emsp;mem (64-deep) | 9,137 | 31,334 |
+| picosoc | 23,265 | 110,752 |
 
-Total SoC area is **251,291 µm²**, well within the 596.4 × 596.4 µm = **355,693 µm² core budget** (70.65% utilisation).
+Total SoC area is **251,294 µm²**, well within the 596.4 × 596.4 µm = **355,693 µm² core budget** (70.66% utilisation).
 
 ### Timing
 
 | Check | WNS (ns) | TNS (ns) | Violating Paths |
 |---|---|---|---|
-| **Setup** | +0.223 | 0.000 | 0 |
-| **Hold** | +0.011 | 0.000 | 0 |
+| **Setup** | +0.226 | 0.000 | 0 |
+| **Hold** | +0.015 | 0.000 | 0 |
 
-Setup and hold timing are both clean across all 12,049 paths with no violations. Reg2reg worst setup slack is **+2,517 ps**, confirming the critical path remains in the **SPI flash → PicoRV32 interface**, not the accelerator.
+Setup and hold timing are both clean across all 12,049 paths with no violations. Reg2reg worst setup slack is **+2,625 ps**, confirming the critical path remains in the **SPI flash → PicoRV32 interface**, not the accelerator.
 
 ### DRV Summary
 
-20 max-transition violations remain (worst −0.348 ns) on real nets — predominantly on flash I/O pads where transition times are dominated by external board-level loads. No max-capacitance, max-fanout, or max-length violations. **0 SI glitch violations** (resolved via SI-aware delay calculation and post-route wire spreading).
+10 max-transition violations remain on real nets (worst −0.223 ns) — predominantly on flash I/O pads where transition times are dominated by external board-level loads. No max-capacitance, max-fanout, or max-length violations. **0 SI glitch violations** (resolved via SI-aware delay calculation and post-route wire spreading).
 
 ---
 
@@ -152,7 +152,7 @@ Each twiddle CSR packs both the real and imaginary parts of one twiddle factor i
 - **Zero-bubble stage transitions.** The pipeline advance condition (`pipe_last_drain`) fires on the same posedge as the last ADD/writeback. This eliminates the dead cycle that would otherwise occur between consecutive FFT stages, saving 5 cycles total (1 per stage).
 - **24-bit datapath.** The internal data width is narrowed from 32 to 24 bits, reducing register-file storage (64 × 24 vs 64 × 32), memory cell area, and multiplier size (24×16 instead of 32×16). Sign extension to/from the 32-bit bus interface is handled at the memory and store-phase boundaries. The 24-bit signed range (±8,388,607) is sufficient for the audio FFT signal path.
 - **Packed twiddle CSRs.** Each twiddle pair (tw\_re + tw\_im, both 16-bit Q12) is packed into a single 32-bit CSR word by firmware, halving the CSR count from 32 to 16. The wrapper unpacks and sign-extends to 24-bit for the FFT core.
-- **PnR-verified frequency.** The 66.2 MHz target (5.5× baseline) closes timing post-route with +223 ps setup slack and essentially zero hold violation. Clock uncertainty is tightened to 150 ps.
+- **PnR-verified frequency.** The 66.2 MHz target (5.5× baseline) closes timing post-route with +226 ps setup slack and +15 ps hold slack — fully clean. Clock uncertainty is tightened to 150 ps.
 - **Drop-in compatible interface.** The firmware (`accel_audio.c`) handles twiddle packing and the updated memory map transparently. Verification scripts work without modification.
 
 ---

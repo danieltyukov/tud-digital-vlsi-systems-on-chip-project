@@ -99,11 +99,13 @@ setOptMode -holdFixingCells {BUFHD1 BUFX1 BUFX2 BUFX4}
  #use small buffers
 setOptMode -fixHoldAllowResizing true
 setOptMode -fixHoldAllowOverlap true
-setOptMode -holdTargetSlack 0.010
+setOptMode -holdTargetSlack 0.020
 # Aim for +10ps margin
 setOptMode -holdSlackFixingThreshold 0.000
 # Fix even small violations
 setOptMode -postRouteAreaReclaim holdAndSetupAware
+# Trigger fix action to apply previous opt settings.
+optDesign -postRoute -hold
 
 timeDesign -postRoute -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold
 timeDesign -postRoute -hold -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold_hold
