@@ -10,7 +10,7 @@
 
 module testbench;
 	// Local Parameters
-	localparam clk_period = 83.33; // Clock cycle in ns
+	localparam clk_period = 15.1; // Clock cycle in ns
 	localparam clk_half_period = clk_period / 2;
 	localparam ser_half_period = 53;
 	localparam freq_show_cycles = 1000;  // Number of clock cycles between each cycle count display

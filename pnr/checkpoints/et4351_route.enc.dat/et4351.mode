@@ -61,7 +61,7 @@ catch {setNanoRouteMode -quiet -routeTdrEffort 5}
 catch {setNanoRouteMode -quiet -routeWithSiDriven true}
 catch {setNanoRouteMode -quiet -routeWithSiPostRouteFix false}
 catch {setNanoRouteMode -quiet -routeWithTimingDriven true}
-catch {setNanoRouteMode -quiet -timingEngine ".timing_file_371371.tif.gz"}
+catch {setNanoRouteMode -quiet -timingEngine ".timing_file_1802012.tif.gz"}
 
 catch { setPlaceMode -place_global_activity_power_driven false }
 catch { setPlaceMode -place_global_cong_effort high }

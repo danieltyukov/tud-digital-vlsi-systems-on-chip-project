@@ -2,15 +2,15 @@
 *	Innovus 21.11-s130_1 (64bit) 08/19/2021 16:59 (Linux 3.10.0-693.el7.x86_64)
 *	
 *
-* 	Date & Time:	2026-Apr-06 15:55:19 (2026-Apr-06 13:55:19 GMT)
+* 	Date & Time:	2026-Apr-07 23:52:16 (2026-Apr-07 21:52:16 GMT)
 *
 *----------------------------------------------------------------------------------------
 *
 *	Design: et4351
 *
 *	Liberty Libraries used: 
-*	        analysis_view_power: /home/nfs/shanghonglin/project/pnr/checkpoints/et4351_cts.enc.dat/libs/mmmc/fast_vdd1v2_basicCells.lib
-*	        analysis_view_power: /home/nfs/shanghonglin/project/pnr/checkpoints/et4351_cts.enc.dat/libs/mmmc/saed32sram_tt1p05v125c.lib
+*	        analysis_view_power: /home/nfs/lcastello/project/pnr/checkpoints/et4351_cts.enc.dat/libs/mmmc/fast_vdd1v2_basicCells.lib
+*	        analysis_view_power: /home/nfs/lcastello/project/pnr/checkpoints/et4351_cts.enc.dat/libs/mmmc/saed32sram_tt1p05v125c.lib
 *
 *	Power Domain used: 
 *              Rail:        VDD      Voltage:       1.32 
@@ -19,17 +19,13 @@
 *
 *       User-Defined Activity : N.A.
 *
-*	Switching Activity File used: 
-*	        /home/nfs/shanghonglin/project/pnr/checkpoints/et4351_cts.enc.dat/libs/power/et4351.struct.vcd
-*                    Vcd Window used(Start Time, Stop Time):   
-*                     Vcd Scale Factor: 1 
-* *                    Design annotation coverage: 0/67999 = 0% 
+*       Activity File: N.A.
 *
 *       Hierarchical Global Activity: N.A.
 *
 *       Global Activity: N.A.
 *
-*       Sequential Element Activity: N.A.
+*       Sequential Element Activity: 0.200000
 *
 *       Primary Input Activity: N.A.
 *

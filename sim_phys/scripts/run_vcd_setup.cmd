@@ -4,7 +4,7 @@ if {![file exists vcd]} {
 }
 
 # Update this value with the accelerator start time
-run 41.069274ms
+run 7.809977ms
 
 # Start activity annotation
 set vcd_file "./vcd/et4351.phys.setup.vcd"
@@ -14,7 +14,7 @@ vcd dumpportson $vcd_file
 vcd on $vcd_file
 
 # Update this value with the accelerator runtime
-run 10.083us
+run 1.827100us
 
 # Stop activity annotation
 vcd off $vcd_file
