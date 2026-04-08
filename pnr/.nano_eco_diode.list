@@ -1,7 +1,0 @@
-FORMATVERSION 1
-ADDINST ANTENNA soc/cpu/DIODE_1 1 addPortAsNeeded
-INSTTERM A soc/cpu/FE_PHN21538_n_29462 -
-ADDINST ANTENNA soc/cpu/DIODE_2 1 addPortAsNeeded
-INSTTERM A soc/cpu/FE_PHN19630_n_3843 -
-ADDINST ANTENNA soc/simpleuart/DIODE_3 1 addPortAsNeeded
-INSTTERM A ser_rx -
