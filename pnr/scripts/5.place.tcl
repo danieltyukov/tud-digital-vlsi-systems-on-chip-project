@@ -1,4 +1,5 @@
 
+
 ##########################################################################
 ###
 ### Place-and-route scripts - standard cell placement.
@@ -38,13 +39,22 @@ report_power -outfile powerReports/prePlace_VCDImport.rpt
 
 setPlaceMode -place_global_cong_effort high \
              -place_global_solver_effort high \
-             -place_global_timing_effort medium \
-             -place_global_activity_power_driven true \
-             -place_global_activity_power_driven_effort standard \
+             -place_global_timing_effort high \
+             -place_global_activity_power_driven false \
              -place_global_uniform_density true
 setDesignMode -topRoutingLayer 10
 set delaycal_use_default_delay_limit 1000
 setExtractRCMode -engine preRoute -effortLevel high
+
+#modifications: timing effort, medium -> high; power_driven true -> false; deleted -place_global_activity_power_driven_effort standard \
+
+# -----------------------------------
+# Setup-driven optimization added
+# -----------------------------------
+
+setOptMode -effort high
+setOptMode -setupTargetSlack 0.050
+# Target +50ps margin
 
 placeDesign
 place_opt_design -incremental -out_dir timingReports/place_opt_design.rpt

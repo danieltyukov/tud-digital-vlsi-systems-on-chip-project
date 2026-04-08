@@ -239,7 +239,7 @@ def write_accel_io(y: List[List[float]]):
     ground_truth = []
 
     for quant_y_chunk in chunk_list(quant_y, MAX_N_PER_FFT):
-        fft_result = rfft_radix4(quant_y_chunk)
+        fft_result = fft(quant_y_chunk)
         ground_truth.extend(fft_result)
 
     with open("expected_output.txt", "w") as file:

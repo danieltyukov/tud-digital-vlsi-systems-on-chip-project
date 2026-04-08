@@ -12,6 +12,7 @@ catch { setOptMode -activeSetupViews { analysis_view_setup analysis_view_power }
 catch { setOptMode -autoSetupViews {analysis_view_setup analysis_view_power} }
 catch { setOptMode -autoTDGRSetupViews { analysis_view_setup} }
 catch { setOptMode -drcMargin 0 }
+catch { setOptMode -effort high }
 catch { setOptMode -fixCap true }
 catch { setOptMode -fixDrc true }
 catch { setOptMode -fixFanoutLoad true }
@@ -19,7 +20,7 @@ catch { setOptMode -fixTran true }
 catch { setOptMode -holdTargetSlack 0.2 }
 catch { setOptMode -optimizeFF true }
 catch { setOptMode -preserveAllSequential false }
-catch { setOptMode -setupTargetSlack 0 }
+catch { setOptMode -setupTargetSlack 0.05 }
 catch { setOptMode -usefulSkew true }
 catch { setOptMode -usefulSkewCCOpt extreme }
 catch { setPathGroupOptions reg2cgate -effortLevel high -weight 1 }
@@ -29,11 +30,10 @@ catch { setExtractRCMode  -effortLevel high -engine preRoute -total_c_th 5 -rela
 catch {setNanoRouteMode -quiet -extractThirdPartyCompatible false}
 catch {setNanoRouteMode -quiet -grouteExpTdStdDelay 41.700000}
 
-catch { setPlaceMode -place_global_activity_power_driven true }
-catch { setPlaceMode -place_global_activity_power_driven_effort standard }
+catch { setPlaceMode -place_global_activity_power_driven false }
 catch { setPlaceMode -place_global_cong_effort high }
 catch { setPlaceMode -place_global_solver_effort high }
-catch { setPlaceMode -place_global_timing_effort medium }
+catch { setPlaceMode -place_global_timing_effort high }
 catch { setPlaceMode -place_global_uniform_density true }
 catch { setIlmMode -keepHighFanoutPorts true -keepLoopBack false -keepInstInSdc false -keepFlatten true }
 catch { setUsefulSkewMode -ecoRoute false }

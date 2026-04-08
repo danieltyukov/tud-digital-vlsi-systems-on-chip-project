@@ -12,6 +12,7 @@ vmap work ${workLib}
 
 # et4351_tb.v et4351.v accelerator.v spimemio.v simpleuart.v picosoc.v ../picorv32.v spiflash.v
 # Compile the DUT
+vlog /data/Cadence/gpdk045_v60/gsclib045_svt_v4.7/gsclib045/verilog/slow_vdd1v0_basicCells.v
 vlog /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v
 vlog ../src/design/accelerator.v \
      ../src/design/accelerator_fft.v \

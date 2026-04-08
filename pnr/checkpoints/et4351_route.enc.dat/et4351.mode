@@ -17,18 +17,19 @@ catch { setOptMode -autoSetupViews {analysis_view_setup analysis_view_power} }
 catch { setOptMode -autoTDGRSetupViews { analysis_view_setup} }
 catch { setOptMode -deleteInst true }
 catch { setOptMode -drcMargin 0 }
+catch { setOptMode -effort high }
 catch { setOptMode -fixCap true }
 catch { setOptMode -fixDrc true }
 catch { setOptMode -fixFanoutLoad true }
 catch { setOptMode -fixGlitch true }
 catch { setOptMode -fixSISlew true }
 catch { setOptMode -fixTran true }
-catch { setOptMode -holdTargetSlack 0.05 }
+catch { setOptMode -holdTargetSlack 0.2 }
 catch { setOptMode -optimizeFF true }
 catch { setOptMode -postRouteDrvRecovery true }
-catch { setOptMode -postRouteHoldRecovery auto }
+catch { setOptMode -postRouteHoldRecovery true }
 catch { setOptMode -preserveAllSequential false }
-catch { setOptMode -setupTargetSlack 0 }
+catch { setOptMode -setupTargetSlack 0.05 }
 catch { setOptMode -usefulSkew true }
 catch { setOptMode -usefulSkewCCOpt extreme }
 catch { setPathGroupOptions reg2cgate -effortLevel high -weight 1 }
@@ -37,6 +38,7 @@ catch { setPathGroupOptions default -effortLevel low }
 catch { setExtractRCMode  -effortLevel high -engine postRoute -total_c_th 5 -relative_c_th 0.03 -coupling_c_th 3 }
 catch {setNanoRouteMode -quiet -drouteEndIteration 30}
 catch {setNanoRouteMode -quiet -drouteFixAntenna true}
+catch {setNanoRouteMode -quiet -droutePostRouteSpreadWire "true"}
 catch {setNanoRouteMode -quiet -drouteStartIteration 0}
 catch {setNanoRouteMode -quiet -drouteUseLefPinTaperRule true}
 catch {setNanoRouteMode -quiet -extractRcModelFile "${::IMEX::libVar}/misc/rc_model.bin"}
@@ -51,17 +53,15 @@ catch {setNanoRouteMode -quiet -routeReInsertFillerCellList "FILL1 FILL2 FILL4 F
 catch {setNanoRouteMode -quiet -routeReInsertFillerCellListFromFile false}
 catch {setNanoRouteMode -quiet -routeSiEffort "high"}
 catch {setNanoRouteMode -quiet -routeTdrEffort 5}
-catch {setNanoRouteMode -quiet -routeWithEco false}
 catch {setNanoRouteMode -quiet -routeWithSiDriven true}
 catch {setNanoRouteMode -quiet -routeWithSiPostRouteFix false}
 catch {setNanoRouteMode -quiet -routeWithTimingDriven true}
-catch {setNanoRouteMode -quiet -timingEngine ".timing_file_995017.tif.gz"}
+catch {setNanoRouteMode -quiet -timingEngine ".timing_file_4030345.tif.gz"}
 
-catch { setPlaceMode -place_global_activity_power_driven true }
-catch { setPlaceMode -place_global_activity_power_driven_effort standard }
+catch { setPlaceMode -place_global_activity_power_driven false }
 catch { setPlaceMode -place_global_cong_effort high }
 catch { setPlaceMode -place_global_solver_effort high }
-catch { setPlaceMode -place_global_timing_effort medium }
+catch { setPlaceMode -place_global_timing_effort high }
 catch { setPlaceMode -place_global_uniform_density true }
 catch { setIlmMode -keepHighFanoutPorts true -keepLoopBack false -keepInstInSdc false -keepFlatten true }
 catch { setUsefulSkewMode -ecoRoute false }

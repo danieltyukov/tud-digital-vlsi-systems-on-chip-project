@@ -65,4 +65,3 @@ Puts " \n\n save Design \n\n"
 saveDesign checkpoints/${DESIGN}_cts.enc
 
 fit
-

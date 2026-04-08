@@ -1,17 +1,17 @@
 
 /*##########################################################################
 ###
-### Dummy accelerator module
-###    
+### EE v3: D1 register-file + hardcoded twiddle LUT + manual clock gating
+###
 ###     This is an accelerator module that implement the iterative (in-place) Cooley-Tukey FFT algorithm using a Moore FSM.
 ###
 ###     TU Delft ET4351
-###     April 2023, C.Gao, C. Frenkel: 
+###     April 2023, C.Gao, C. Frenkel:
 ###                - Baseline project for count from zero to the value of the input data.
 ###                - It is used to demonstrate the use of the accelerator interface.
-###     April 2024, N.Chauvaux: 
+###     April 2024, N.Chauvaux:
 ###                - Sorting accelerator + memory interface
-###     December 2024, Ang Li, Yizhuo Wu: 
+###     December 2024, Ang Li, Yizhuo Wu:
 ###                - Pathfinding accelerator
 ###     January 2026, N.Chauvaux and Douwe den Blanken:
 ###                - FFT accelerator
@@ -102,13 +102,39 @@ module accelerator (
   wire [NUM_REGS_WIDTH-1:0] iomem_accel_addr;  // Accelerator Register Address
 
   /*----------------------------------------------------------------------------------------
+        CLOCK GATING
+    ----------------------------------------------------------------------------------------*/
+  // Gated clock signals
+  wire fft_clk;
+  wire mem_clk;
+  wire fft_clk_en;
+  wire mem_clk_en;
+
+  // Clock gating enable logic
+  assign fft_clk_en = reset_accel || (enable_accel && !finished_accel);
+  assign mem_clk_en = fft_clk_en || (iomem_access_mem && (|iomem_wstrb));
+
+  // ICG cell instantiations
+  TLATNCAX2 fft_icg (
+      .ECK(fft_clk),
+      .E  (fft_clk_en),
+      .CK (clk)
+  );
+
+  TLATNCAX2 mem_icg (
+      .ECK(mem_clk),
+      .E  (mem_clk_en),
+      .CK (clk)
+  );
+
+  /*----------------------------------------------------------------------------------------
         MEMORY AND ACCELERATOR
     ----------------------------------------------------------------------------------------*/
   // Instantiate the MEMORY of the accelerator
   accelerator_mem #(
       .MEM_DEPTH(MEM_DEPTH)
   ) mem (
-      .clk  (clk),
+      .clk  (mem_clk),
       .wen  (mem_wstrb),
       .addr (mem_addr),
       .wdata(mem_wdata),
@@ -121,7 +147,7 @@ module accelerator (
       .MEM_WIDTH (32),
       .ADDR_WIDTH(ADDR_WIDTH)
   ) fft (
-      .clk(clk),
+      .clk(fft_clk),
       .resetn(resetn),
 
       .reset_accel (reset_accel),
@@ -163,6 +189,7 @@ module accelerator (
   assign mem_wstrb = iomem_access_mem ? iomem_wstrb : accel_mem_wstrb;
 
   // Manage the configuration register accesses.
+  // NOTE: CSR logic remains on ungated clk — always responsive to firmware
   always @(posedge clk) begin
     if (!resetn) begin
       for (i = 0; i < NUM_REGS; i = i + 1) iomem_accel[i] <= 0;

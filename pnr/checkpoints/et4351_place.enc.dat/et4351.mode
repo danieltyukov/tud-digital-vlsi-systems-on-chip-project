@@ -10,19 +10,19 @@ catch { setAnalysisMode -virtualIPO false }
 catch { setOptMode -activeSetupViews { analysis_view_setup analysis_view_power } }
 catch { setOptMode -autoTDGRSetupViews { analysis_view_setup} }
 catch { setOptMode -drcMargin 0 }
+catch { setOptMode -effort high }
 catch { setOptMode -optimizeFF true }
-catch { setOptMode -setupTargetSlack 0 }
+catch { setOptMode -setupTargetSlack 0.05 }
 catch { setPathGroupOptions reg2cgate -effortLevel high -weight 1 }
 catch { setPathGroupOptions reg2reg -effortLevel high -weight 2 }
 catch { setPathGroupOptions default -effortLevel low }
 catch { setExtractRCMode  -effortLevel high -engine preRoute -total_c_th 5 -relative_c_th 0.03 -coupling_c_th 3 }
 catch {setNanoRouteMode -quiet -extractThirdPartyCompatible false}
 
-catch { setPlaceMode -place_global_activity_power_driven true }
-catch { setPlaceMode -place_global_activity_power_driven_effort standard }
+catch { setPlaceMode -place_global_activity_power_driven false }
 catch { setPlaceMode -place_global_cong_effort high }
 catch { setPlaceMode -place_global_solver_effort high }
-catch { setPlaceMode -place_global_timing_effort medium }
+catch { setPlaceMode -place_global_timing_effort high }
 catch { setPlaceMode -place_global_uniform_density true }
 catch { setIlmMode -keepHighFanoutPorts true -keepLoopBack false -keepInstInSdc false -keepFlatten true }
 catch { setDelayCalMode -enable_high_fanout true }

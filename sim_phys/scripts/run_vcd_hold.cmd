@@ -14,7 +14,7 @@ vcd dumpportson $vcd_file
 vcd on $vcd_file
 
 # Update this value with the accelerator runtime
-run 10.832900us
+run 17.499300us
 
 # Stop activity annotation
 vcd off $vcd_file
