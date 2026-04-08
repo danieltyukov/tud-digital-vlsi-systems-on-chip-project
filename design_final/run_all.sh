@@ -77,6 +77,11 @@ source run_pnr_sim_hold_min.sh
 echo ":::: INFO :::: Verifying physical simulation..."
 ${PYTHON} ../sw/verify.py sim_phys
 
+# 7. Generate VCD-annotated power report
+echo ":::: INFO :::: Generating VCD-annotated power report..."
+cd "${PROJECT_DIR}/pnr"
+innovus -files ./scripts/11.finalPowerReports.tcl
+cd "${PROJECT_DIR}"
 
 # Optional: Visualization
 # echo "Running visualization tools..."
