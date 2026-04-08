@@ -34,3 +34,4 @@ source ./scripts/9.report.tcl
 # suspend
 source ./scripts/10.export.tcl
 
+exit

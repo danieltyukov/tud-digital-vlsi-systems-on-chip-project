@@ -70,7 +70,7 @@ report_power -clock_network all -hierarchy all -cell_type all -power_domain all 
 # Post-route optimization
 # ####################
 
-setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.05
+setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.2
 optDesign -postRoute
 
 timeDesign -postRoute -pathReports -slackReports -numPaths 50 -outDir timingReports/postRoute
@@ -85,7 +85,7 @@ report_power -clock_network all -hierarchy all -cell_type all -power_domain all 
 # Post-route hold optimization
 # ####################
 
-setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.05
+setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.2
 optDesign -postRoute -hold
 optDesign -postRoute -hold
 optDesign -postRoute -drv

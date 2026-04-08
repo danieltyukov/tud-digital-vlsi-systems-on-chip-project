@@ -42,7 +42,9 @@ set_attribute hdl_error_on_latch true /
 set_attribute auto_ungroup none /
 
 # Defining clock gating before elaboration
-set_attribute lp_insert_clock_gating true /
+set_attribute lp_insert_clock_gating false /
+set_attribute lp_insert_clock_gating true accelerator
+set_attribute lp_insert_clock_gating true accelerator_fft
 
 # Elaborate design
 elaborate $DESIGN

@@ -1,0 +1,105 @@
+#################  nanoroute  ################
+[04/08 20:38:04] [00:00:00] #Copyright (c) 1999 - 2010
+[04/08 20:38:04] [00:00:00] #Cadence Design Systems, Inc.
+[04/08 20:38:04] [00:00:00] #All rights reserved. This work may not be copied, modified, 
+[04/08 20:38:04] [00:00:00] #re-published, uploaded, executed, or distributed in any way, 
+[04/08 20:38:04] [00:00:00] #in any medium, whether in whole or in part, without prior 
+[04/08 20:38:04] [00:00:00] #written permission from Cadence Design Systems, Inc.
+[04/08 20:38:04] [00:00:00] #http://www.cadence.com
+[04/08 20:38:04] [00:00:00] #
+[04/08 20:38:04] [00:00:00] #Product Version : 21.11-s130_1 NR210811-1832/21_11-UB
+[04/08 20:38:04] [00:00:00] #Database Version : 18.20 {superthreading v2.14}
+[04/08 20:38:04] [00:00:00] #Checkout Date : 08/11/2021:18:32:00 from 21_11
+[04/08 20:38:04] [00:00:00] #Compiled Date : 08/19/2021 16:30:20 using tools-
+[04/08 20:38:04] [00:00:00] #Hostname : et4351.ewi.tudelft.nl (x86_64 w/Linux 4.18.0-553.111.1.el8_10.x86_64 AMD EPYC 7702P 64-Core Processor 1Core 64CPU 0MB cache 257GB)
+[04/08 20:38:04] [00:00:00] #Current Working Directory : /home/nfs/asakr/project/design_final/pnr
+[04/08 20:38:04] [00:00:00] #nanoroute Executable : /eda/cadence/2021-22/RHELx86/INNOVUS_21.11.000/tools.lnx86/plato/bin/64bit/nanoroute
+[04/08 20:38:04] [00:00:00] #Current Date and Time : Wed Apr  8 20:38:04 2026
+#
+[04/08 20:38:04] [00:00:00] #number of cpu = 4.
+[04/08 20:38:04] [00:00:00] #client index = 1775673739.
+[04/08 20:38:04] [00:00:00] #Connected to server et4351.ewi.tudelft.nl on port 46499. (4 threads)
+[04/08 20:38:04] [00:00:00] #WARNING (NRIF-47) This option supports a feature that is under development and experimental, use at your own risk.
+[04/08 20:38:04] [00:00:00] #WARNING (NRIF-47) This option supports a feature that is under development and experimental, use at your own risk.
+[04/08 20:38:04] [00:00:00] #Loading library ...
+[04/08 20:38:04] [00:00:00] #    loading LIBRARY_HEADER ...
+[04/08 20:38:04] [00:00:00] #    loading TECHNOLOGY ...
+[04/08 20:38:04] [00:00:00] #    loading 27 LAYERS ...
+[04/08 20:38:04] [00:00:00] #    loading 119 VIAS ...
+[04/08 20:38:04] [00:00:00] #    loading 16 VIA_RULES ...
+[04/08 20:38:04] [00:00:00] #    loading 3 RULES ...
+[04/08 20:38:04] [00:00:00] #    loading TIMING ...
+[04/08 20:38:04] [00:00:00] #    receiving 620 CELLS ...
+[04/08 20:38:04] [00:00:01] #setNanoRouteMode -droute_auto_stop false
+[04/08 20:38:04] [00:00:01] #setNanoRouteMode -droute_end_iteration 20
+[04/08 20:38:04] [00:00:01] #setNanoRouteMode -route_allow_pin_as_feedthrough "false"
+[04/08 20:38:04] [00:00:01] #setNanoRouteMode -route_selected_net_only true
+[04/08 20:38:04] [00:00:01] #setNanoRouteMode -route_with_eco false
+[04/08 20:38:04] [00:00:01] #setNanoRouteMode -route_with_si_driven false
+[04/08 20:38:04] [00:00:01] #setNanoRouteMode -route_with_timing_driven false
+[04/08 20:38:04] [00:00:01] #Loading design et4351 init ...
+[04/08 20:38:04] [00:00:01] #    loading DESIGN_VIEW et4351,init ... 
+[04/08 20:38:04] [00:00:01] #    loading 210 CHILD CELL_VIEWS ...
+[04/08 20:38:04] [00:00:01] #    loading 78 VIAS ...
+[04/08 20:38:05] [00:00:01] #    loading 60299 INSTANCES ...
+[04/08 20:38:05] [00:00:01] #    loading 2 SPECIAL_NETS ...
+[04/08 20:38:05] [00:00:01] #    loading 67457 NETS ...
+[04/08 20:38:05] [00:00:01] #setNanoRouteMode -droute_auto_stop false
+[04/08 20:38:05] [00:00:01] #setNanoRouteMode -droute_end_iteration 20
+[04/08 20:38:05] [00:00:01] #setNanoRouteMode -route_allow_pin_as_feedthrough "false"
+[04/08 20:38:05] [00:00:01] #setNanoRouteMode -route_selected_net_only true
+[04/08 20:38:05] [00:00:01] #setNanoRouteMode -route_with_eco false
+[04/08 20:38:05] [00:00:01] #setNanoRouteMode -route_with_si_driven false
+[04/08 20:38:05] [00:00:01] #setNanoRouteMode -route_with_timing_driven false
+[04/08 20:38:05] [00:00:01] #cpu time = 00:00:01, elapsed time = 00:00:01, memory = 162.48 (MB), peak = 162.48 (MB)
+[04/08 20:38:05] [00:00:01] #Start routing data preparation on Wed Apr  8 20:38:05 2026
+#
+[04/08 20:38:05] [00:00:01] #Minimum voltage of a net in the design = 0.000.
+[04/08 20:38:05] [00:00:01] #Maximum voltage of a net in the design = 1.320.
+[04/08 20:38:05] [00:00:01] #Voltage range [0.000 - 1.320] has 67455 nets.
+[04/08 20:38:05] [00:00:01] #Voltage range [0.900 - 1.320] has 1 net.
+[04/08 20:38:05] [00:00:01] #Voltage range [0.000 - 0.000] has 1 net.
+[04/08 20:38:05] [00:00:01] ### receiving APA data from server ...
+[04/08 20:38:05] [00:00:01] #Restoring pin access data from file (null) ...
+[04/08 20:38:06] [00:00:01] #Done restoring pin access data
+[04/08 20:38:06] [00:00:02] #Initial pin access analysis.
+[04/08 20:38:06] [00:00:02] #Detail pin access analysis.
+[04/08 20:38:07] [00:00:03] # Metal1       H   Track-Pitch = 0.19000    Line-2-Via Pitch = 0.13000
+[04/08 20:38:07] [00:00:03] # Metal2       V   Track-Pitch = 0.20000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal3       H   Track-Pitch = 0.19000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal4       V   Track-Pitch = 0.20000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal5       H   Track-Pitch = 0.19000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal6       V   Track-Pitch = 0.20000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal7       H   Track-Pitch = 0.19000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal8       V   Track-Pitch = 0.20000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal9       H   Track-Pitch = 0.19000    Line-2-Via Pitch = 0.15000
+[04/08 20:38:07] [00:00:03] # Metal10      V   Track-Pitch = 0.50000    Line-2-Via Pitch = 0.42000
+[04/08 20:38:07] [00:00:03] # Metal11      H   Track-Pitch = 0.47500    Line-2-Via Pitch = 0.43000
+[04/08 20:38:07] [00:00:03] #Regenerating Ggrids automatically.
+[04/08 20:38:07] [00:00:03] #Auto generating G-grids with size=15 tracks, using layer Metal3's pitch = 0.19000.
+[04/08 20:38:07] [00:00:03] #Using automatically generated G-grids.
+[04/08 20:38:07] [00:00:03] #(check_and_prepare_match_target_file) no match_target_file in constraint. quit
+[04/08 20:38:08] [00:00:04] #Done routing data preparation.
+[04/08 20:38:08] [00:00:04] #cpu time = 00:00:02, elapsed time = 00:00:03, memory = 217.80 (MB), peak = 217.99 (MB)
+[04/08 20:38:08] [00:00:04] ### drc_pitch = 4500 ( 2.25000 um) drc_range = 3500 ( 1.75000 um) route_pitch = 2400 ( 1.20000 um) patch_pitch = 6800 ( 3.40000 um) top_route_layer = 10 top_pin_layer = 10
+[04/08 20:38:08] [00:00:04] #build: cpu time = 00:00:03, elapsed time = 00:00:03, memory = 221.80 (MB), peak = 221.80 (MB)
+[04/08 20:38:08] [00:00:04] #
+[04/08 20:38:08] [00:00:04] #Start client routing ...
+[04/08 20:38:08] [00:00:04] #
+[04/08 20:38:08] [00:00:04] #start initial detail routing ...
+[04/08 20:38:13] [00:00:23] #cpu time = 00:00:19, elapsed time = 00:00:05, memory = 222.21 (MB), peak = 420.73 (MB)
+[04/08 20:38:14] [00:00:23] #start 1st optimization iteration ...
+[04/08 20:38:14] [00:00:25] #cpu time = 00:00:02, elapsed time = 00:00:01, memory = 222.23 (MB), peak = 420.73 (MB)
+[04/08 20:38:14] [00:00:25] #Cpu time = 00:00:24
+[04/08 20:38:14] [00:00:25] #Elapsed time = 00:00:10
+[04/08 20:38:14] [00:00:25] #Increased memory = 59.74 (MB)
+[04/08 20:38:14] [00:00:25] #Total memory = 222.22 (MB)
+[04/08 20:38:14] [00:00:25] #Peak memory = 420.73 (MB)
+[04/08 20:38:14] [00:00:25] #
+[04/08 20:38:18] [00:00:25] #Cpu time = 00:00:25
+[04/08 20:38:18] [00:00:25] #Elapsed time = 00:00:14
+[04/08 20:38:18] [00:00:25] #Increased memory = 221.05 (MB)
+[04/08 20:38:18] [00:00:25] #Total memory = 222.21 (MB)
+[04/08 20:38:18] [00:00:25] #Peak memory = 420.73 (MB)
+[04/08 20:38:18] [00:00:25] #Finished client route on Wed Apr  8 20:38:18 2026
+#

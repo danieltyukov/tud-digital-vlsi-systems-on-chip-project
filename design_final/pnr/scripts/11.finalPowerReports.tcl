@@ -20,3 +20,5 @@ read_activity_file ../sim_phys/vcd/${DESIGN}.phys.hold.vcd -reset -format VCD -s
 propagate_activity
 
 report_power -hierarchy all -outfile finalReports/report_power_postRouteVCD.rpt
+
+exit

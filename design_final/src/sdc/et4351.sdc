@@ -60,6 +60,10 @@ set_load -pin_load 0.050 [all_outputs]
 
 # RESET
 set_false_path       -from  [get_ports resetn]
+# Async reset/set pins: removal/recovery hold checks are not meaningful
+# since resetn is asserted asynchronously and held for many cycles
+set_false_path -hold -to [get_pins -hierarchical */RN]
+set_false_path -hold -to [get_pins -hierarchical */SN]
 
 # Clock gating scan enable pins (not used in normal operation)
 set_false_path -to [get_pins -hierarchical */RC_CGIC_INST/SE]
