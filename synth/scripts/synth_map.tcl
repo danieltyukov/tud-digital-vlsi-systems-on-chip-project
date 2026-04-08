@@ -26,8 +26,10 @@ puts ""
 ####################################################################################################
 # Synthesize with low effort
 # set_attribute auto_ungroup none /
-set_attribute syn_map_effort low
+set_attribute syn_map_effort medium
 syn_map
+set_attribute syn_opt_effort medium /
+syn_opt
 echo "Synthesis complete"
 puts "Runtime & Memory after synthesis"
 timestat MAPPED
