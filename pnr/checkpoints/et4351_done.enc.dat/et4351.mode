@@ -23,7 +23,7 @@ catch { setOptMode -fixFanoutLoad true }
 catch { setOptMode -fixGlitch true }
 catch { setOptMode -fixSISlew true }
 catch { setOptMode -fixTran true }
-catch { setOptMode -holdTargetSlack 0.1 }
+catch { setOptMode -holdTargetSlack 0.05 }
 catch { setOptMode -optimizeFF true }
 catch { setOptMode -postRouteDrvRecovery true }
 catch { setOptMode -postRouteHoldRecovery auto }
@@ -31,6 +31,7 @@ catch { setOptMode -preserveAllSequential false }
 catch { setOptMode -setupTargetSlack 0 }
 catch { setOptMode -usefulSkew true }
 catch { setOptMode -usefulSkewCCOpt extreme }
+catch { setPathGroupOptions reg2cgate -effortLevel high -weight 1 }
 catch { setPathGroupOptions reg2reg -effortLevel high -weight 2 }
 catch { setPathGroupOptions default -effortLevel low }
 catch { setExtractRCMode  -effortLevel high -engine postRoute -total_c_th 5 -relative_c_th 0.03 -coupling_c_th 3 }
@@ -55,7 +56,7 @@ catch {setNanoRouteMode -quiet -routeTdrEffort 5}
 catch {setNanoRouteMode -quiet -routeWithSiDriven true}
 catch {setNanoRouteMode -quiet -routeWithSiPostRouteFix false}
 catch {setNanoRouteMode -quiet -routeWithTimingDriven true}
-catch {setNanoRouteMode -quiet -timingEngine ".timing_file_2422174.tif.gz"}
+catch {setNanoRouteMode -quiet -timingEngine ".timing_file_2116713.tif.gz"}
 
 catch { setPlaceMode -place_global_activity_power_driven true }
 catch { setPlaceMode -place_global_activity_power_driven_effort standard }

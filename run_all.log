@@ -1,0 +1,730 @@
+nohup: ignoring input
+:::: INFO :::: Starting full project flow...
+:::: INFO :::: Setting up environment...
+:::: INFO :::: Generating firmware for full audio signal...
+rm -f accel_audio.elf accel_audio.hex
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -march=rv32imc -S accel_audio.c -o accel_audio.s
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -c accel_audio.s -o accel_audio.o
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -march=rv32imc -S fft.c -o fft.s
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -c fft.s -o fft.o
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -march=rv32imc -S uart.c -o uart.s
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -c uart.s -o uart.o
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -march=rv32imc -S flash.c -o flash.s
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -c flash.s -o flash.o
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-ld -T linkerscript.ld accel_audio.o fft.o uart.o flash.o -o accel_audio.elf
+# /data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-ld accel_audio.o fft.o uart.o flash.o -o accel_audio.elf
+/data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-gcc -O0 -march=rv32imc \
+	-T linkerscript.ld \
+	-nostdlib \
+	-o accel_audio.elf \
+	accel_audio.c fft.c uart.c flash.c
+/data/picorv32-utils/riscv32imc/bin/riscv32-unknown-elf-objcopy -O verilog accel_audio.elf accel_audio.hex
+:::: INFO :::: Running behavioral simulation...
+QuestaSim-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+vmap work workLib 
+Modifying modelsim.ini
+QuestaSim-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 00:17:55 on Apr 08,2026
+vlog /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v 
+-- Compiling module SRAM1RW1024x8
+-- Compiling module SRAM1RW1024x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(101): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(13), old value '10', new value '7') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(102): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(14), old value '1024', new value '128') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(103): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(15), old value '8', new value '46') .
+-- Compiling module SRAM1RW128x46
+-- Compiling module SRAM1RW128x46_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(229): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(103), old value '46', new value '48') .
+-- Compiling module SRAM1RW128x48
+-- Compiling module SRAM1RW128x48_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(357): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(229), old value '48', new value '8') .
+-- Compiling module SRAM1RW128x8
+-- Compiling module SRAM1RW128x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(443): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(355), old value '7', new value '8') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(444): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(356), old value '128', new value '256') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(445): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(357), old value '8', new value '128') .
+-- Compiling module SRAM1RW256x128
+-- Compiling module SRAM1RW256x128_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(653): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(445), old value '128', new value '32') .
+-- Compiling module SRAM1RW256x32
+-- Compiling module SRAM1RW256x32_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(765): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(653), old value '32', new value '46') .
+-- Compiling module SRAM1RW256x46
+-- Compiling module SRAM1RW256x46_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(891): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(765), old value '46', new value '48') .
+-- Compiling module SRAM1RW256x48
+-- Compiling module SRAM1RW256x48_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1019): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(891), old value '48', new value '8') .
+-- Compiling module SRAM1RW256x8
+-- Compiling module SRAM1RW256x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1105): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1017), old value '8', new value '5') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1106): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1018), old value '256', new value '32') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1107): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1019), old value '8', new value '50') .
+-- Compiling module SRAM1RW32x50
+-- Compiling module SRAM1RW32x50_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1235): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1105), old value '5', new value '9') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1236): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1106), old value '32', new value '512') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1237): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1107), old value '50', new value '128') .
+-- Compiling module SRAM1RW512x128
+-- Compiling module SRAM1RW512x128_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1445): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1237), old value '128', new value '32') .
+-- Compiling module SRAM1RW512x32
+-- Compiling module SRAM1RW512x32_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1557): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1445), old value '32', new value '8') .
+-- Compiling module SRAM1RW512x8
+-- Compiling module SRAM1RW512x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1643): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1555), old value '9', new value '6') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1644): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1556), old value '512', new value '64') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1645): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1557), old value '8', new value '128') .
+-- Compiling module SRAM1RW64x128
+-- Compiling module SRAM1RW64x128_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1853): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1645), old value '128', new value '32') .
+-- Compiling module SRAM1RW64x32
+-- Compiling module SRAM1RW64x32_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1965): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1853), old value '32', new value '34') .
+-- Compiling module SRAM1RW64x34
+-- Compiling module SRAM1RW64x34_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2079): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(1965), old value '34', new value '8') .
+-- Compiling module SRAM1RW64x8
+-- Compiling module SRAM1RW64x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2165): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2077), old value '6', new value '7') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2166): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2078), old value '64', new value '128') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2167): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2079), old value '8', new value '16') .
+-- Compiling module SRAM2RW128x16
+-- Compiling module SRAM2RW128x16_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2288): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2167), old value '16', new value '32') .
+-- Compiling module SRAM2RW128x32
+-- Compiling module SRAM2RW128x32_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2425): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2288), old value '32', new value '4') .
+-- Compiling module SRAM2RW128x4
+-- Compiling module SRAM2RW128x4_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2534): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2425), old value '4', new value '8') .
+-- Compiling module SRAM2RW128x8
+-- Compiling module SRAM2RW128x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2645): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2532), old value '7', new value '4') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2646): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2533), old value '128', new value '16') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2647): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2534), old value '8', new value '16') .
+-- Compiling module SRAM2RW16x16
+-- Compiling module SRAM2RW16x16_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2768): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2647), old value '16', new value '32') .
+-- Compiling module SRAM2RW16x32
+-- Compiling module SRAM2RW16x32_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2905): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2768), old value '32', new value '4') .
+-- Compiling module SRAM2RW16x4
+-- Compiling module SRAM2RW16x4_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3014): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(2905), old value '4', new value '8') .
+-- Compiling module SRAM2RW16x8
+-- Compiling module SRAM2RW16x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3125): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3012), old value '4', new value '5') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3126): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3013), old value '16', new value '32') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3127): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3014), old value '8', new value '16') .
+-- Compiling module SRAM2RW32x16
+-- Compiling module SRAM2RW32x16_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3248): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3127), old value '16', new value '22') .
+-- Compiling module SRAM2RW32x22
+-- Compiling module SRAM2RW32x22_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3375): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3248), old value '22', new value '32') .
+-- Compiling module SRAM2RW32x32
+-- Compiling module SRAM2RW32x32_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3512): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3375), old value '32', new value '39') .
+-- Compiling module SRAM2RW32x39
+-- Compiling module SRAM2RW32x39_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3656): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3512), old value '39', new value '4') .
+-- Compiling module SRAM2RW32x4
+-- Compiling module SRAM2RW32x4_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3765): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3656), old value '4', new value '8') .
+-- Compiling module SRAM2RW32x8
+-- Compiling module SRAM2RW32x8_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3876): (vlog-2263) Redefinition of macro: 'numAddr' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3763), old value '5', new value '6') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3877): (vlog-2263) Redefinition of macro: 'numWords' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3764), old value '32', new value '64') .
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3878): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3765), old value '8', new value '16') .
+-- Compiling module SRAM2RW64x16
+-- Compiling module SRAM2RW64x16_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3999): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3878), old value '16', new value '32') .
+-- Compiling module SRAM2RW64x32
+-- Compiling module SRAM2RW64x32_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(4136): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(3999), old value '32', new value '4') .
+-- Compiling module SRAM2RW64x4
+-- Compiling module SRAM2RW64x4_1bit
+** Warning: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(4245): (vlog-2263) Redefinition of macro: 'wordLength' (previously defined near /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v(4136), old value '4', new value '8') .
+-- Compiling module SRAM2RW64x8
+-- Compiling module SRAM2RW64x8_1bit
+
+Top level modules:
+	SRAM1RW1024x8
+	SRAM1RW128x46
+	SRAM1RW128x48
+	SRAM1RW128x8
+	SRAM1RW256x128
+	SRAM1RW256x32
+	SRAM1RW256x46
+	SRAM1RW256x48
+	SRAM1RW256x8
+	SRAM1RW32x50
+	SRAM1RW512x128
+	SRAM1RW512x32
+	SRAM1RW512x8
+	SRAM1RW64x128
+	SRAM1RW64x32
+	SRAM1RW64x34
+	SRAM1RW64x8
+	SRAM2RW128x16
+	SRAM2RW128x32
+	SRAM2RW128x4
+	SRAM2RW128x8
+	SRAM2RW16x16
+	SRAM2RW16x32
+	SRAM2RW16x4
+	SRAM2RW16x8
+	SRAM2RW32x16
+	SRAM2RW32x22
+	SRAM2RW32x32
+	SRAM2RW32x39
+	SRAM2RW32x4
+	SRAM2RW32x8
+	SRAM2RW64x16
+	SRAM2RW64x32
+	SRAM2RW64x4
+	SRAM2RW64x8
+End time: 00:17:55 on Apr 08,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 52
+QuestaSim-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 00:17:55 on Apr 08,2026
+vlog ../src/design/accelerator.v ../src/design/accelerator_fft.v ../src/design/accelerator_mem.v ../src/design/picosoc.v ../src/design/spimemio.v ../src/design/simpleuart.v ../src/design/picorv32.v ../src/design/et4351.v "+incdir+../src/" -timescale 1ns/1ps 
+-- Compiling module accelerator
+-- Compiling module accelerator_fft
+-- Compiling module accelerator_mem
+-- Compiling module picosoc
+-- Compiling module picosoc_mem
+-- Compiling module spimemio
+-- Compiling module spimemio_xfer
+-- Compiling module simpleuart
+-- Compiling module picorv32
+** Warning: ../src/design/picorv32.v(386): (vlog-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+** Warning: ../src/design/picorv32.v(388): (vlog-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+-- Compiling module picorv32_regs
+-- Compiling module picorv32_pcpi_mul
+-- Compiling module picorv32_pcpi_fast_mul
+-- Compiling module picorv32_pcpi_div
+-- Compiling module picorv32_axi
+-- Compiling module picorv32_axi_adapter
+-- Compiling module picorv32_wb
+-- Compiling module et4351
+-- Compiling module bidir_buf
+
+Top level modules:
+	picorv32_regs
+	picorv32_axi
+	picorv32_wb
+	et4351
+End time: 00:17:56 on Apr 08,2026, Elapsed time: 0:00:01
+Errors: 0, Warnings: 2
+QuestaSim-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 00:17:56 on Apr 08,2026
+vlog ../src/testbench/spiflash.v "+define+BEHAV=1" -timescale 1ns/1ps 
+-- Compiling module spiflash
+
+Top level modules:
+	spiflash
+End time: 00:17:56 on Apr 08,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+Start time: 00:17:56 on Apr 08,2026
+vlog -sv ../src/testbench/tb_et4351.sv "+incdir+../src/" "+define+BEHAV=1" -timescale 1ns/1ps 
+-- Compiling module testbench
+
+Top level modules:
+	testbench
+End time: 00:17:56 on Apr 08,2026, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+Reading pref.tcl
+
+# 2020.4
+
+# vsim testbench -c -do "./scripts/run.cmd" -t 10ns "+firmware=../firmware/accel_audio.hex" "+fft_data=../firmware/fft_data.hex" "+is_sim_behav=1" 
+# Start time: 00:17:58 on Apr 08,2026
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: ../src/design/picorv32.v(386): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+# ** Warning: ../src/design/picorv32.v(388): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+# ** Warning: ../src/design/picorv32.v(386): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+# ** Warning: ../src/design/picorv32.v(388): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+# ** Warning: ../src/design/picorv32.v(386): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+# ** Warning: ../src/design/picorv32.v(388): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=6.
+# //  Questa Sim-64
+# //  Version 2020.4 linux_x86_64 Oct 13 2020
+# //
+# //  Copyright 1991-2020 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.testbench(fast)
+# Loading work.et4351(fast)
+# Loading work.spiflash(fast)
+# do ./scripts/run.cmd
+##################################################
+# Start of Testbench 						        
+##################################################
+# 
+# Frequency domain output: 
+# [
+#   0 + 0j,
+#   -14 + 4j,
+#   -24 + 52j,
+#   -9 + 5j,
+#   -17 + 11j,
+#   13 + -26j,
+#   1 + 4j,
+#   1 + -7j,
+#   0 + 2j,
+#   21 + 24j,
+#   -22 + 1j,
+#   0 + -11j,
+#   17 + -65525j,
+#   -4 + 8j,
+#   44 + -327631j,
+#   -10 + -327657j,
+#   0 + 0j,
+#   -10 + 327656j,
+#   44 + 327631j,
+#   -4 + -8j,
+#   17 + 65524j,
+#   0 + 11j,
+#   -22 + -1j,
+#   21 + -25j,
+#   0 + -2j,
+#   1 + 6j,
+#   1 + -4j,
+#   13 + 26j,
+#   -17 + -12j,
+#   -9 + -5j,
+#   -24 + -52j,
+#   -14 + -5j,
+#   0 + 0j,
+#   -16 + 1j,
+#   -25 + 49j,
+#   -10 + 0j,
+#   -1 + -1j,
+#   -6 + -19j,
+#   1 + 6j,
+#   2 + -12j,
+#   -1 + -2j,
+#   20 + 21j,
+#   -21 + 4j,
+#   19 + -65538j,
+#   0 + -1j,
+#   -1 + 11j,
+#   44 + -327633j,
+#   -10 + -327652j,
+#   0 + 0j,
+#   -10 + 327652j,
+#   44 + 327632j,
+#   -1 + -12j,
+#   0 + 1j,
+#   19 + 65537j,
+#   -21 + -4j,
+#   20 + -22j,
+#   -1 + 1j,
+#   2 + 11j,
+#   1 + -6j,
+#   -6 + 18j,
+#   -1 + 1j,
+#   -10 + -1j,
+#   -25 + -50j,
+#   -16 + -1j,
+#   0 + 0j,
+#   -15 + 3j,
+#   -26 + 48j,
+#   -9 + 6j,
+#   -1 + 1j,
+#   13 + -26j,
+#   -27 + -65518j,
+#   2 + -9j,
+#   0 + 2j,
+#   21 + 26j,
+#   6 + 11j,
+#   0 + -12j,
+#   0 + -3j,
+#   -3 + 8j,
+#   47 + -327639j,
+#   -11 + -327654j,
+#   0 + 0j,
+#   -11 + 327654j,
+#   47 + 327639j,
+#   -3 + -8j,
+#   0 + 3j,
+#   0 + 12j,
+#   6 + -12j,
+#   21 + -27j,
+#   0 + -2j,
+#   2 + 8j,
+#   -27 + 65517j,
+#   13 + 26j,
+#   -1 + -1j,
+#   -9 + -6j,
+#   -26 + -48j,
+#   -15 + -3j,
+#   0 + 0j,
+#   -15 + 3j,
+#   -26 + 48j,
+#   -9 + 6j,
+#   -1 + 1j,
+#   13 + -26j,
+#   -27 + -65518j,
+#   2 + -9j,
+#   0 + 2j,
+#   21 + 26j,
+#   6 + 11j,
+#   0 + -12j,
+#   0 + -3j,
+#   -3 + 8j,
+#   47 + -327639j,
+#   -11 + -327654j,
+#   0 + 0j,
+#   -11 + 327654j,
+#   47 + 327639j,
+#   -3 + -8j,
+#   0 + 3j,
+#   0 + 12j,
+#   6 + -12j,
+#   21 + -27j,
+#   0 + -2j,
+#   2 + 8j,
+#   -27 + 65517j,
+#   13 + 26j,
+#   -1 + -1j,
+#   -9 + -6j,
+#   -26 + -48j,
+#   -15 + -3j,
+#   0 + 0j,
+#   -13 + 2j,
+#   -24 + 49j,
+#   -7 + 2j,
+#   0 + 0j,
+#   13 + -27j,
+#   0 + 5j,
+#   -31 + -65531j,
+#   0 + 0j,
+#   53 + 36j,
+#   -22 + 2j,
+#   1 + -11j,
+#   0 + 0j,
+#   -5 + 14j,
+#   44 + -327634j,
+#   -12 + -327651j,
+#   0 + 0j,
+#   -12 + 327651j,
+#   44 + 327633j,
+#   -5 + -14j,
+#   0 + 0j,
+#   1 + 10j,
+#   -22 + -2j,
+#   53 + -37j,
+#   0 + 0j,
+#   -31 + 65530j,
+#   0 + -5j,
+#   13 + 26j,
+#   0 + 0j,
+#   -7 + -2j,
+#   -24 + -50j,
+#   -13 + -2j,
+#   0 + 0j,
+#   -13 + 2j,
+#   -24 + 49j,
+#   -7 + 2j,
+#   0 + 0j,
+#   13 + -27j,
+#   0 + 5j,
+#   -31 + -65531j,
+#   0 + 0j,
+#   53 + 36j,
+#   -22 + 2j,
+#   1 + -11j,
+#   0 + 0j,
+#   -5 + 14j,
+#   44 + -327634j,
+#   -12 + -327651j,
+#   0 + 0j,
+#   -12 + 327651j,
+#   44 + 327633j,
+#   -5 + -14j,
+#   0 + 0j,
+#   1 + 10j,
+#   -22 + -2j,
+#   53 + -37j,
+#   0 + 0j,
+#   -31 + 65530j,
+#   0 + -5j,
+#   13 + 26j,
+#   0 + 0j,
+#   -7 + -2j,
+#   -24 + -50j,
+#   -13 + -2j,
+#   0 + 0j,
+#   -15 + 3j,
+#   -19 + 49j,
+#   -9 + 6j,
+#   -1 + -3j,
+#   13 + -26j,
+#   -29 + 21j,
+#   2 + -9j,
+#   0 + 2j,
+#   21 + 26j,
+#   1 + -65520j,
+#   0 + -12j,
+#   0 + 1j,
+#   -3 + 8j,
+#   46 + -327636j,
+#   -11 + -327654j,
+#   0 + 0j,
+#   -11 + 327654j,
+#   46 + 327636j,
+#   -3 + -8j,
+#   0 + -1j,
+#   0 + 12j,
+#   1 + 65519j,
+#   21 + -27j,
+#   0 + -2j,
+#   2 + 8j,
+#   -29 + -22j,
+#   13 + 26j,
+#   -1 + 3j,
+#   -9 + -6j,
+#   -19 + -49j,
+#   -15 + -3j,
+#   0 + 0j,
+#   -20 + -4j,
+#   -24 + 49j,
+#   -11 + -1j,
+#   0 + 0j,
+#   15 + -29j,
+#   0 + 5j,
+#   -30 + 4j,
+#   0 + 0j,
+#   57 + -65504j,
+#   -22 + 2j,
+#   0 + -12j,
+#   0 + 0j,
+#   2 + 16j,
+#   44 + -327634j,
+#   -16 + -327656j,
+#   0 + 0j,
+#   -16 + 327655j,
+#   44 + 327633j,
+#   2 + -17j,
+#   0 + 0j,
+#   0 + 12j,
+#   -22 + -2j,
+#   57 + 65504j,
+#   0 + 0j,
+#   -30 + -4j,
+#   0 + -5j,
+#   15 + 29j,
+#   0 + 0j,
+#   -11 + 0j,
+#   -24 + -50j,
+#   -20 + 3j,
+#   0 + 0j,
+#   -14 + 4j,
+#   -24 + 52j,
+#   -9 + 5j,
+#   -17 + -65525j,
+#   13 + -26j,
+#   1 + 4j,
+#   1 + -7j,
+#   0 + 2j,
+#   21 + 24j,
+#   -22 + 1j,
+#   0 + -11j,
+#   17 + 11j,
+#   -4 + 8j,
+#   44 + -327631j,
+#   -10 + -327657j,
+#   0 + 0j,
+#   -10 + 327656j,
+#   44 + 327631j,
+#   -4 + -8j,
+#   17 + -12j,
+#   0 + 11j,
+#   -22 + -1j,
+#   21 + -25j,
+#   0 + -2j,
+#   1 + 6j,
+#   1 + -4j,
+#   13 + 26j,
+#   -17 + 65524j,
+#   -9 + -5j,
+#   -24 + -52j,
+#   -14 + -5j,
+#   0 + 0j,
+#   -14 + 4j,
+#   -24 + 52j,
+#   -9 + 5j,
+#   -17 + -65525j,
+#   13 + -26j,
+#   1 + 4j,
+#   1 + -7j,
+#   0 + 2j,
+#   21 + 24j,
+#   -22 + 1j,
+#   0 + -11j,
+#   17 + 11j,
+#   -4 + 8j,
+#   44 + -327631j,
+#   -10 + -327657j,
+#   0 + 0j,
+#   -10 + 327656j,
+#   44 + 327631j,
+#   -4 + -8j,
+#   17 + -12j,
+#   0 + 11j,
+Note: vsim caught SIGHUP. Closing vsimk kernel.
+** Fatal: vsimk is exiting with code 201.
+Exit codes are defined in the "Error and Warning Messages"
+appendix of the QuestaSim User's Manual.
+#   -22 + -1j,
+#   21 + -25j,
+#   0 + -2j,
+#   1 + 6j,
+#   1 + -4j,
+#   13 + 26j,
+#   -17 + 65524j,
+#   -9 + -5j,
+#   -24 + -52j,
+#   -14 + -5j,
+#   0 + 0j,
+#   -14 + 1j,
+#   -25 + 49j,
+#   -12 + 9j,
+#   -1 + -1j,
+#   0 + -65553j,
+#   1 + 6j,
+#   2 + -8j,
+#   -1 + -2j,
+#   27 + 27j,
+#   -21 + 4j,
+#   16 + -5j,
+#   0 + -1j,
+#   -9 + 13j,
+#   44 + -327633j,
+#   -13 + -327652j,
+#   0 + 0j,
+#   -13 + 327651j,
+#   44 + 327632j,
+#   -9 + -13j,
+#   0 + 1j,
+#   16 + 5j,
+#   -21 + -4j,
+#   27 + -27j,
+#   -1 + 1j,
+#   2 + 8j,
+#   1 + -6j,
+#   0 + 65553j,
+#   -1 + 1j,
+#   -12 + -9j,
+#   -25 + -50j,
+#   -14 + -2j,
+#   0 + 0j,
+#   -14 + 1j,
+#   -25 + 49j,
+#   -12 + 9j,
+#   -1 + -1j,
+#   0 + -65553j,
+#   1 + 6j,
+#   2 + -8j,
+#   -1 + -2j,
+#   27 + 27j,
+#   -21 + 4j,
+#   16 + -5j,
+#   0 + -1j,
+#   -9 + 13j,
+#   44 + -327633j,
+#   -13 + -327652j,
+#   0 + 0j,
+#   -13 + 327651j,
+#   44 + 327632j,
+#   -9 + -13j,
+#   0 + 1j,
+#   16 + 5j,
+#   -21 + -4j,
+#   27 + -27j,
+#   -1 + 1j,
+#   2 + 8j,
+#   1 + -6j,
+#   0 + 65553j,
+#   -1 + 1j,
+#   -12 + -9j,
+#   -25 + -50j,
+#   -14 + -2j,
+#   0 + 0j,
+#   -20 + -4j,
+#   -24 + 49j,
+#   -11 + -1j,
+#   0 + 0j,
+#   15 + -29j,
+#   0 + 5j,
+#   -30 + 4j,
+#   0 + 0j,
+#   57 + -65504j,
+#   -22 + 2j,
+#   0 + -12j,
+#   0 + 0j,
+#   2 + 16j,
+#   44 + -327634j,
+#   -16 + -327656j,
+#   0 + 0j,
+#   -16 + 327655j,
+#   44 + 327633j,
+#   2 + -17j,
+#   0 + 0j,
+#   0 + 12j,
+#   -22 + -2j,
+#   57 + 65504j,
+#   0 + 0j,
+#   -30 + -4j,
+#   0 + -5j,
+#   15 + 29j,
+#   0 + 0j,
+#   -11 + 0j,
+#   -24 + -50j,
+#   -20 + 3j,
+#   0 + 0j,
+#   -14 + 4j,
+#   -24 + 47j,
+#   -9 + 5j,
+#   0 + 1j,
+#   13 + -26j,
+#   0 + 5j,
+#   1 + -7j,
+#   -65 + -65522j,
+#   21 + 24j,
+#   -21 + 2j,
+#   0 + -11j,
+#   0 + 1j,
+#   -4 + 8j,
+#   44 + -327636j,
+#   -10 + -327657j,
+#   0 + 0j,
+#   -10 + 327656j,
+#   44 + 327635j,
+#   -4 + -8j,
+#   0 + -2j,
+#   0 + 11j,
+#   -21 + -3j,
+#   21 + -25j,
+#   -65 + 65521j,
+#   1 + 6j,
+#   0 + -6j,
+#   13 + 26j,
+#   0 + -2j,
+#   -9 + -5j,
+#   -24 + -48j,
+#   -14 End time: 00:18:27 on Apr 08,2026, Elapsed time: 0:00:29
+# Errors: 0, Warnings: 6

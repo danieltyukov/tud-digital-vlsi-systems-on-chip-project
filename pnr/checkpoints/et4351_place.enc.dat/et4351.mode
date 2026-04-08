@@ -12,6 +12,7 @@ catch { setOptMode -autoTDGRSetupViews { analysis_view_setup} }
 catch { setOptMode -drcMargin 0 }
 catch { setOptMode -optimizeFF true }
 catch { setOptMode -setupTargetSlack 0 }
+catch { setPathGroupOptions reg2cgate -effortLevel high -weight 1 }
 catch { setPathGroupOptions reg2reg -effortLevel high -weight 2 }
 catch { setPathGroupOptions default -effortLevel low }
 catch { setExtractRCMode  -effortLevel high -engine preRoute -total_c_th 5 -relative_c_th 0.03 -coupling_c_th 3 }

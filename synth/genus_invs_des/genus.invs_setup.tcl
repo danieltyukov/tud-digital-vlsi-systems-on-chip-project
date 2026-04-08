@@ -2,7 +2,7 @@
 #
 # Innovus setup file
 # Created by Genus(TM) Synthesis Solution 21.10-p002_1
-#   on 03/13/2026 00:19:47
+#   on 04/08/2026 01:07:31
 #
 ################################################################################
 #
@@ -56,6 +56,10 @@ setMaxRouteLayer 8
 
 # MSV Setup
 ################################################################################
+
+# Import list of instances with subdesigns having boundary optimization disabled
+################################################################################
+setOptMode -keepPort genus_invs_des/genus.boundary_opto.tcl
 
 # Source cell padding from Genus
 ################################################################################
