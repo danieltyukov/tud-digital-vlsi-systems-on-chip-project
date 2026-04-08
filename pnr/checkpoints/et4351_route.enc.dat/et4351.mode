@@ -46,6 +46,8 @@ catch {setNanoRouteMode -quiet -extractThirdPartyCompatible false}
 catch {setNanoRouteMode -quiet -grouteExpTdStdDelay 41.700000}
 catch {setNanoRouteMode -quiet -grouteExpTdUseTifTimingEngineForImportDesign false}
 catch {setNanoRouteMode -quiet -routeAntennaCellName "ANTENNA"}
+catch {setNanoRouteMode -quiet -routeExpDirtyAreaEco false}
+catch {setNanoRouteMode -quiet -routeExpSignatureEco false}
 catch {setNanoRouteMode -quiet -routeFillerInstPrefix "FILLER_"}
 catch {setNanoRouteMode -quiet -routeFixTopLayerAntenna false}
 catch {setNanoRouteMode -quiet -routeInsertAntennaDiode true}
@@ -56,7 +58,11 @@ catch {setNanoRouteMode -quiet -routeTdrEffort 5}
 catch {setNanoRouteMode -quiet -routeWithSiDriven true}
 catch {setNanoRouteMode -quiet -routeWithSiPostRouteFix false}
 catch {setNanoRouteMode -quiet -routeWithTimingDriven true}
+<<<<<<< Updated upstream
 catch {setNanoRouteMode -quiet -timingEngine ".timing_file_4030345.tif.gz"}
+=======
+catch {setNanoRouteMode -quiet -timingEngine ".timing_file_1070576.tif.gz"}
+>>>>>>> Stashed changes
 
 catch { setPlaceMode -place_global_activity_power_driven false }
 catch { setPlaceMode -place_global_cong_effort high }

@@ -1,0 +1,42 @@
+[04/09 01:03:24      0s] 
+[04/09 01:03:24      0s] Cadence Innovus(TM) Implementation System.
+[04/09 01:03:24      0s] Copyright 2021 Cadence Design Systems, Inc. All rights reserved worldwide.
+[04/09 01:03:24      0s] 
+[04/09 01:03:24      0s] Version:	v21.11-s130_1, built Thu Aug 19 16:59:56 PDT 2021
+[04/09 01:03:24      0s] Options:	
+[04/09 01:03:24      0s] Date:		Thu Apr  9 01:03:24 2026
+[04/09 01:03:24      0s] Host:		et4351.ewi.tudelft.nl (x86_64 w/Linux 4.18.0-553.111.1.el8_10.x86_64) (1core*64cpus*AMD EPYC 7702P 64-Core Processor 512KB)
+[04/09 01:03:24      0s] OS:		Red Hat Enterprise Linux release 8.10 (Ootpa)
+[04/09 01:03:24      0s] 
+[04/09 01:03:24      0s] License:
+[04/09 01:03:24      0s] 		[01:03:24.316754] Configured Lic search path (20.02-p002): 27012@flexserv1.tudelft.nl:27017@flexserv1.tudelft.nl
+
+[04/09 01:03:25      0s] 		invs	Innovus Implementation System	21.1	checkout succeeded
+[04/09 01:03:25      0s] 		8 CPU jobs allowed with the current license(s). Use setMultiCpuUsage to set your required CPU count.
+[04/09 01:03:25      0s] **WARN: (IMPSYT-1507):	The display is invalid and will start in no window mode
+[04/09 01:03:41     13s] Reset Parastics called with the command setExtractRCMode -reset@(#)CDS: Innovus v21.11-s130_1 (64bit) 08/19/2021 16:59 (Linux 3.10.0-693.el7.x86_64)
+[04/09 01:03:45     16s] @(#)CDS: NanoRoute 21.11-s130_1 NR210811-1832/21_11-UB (database version 18.20.554) {superthreading v2.14}
+[04/09 01:03:45     16s] @(#)CDS: AAE 21.11-s059 (64bit) 08/19/2021 (Linux 3.10.0-693.el7.x86_64)
+[04/09 01:03:45     16s] @(#)CDS: CTE 21.11-s010_1 () Aug 12 2021 04:17:41 ( )
+[04/09 01:03:45     16s] @(#)CDS: SYNTECH 21.11-s003_1 () Aug  4 2021 01:23:26 ( )
+[04/09 01:03:45     16s] @(#)CDS: CPE v21.11-s010
+[04/09 01:03:45     16s] @(#)CDS: IQuantus/TQuantus 20.1.2-s578 (64bit) Fri Jul 9 11:48:16 PDT 2021 (Linux 2.6.32-431.11.2.el6.x86_64)
+[04/09 01:03:45     16s] @(#)CDS: OA 22.60-p059 Mon Jun 28 12:16:29 2021
+[04/09 01:03:45     16s] @(#)CDS: SGN 20.10-d001 (01-Jun-2020) (64 bit executable, Qt5.9.0)
+[04/09 01:03:45     16s] @(#)CDS: RCDB 11.15.0
+[04/09 01:03:45     16s] @(#)CDS: STYLUS 21.11-s001_1 (06/02/2021 03:53 PDT)
+[04/09 01:03:45     16s] Create and set the environment variable TMPDIR to /tmp/innovus_temp_1308889_et4351.ewi.tudelft.nl_jhque_2ECJiZ.
+
+[04/09 01:03:45     16s] Change the soft stacksize limit to 0.2%RAM (514 mbytes). Set global soft_stack_size_limit to change the value.
+[04/09 01:03:47     18s] 
+[04/09 01:03:47     18s] **INFO:  MMMC transition support version v31-84 
+[04/09 01:03:47     18s] 
+[04/09 01:03:47     18s] <CMD> set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+[04/09 01:03:47     18s] <CMD> suppressMessage ENCEXT-2799
+[04/09 01:04:09     18s] couldn't read file "./script/1.set_variable.tcl": no such file or directory
+[04/09 01:04:14     18s] couldn't read file ".pnr/script/1.set_variable.tcl": no such file or directory
+[04/09 01:04:48     18s] 
+[04/09 01:04:48     18s] *** Memory Usage v#1 (Current mem = 749.090M, initial mem = 318.535M) ***
+[04/09 01:04:48     18s] *** Message Summary: 0 warning(s), 0 error(s)
+[04/09 01:04:48     18s] 
+[04/09 01:04:48     18s] --- Ending "Innovus" (totcpu=0:00:18.4, real=0:01:24, mem=749.1M) ---

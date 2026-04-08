@@ -47,6 +47,8 @@ catch {setNanoRouteMode -quiet -extractThirdPartyCompatible false}
 catch {setNanoRouteMode -quiet -grouteExpTdStdDelay 41.700000}
 catch {setNanoRouteMode -quiet -grouteExpTdUseTifTimingEngineForImportDesign false}
 catch {setNanoRouteMode -quiet -routeAntennaCellName "ANTENNA"}
+catch {setNanoRouteMode -quiet -routeExpDirtyAreaEco false}
+catch {setNanoRouteMode -quiet -routeExpSignatureEco false}
 catch {setNanoRouteMode -quiet -routeFillerInstPrefix "FILLER_"}
 catch {setNanoRouteMode -quiet -routeFixTopLayerAntenna false}
 catch {setNanoRouteMode -quiet -routeInsertAntennaDiode true}
@@ -58,7 +60,11 @@ catch {setNanoRouteMode -quiet -routeTdrEffort 5}
 catch {setNanoRouteMode -quiet -routeWithSiDriven true}
 catch {setNanoRouteMode -quiet -routeWithSiPostRouteFix false}
 catch {setNanoRouteMode -quiet -routeWithTimingDriven true}
+<<<<<<< Updated upstream
 catch {setNanoRouteMode -quiet -timingEngine ".timing_file_4030345.tif.gz"}
+=======
+catch {setNanoRouteMode -quiet -timingEngine ".et4351_1327950.slk.gz"}
+>>>>>>> Stashed changes
 
 catch { setPlaceMode -place_global_activity_power_driven false }
 catch { setPlaceMode -place_global_cong_effort high }
@@ -66,6 +72,7 @@ catch { setPlaceMode -place_global_solver_effort high }
 catch { setPlaceMode -place_global_timing_effort high }
 catch { setPlaceMode -place_global_uniform_density true }
 catch { setIlmMode -keepHighFanoutPorts true -keepLoopBack false -keepInstInSdc false -keepFlatten true }
+catch { setActiveLogicViewMode -keepHighFanoutCriticalInsts false }
 catch { setUsefulSkewMode -ecoRoute false }
 catch { setDelayCalMode -enable_high_fanout true }
 catch { setDelayCalMode -engine aae }

@@ -89,6 +89,7 @@ report_power -clock_network all -hierarchy all -cell_type all -power_domain all 
 setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery true
 optDesign -postRoute -hold
 optDesign -postRoute -drv
+optDesign -postRoute -hold
 
 timeDesign -postRoute -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold
 timeDesign -postRoute -hold -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold_hold

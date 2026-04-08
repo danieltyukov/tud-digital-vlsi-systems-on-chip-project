@@ -16,18 +16,19 @@
 
 
 source ./scripts/1.set_variable.tcl
-source ./scripts/2.0.load_design.tcl
+# source ./scripts/2.0.load_design.tcl
 # suspend
-source ./scripts/3.0.fplan.tcl
+# source ./scripts/3.0.fplan.tcl
 # suspend
-source ./scripts/4.pplan.tcl
+# source ./scripts/4.pplan.tcl
 # suspend
-source ./scripts/5.place.tcl
+# source ./scripts/5.place.tcl
 # suspend
-source ./scripts/6.cts.tcl
+# source ./scripts/6.cts.tcl
 # suspend
-source ./scripts/7.route.tcl
+# source ./scripts/7.route.tcl
 # suspend
+restoreDesign checkpoints/et4351_route.enc et4351
 source ./scripts/8.verify.tcl
 # suspend
 source ./scripts/9.report.tcl

@@ -29,7 +29,7 @@ vlog -sv ../src/testbench/tb_et4351.sv    +incdir+../src/ +define+PHYS=1 -timesc
 # Launch the simulation
 vsim testbench -c -do ./scripts/run_vcd_hold.cmd -t 1ns \
             -sdfmin /testbench/dut=../pnr/outputs/et4351.phys.sdf \
-            +nosdferror -v2k_int_delays +nosdferror +nosdfwarn +notimingchecks \
+            +nosdferror -v2k_int_delays +nosdferror +nosdfwarn \
             +firmware=../firmware/accel_audio.hex \
             +fft_data=../firmware/fft_data.hex
 

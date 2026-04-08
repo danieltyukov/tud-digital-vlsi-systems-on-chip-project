@@ -34,8 +34,8 @@ create_delay_corner -name delay_max\
    -rc_corner rc
 create_constraint_mode -name constraint_mode\
    -sdc_files\
-    [list ${::IMEX::dataVar}/mmmc/modes/constraint_mode/constraint_mode.sdc]
-create_analysis_view -name analysis_view_setup -constraint_mode constraint_mode -delay_corner delay_max -latency_file ${::IMEX::dataVar}/mmmc/views/analysis_view_setup/latency.sdc
-create_analysis_view -name analysis_view_power -constraint_mode constraint_mode -delay_corner delay_typ -latency_file ${::IMEX::dataVar}/mmmc/views/analysis_view_power/latency.sdc
-create_analysis_view -name analysis_view_hold -constraint_mode constraint_mode -delay_corner delay_min -latency_file ${::IMEX::dataVar}/mmmc/views/analysis_view_hold/latency.sdc
+    [list /dev/null]
+create_analysis_view -name analysis_view_setup -constraint_mode constraint_mode -delay_corner delay_max -latency_file ${::IMEX::libVar}/mmmc/latency.sdc
+create_analysis_view -name analysis_view_power -constraint_mode constraint_mode -delay_corner delay_typ -latency_file ${::IMEX::libVar}/mmmc/latency.1.sdc
+create_analysis_view -name analysis_view_hold -constraint_mode constraint_mode -delay_corner delay_min -latency_file ${::IMEX::libVar}/mmmc/latency.2.sdc
 set_analysis_view -setup [list analysis_view_setup analysis_view_power] -hold [list analysis_view_hold analysis_view_power]

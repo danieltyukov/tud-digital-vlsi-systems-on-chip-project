@@ -78,6 +78,7 @@ VDD	powerReports/static_VDD.ptiavg
 VSS	powerReports/static_VSS.ptiavg
 VDD	powerReports/static_VDD.ptiavg
 VSS	powerReports/static_VSS.ptiavg
+<<<<<<< Updated upstream
 VDD	powerReports/static_VDD.ptiavg
 VSS	powerReports/static_VSS.ptiavg
 VDD	powerReports/static_VDD.ptiavg
@@ -136,3 +137,5 @@ VDD	powerReports/static_VDD.ptiavg
 VSS	powerReports/static_VSS.ptiavg
 VDD	powerReports/static_VDD.ptiavg
 VSS	powerReports/static_VSS.ptiavg
+=======
+>>>>>>> Stashed changes

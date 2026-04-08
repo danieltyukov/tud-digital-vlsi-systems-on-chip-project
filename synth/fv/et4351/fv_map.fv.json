@@ -46783,6 +46783,7 @@
 "object":"/designs/et4351/instances_seq/resetn_sync_int_reg",
 "type":"instance"},
 {"index": "1", 
+<<<<<<< Updated upstream
  "date": "Wed Apr 08 16:24:21 UTC 2026",
  "seconds": 1775665461.2641969,
  "netlist": "fv/et4351/fv_map.v.gz", 
@@ -46792,11 +46793,26 @@
  "netlist_timestamp": "Wed Apr 08 16:24:13 UTC 2026", 
  "netlist_size": "593357", 
  "netlist_cksum": "1347038524", 
+=======
+ "date": "Wed Apr 08 21:38:17 UTC 2026",
+ "seconds": 1775684297.475838,
+ "netlist": "fv/et4351/fv_map.v.gz", 
+ "netlist_exists": "1", 
+ "netlist_normalize": "/home/nfs/jhque/project/synth/fv/et4351/fv_map.v.gz", 
+ "netlist_mtime": "1775684289", 
+ "netlist_timestamp": "Wed Apr 08 21:38:09 UTC 2026", 
+ "netlist_size": "593357", 
+ "netlist_cksum": "3606933919", 
+>>>>>>> Stashed changes
  "design_name": "et4351", 
  "synth_workdir": "/home/nfs/jhque/project/synth", 
  "synthesis_command":"",
  "current_label": "fv_map", 
  "previous_label": "rtl", 
+<<<<<<< Updated upstream
  "write_verif_file_runtime": 8.037837999999999 
+=======
+ "write_verif_file_runtime": 8.134409 
+>>>>>>> Stashed changes
  }
 ]

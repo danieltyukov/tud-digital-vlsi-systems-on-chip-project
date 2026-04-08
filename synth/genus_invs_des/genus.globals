@@ -1,7 +1,11 @@
 #####################################################################
 #
 # Innovus input globals file
+<<<<<<< Updated upstream
 # Created by Genus(TM) Synthesis Solution on 04/08/2026 18:27:41
+=======
+# Created by Genus(TM) Synthesis Solution on 04/08/2026 23:41:27
+>>>>>>> Stashed changes
 #
 #####################################################################
 set cwd /home/nfs/jhque/project/synth

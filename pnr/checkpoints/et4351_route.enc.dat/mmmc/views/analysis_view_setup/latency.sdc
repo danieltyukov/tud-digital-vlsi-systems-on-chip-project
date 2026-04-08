@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 set_clock_latency -source -early -min -rise  -0.874931 [get_ports {clk}] -clock clk 
 set_clock_latency -source -early -min -fall  -0.841861 [get_ports {clk}] -clock clk 
 set_clock_latency -source -early -max -rise  -0.874931 [get_ports {clk}] -clock clk 
@@ -6,3 +7,13 @@ set_clock_latency -source -late -min -rise  -0.874931 [get_ports {clk}] -clock c
 set_clock_latency -source -late -min -fall  -0.841861 [get_ports {clk}] -clock clk 
 set_clock_latency -source -late -max -rise  -0.874931 [get_ports {clk}] -clock clk 
 set_clock_latency -source -late -max -fall  -0.841861 [get_ports {clk}] -clock clk 
+=======
+set_clock_latency -source -early -min -rise  -0.885132 [get_ports {clk}] -clock clk 
+set_clock_latency -source -early -min -fall  -0.847882 [get_ports {clk}] -clock clk 
+set_clock_latency -source -early -max -rise  -0.885132 [get_ports {clk}] -clock clk 
+set_clock_latency -source -early -max -fall  -0.847882 [get_ports {clk}] -clock clk 
+set_clock_latency -source -late -min -rise  -0.885132 [get_ports {clk}] -clock clk 
+set_clock_latency -source -late -min -fall  -0.847882 [get_ports {clk}] -clock clk 
+set_clock_latency -source -late -max -rise  -0.885132 [get_ports {clk}] -clock clk 
+set_clock_latency -source -late -max -fall  -0.847882 [get_ports {clk}] -clock clk 
+>>>>>>> Stashed changes
