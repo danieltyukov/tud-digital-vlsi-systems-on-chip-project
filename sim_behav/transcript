@@ -1,9 +1,5 @@
 # vsim testbench -c -do "./scripts/run.cmd" -t 10ns "+firmware=../firmware/accel_audio.hex" "+fft_data=../firmware/fft_data.hex" "+is_sim_behav=1" 
-<<<<<<< Updated upstream
-# Start time: 17:44:17 on Apr 08,2026
-=======
 # Start time: 23:22:07 on Apr 08,2026
->>>>>>> Stashed changes
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Warning: ../src/design/picorv32.v(386): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
 # ** Warning: ../src/design/picorv32.v(388): (vopt-2121) Illegal concatenation of an unsized constant. Will treat it as a 32-bit value.
@@ -818,9 +814,5 @@
 ##################################################
 # ** Note: $finish    : ../src/testbench/tb_et4351.sv(182)
 #    Time: 2562746560 ns  Iteration: 1  Instance: /testbench
-<<<<<<< Updated upstream
-# End time: 17:45:07 on Apr 08,2026, Elapsed time: 0:00:50
-=======
 # End time: 23:22:56 on Apr 08,2026, Elapsed time: 0:00:49
->>>>>>> Stashed changes
 # Errors: 0, Warnings: 6

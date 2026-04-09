@@ -2,11 +2,7 @@
 #
 # Innovus setup file
 # Created by Genus(TM) Synthesis Solution 21.10-p002_1
-<<<<<<< Updated upstream
-#   on 04/08/2026 18:27:41
-=======
 #   on 04/08/2026 23:41:27
->>>>>>> Stashed changes
 #
 ################################################################################
 #

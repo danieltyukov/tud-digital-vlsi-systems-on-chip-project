@@ -1,9 +1,5 @@
 # vsim testbench -c -do "./scripts/run_vcd.cmd" -t 100ps -sdfmax "/testbench/dut=../synth/outputs/et4351.struct.sdf" -v2k_int_delays "+nosdferror" "+nosdfwarn" "+firmware=../firmware/accel_audio.hex" "+fft_data=../firmware/fft_data.hex" 
-<<<<<<< Updated upstream
-# Start time: 18:28:19 on Apr 08,2026
-=======
 # Start time: 23:42:34 on Apr 08,2026
->>>>>>> Stashed changes
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim-64
 # //  Version 2020.4 linux_x86_64 Oct 13 2020
@@ -240,9 +236,5 @@
 ##################################################
 # ** Note: $finish    : ../src/testbench/tb_et4351.sv(182)
 #    Time: 123084555600 ps  Iteration: 1  Instance: /testbench
-<<<<<<< Updated upstream
-# End time: 18:29:14 on Apr 08,2026, Elapsed time: 0:00:55
-=======
 # End time: 23:43:26 on Apr 08,2026, Elapsed time: 0:00:52
->>>>>>> Stashed changes
 # Errors: 0, Warnings: 0

@@ -1,10 +1,6 @@
 # ####################################################################
 
-<<<<<<< Updated upstream
-#  Created by Genus(TM) Synthesis Solution 21.10-p002_1 on Wed Apr 08 18:27:42 CEST 2026
-=======
 #  Created by Genus(TM) Synthesis Solution 21.10-p002_1 on Wed Apr 08 23:41:28 CEST 2026
->>>>>>> Stashed changes
 
 # ####################################################################
 
