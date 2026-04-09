@@ -10,7 +10,7 @@
 ##########################################################################
 
 
-Puts "" 
+Puts ""
 Puts ""
 Puts ""
 Puts " ##############################################################    "
@@ -32,5 +32,5 @@ write_sdf -min_view analysis_view_hold -max_view analysis_view_setup -typ_view a
 # Export .enc
 saveDesign checkpoints/${DESIGN}_done.enc
 
-# gds
-streamOut outputs/${DESIGN}.phys.gds
+# gds — disabled to avoid disk quota issues (not needed for simulation)
+# streamOut outputs/${DESIGN}.phys.gds

@@ -41,11 +41,6 @@ set_attribute hdl_error_on_latch true /
 # No automatically ungroup of any hierarchy during the synthesis process (Good for debug but turn it off for better results)
 set_attribute auto_ungroup none /
 
-# Defining clock gating before elaboration
-set_attribute lp_insert_clock_gating false /
-set_attribute lp_insert_clock_gating true accelerator
-set_attribute lp_insert_clock_gating true accelerator_fft
-
 # Elaborate design
 elaborate $DESIGN
 timestat Elaboration
@@ -68,10 +63,20 @@ change_names -restricted "\[ \]" -replace_str "_"
 # Number of routing layers
 set_attribute number_of_routing_layers 8 /designs/*
 
-# Clock gating options
+# Clock gating options — set AFTER elaborate so all submodule objects exist.
+# Disable CG on ALL designs first, then enable only on the accelerator modules.
+# This must be done post-elaborate because submodules like picorv32_pcpi_div,
+# spimemio_xfer etc. are separate Genus design objects that don't exist before
+# elaboration, so a pre-elaborate "false /" does not cover them.
 set_attribute lp_clock_gating_control_point precontrol /des*/*
 set_attribute lp_clock_gating_style latch /des*/*
 set_attribute lp_insert_discrete_clock_gating_logic true
+
+# Disable CG on all designs using /designs/* glob (works in Genus legacy_ui),
+# then re-enable only on the accelerator modules using find.
+set_attribute lp_insert_clock_gating false /designs/*
+set_attribute lp_insert_clock_gating true  [find /designs -design accelerator]
+set_attribute lp_insert_clock_gating true  [find /designs -design "accelerator_fft*"]
 
 
 ####################################################################

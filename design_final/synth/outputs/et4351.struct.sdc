@@ -1,6 +1,6 @@
 # ####################################################################
 
-#  Created by Genus(TM) Synthesis Solution 21.10-p002_1 on Thu Apr 09 02:57:07 CEST 2026
+#  Created by Genus(TM) Synthesis Solution 21.10-p002_1 on Thu Apr 09 16:04:57 CEST 2026
 
 # ####################################################################
 
@@ -129,6 +129,6 @@ set_dont_use true [get_lib_cells slow_vdd1v0/SMDFFHQX2]
 set_dont_use true [get_lib_cells slow_vdd1v0/SMDFFHQX4]
 set_dont_use true [get_lib_cells slow_vdd1v0/SMDFFHQX8]
 set_clock_uncertainty -setup 0.1 [get_clocks clk]
-set_clock_uncertainty -hold 0.1 [get_clocks clk]
+set_clock_uncertainty -hold 0.05 [get_clocks clk]
 set_clock_uncertainty -setup 0.1 [get_clocks flash_clk]
-set_clock_uncertainty -hold 0.1 [get_clocks flash_clk]
+set_clock_uncertainty -hold 0.05 [get_clocks flash_clk]
