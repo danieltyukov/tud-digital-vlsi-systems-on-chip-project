@@ -50,3 +50,10 @@ create_analysis_view -name analysis_view_setup -constraint_mode constraint_mode 
 create_analysis_view -name analysis_view_hold  -constraint_mode constraint_mode -delay_corner delay_min
 
 set_analysis_view -setup {analysis_view_setup analysis_view_power} -hold {analysis_view_hold analysis_view_power}
+
+# Async reset/set pins: removal/recovery hold checks are not meaningful
+# since resetn is asserted asynchronously and held for many cycles.
+# Applied here (not in SDC) because Genus does not support -hold on set_false_path.
+set_interactive_constraint_modes [all_constraint_modes -active]
+set_false_path -hold -to [get_pins -hierarchical */RN]
+set_false_path -hold -to [get_pins -hierarchical */SN]
