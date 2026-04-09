@@ -21,7 +21,7 @@ vlog ../src/design/accelerator.v \
      ../src/design/simpleuart.v \
      ../src/design/picorv32.v \
      ../src/design/et4351.v \
-     +incdir+../src/                  -timescale 1ns/1ps
+     +incdir+../src/ +define+BEHAV=1  -timescale 1ns/1ps
 
 # Compile the testbench 
 vlog     ../src/testbench/spiflash.v +define+BEHAV=1 -timescale 1ns/1ps

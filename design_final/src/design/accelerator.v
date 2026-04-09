@@ -102,13 +102,50 @@ module accelerator (
   wire [NUM_REGS_WIDTH-1:0] iomem_accel_addr;  // Accelerator Register Address
 
   /*----------------------------------------------------------------------------------------
+        CLOCK GATING
+    ----------------------------------------------------------------------------------------*/
+  // Gated clock signals
+  wire fft_clk;
+  wire mem_clk;
+  wire fft_clk_en;
+  wire mem_clk_en;
+
+  // Clock gating enable logic
+  // fft_clk runs during reset or when accelerator is enabled and not finished
+  // mem_clk also runs during CPU memory writes to the accelerator memory
+  assign fft_clk_en = reset_accel || (enable_accel && !finished_accel);
+  assign mem_clk_en = fft_clk_en || (iomem_access_mem && (|iomem_wstrb));
+
+  // ICG cell instantiations (latch-based, gpdk045 library)
+`ifdef BEHAV
+  // Behavioral model: negative-latch + AND gate
+  reg fft_latch, mem_latch;
+  always @(*) if (!clk) fft_latch <= fft_clk_en;
+  always @(*) if (!clk) mem_latch <= mem_clk_en;
+  assign fft_clk = clk & fft_latch;
+  assign mem_clk = clk & mem_latch;
+`else
+  TLATNCAX2 fft_icg (
+      .ECK(fft_clk),
+      .E  (fft_clk_en),
+      .CK (clk)
+  );
+
+  TLATNCAX2 mem_icg (
+      .ECK(mem_clk),
+      .E  (mem_clk_en),
+      .CK (clk)
+  );
+`endif
+
+  /*----------------------------------------------------------------------------------------
         MEMORY AND ACCELERATOR
     ----------------------------------------------------------------------------------------*/
   // Instantiate the MEMORY of the accelerator
   accelerator_mem #(
       .MEM_DEPTH(MEM_DEPTH)
   ) mem (
-      .clk  (clk),
+      .clk  (mem_clk),
       .wen  (mem_wstrb),
       .addr (mem_addr),
       .wdata(mem_wdata),
@@ -121,7 +158,7 @@ module accelerator (
       .MEM_WIDTH (32),
       .ADDR_WIDTH(ADDR_WIDTH)
   ) fft (
-      .clk(clk),
+      .clk(fft_clk),
       .resetn(resetn),
 
       .reset_accel (reset_accel),

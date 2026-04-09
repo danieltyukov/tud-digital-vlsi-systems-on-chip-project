@@ -57,3 +57,11 @@ set_analysis_view -setup {analysis_view_setup analysis_view_power} -hold {analys
 set_interactive_constraint_modes [all_constraint_modes -active]
 set_false_path -hold -to [get_pins -hierarchical */RN]
 set_false_path -hold -to [get_pins -hierarchical */SN]
+
+# Manual ICG clock gating: fft_clk and mem_clk are derived from clk via TLATNCAX2.
+# Cross-domain paths (clk CSR regs <-> fft_clk/mem_clk FFT/mem regs) carry only
+# slow control signals (enable_accel, reset_accel, finished_accel) — false path.
+set_false_path -from [get_clocks clk] -to [get_pins -hierarchical accel/fft_icg/ECK]
+set_false_path -from [get_clocks clk] -to [get_pins -hierarchical accel/mem_icg/ECK]
+set_false_path -from [get_pins -hierarchical accel/fft_icg/ECK] -to [get_clocks clk]
+set_false_path -from [get_pins -hierarchical accel/mem_icg/ECK] -to [get_clocks clk]

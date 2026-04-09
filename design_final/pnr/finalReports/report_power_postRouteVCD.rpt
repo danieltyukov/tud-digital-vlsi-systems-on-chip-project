@@ -2,7 +2,7 @@
 *	Innovus 21.11-s130_1 (64bit) 08/19/2021 16:59 (Linux 3.10.0-693.el7.x86_64)
 *	
 *
-* 	Date & Time:	2026-Apr-09 21:00:24 (2026-Apr-09 19:00:24 GMT)
+* 	Date & Time:	2026-Apr-10 00:13:09 (2026-Apr-09 22:13:09 GMT)
 *
 *----------------------------------------------------------------------------------------
 *
@@ -23,7 +23,7 @@
 *	        ../sim_phys/vcd/et4351.phys.hold.vcd
 *                    Vcd Window used(Start Time, Stop Time):   
 *                     Vcd Scale Factor: 1 
-* *                    Design annotation coverage: 0/80396 = 0% 
+* *                    Design annotation coverage: 0/79559 = 0% 
 *
 *       Hierarchical Global Activity: N.A.
 *
@@ -48,33 +48,33 @@
 
 Total Power 
 -----------------------------------------------------------------------------------------
-Total Internal Power:        0.50146303 	   73.8278%
-Total Switching Power:       0.14823861 	   21.8244%
-Total Leakage Power:         0.02953195 	    4.3478%
-Total Power:                 0.67923359 
+Total Internal Power:        0.15620897 	   65.4360%
+Total Switching Power:       0.05339382 	   22.3667%
+Total Leakage Power:         0.02911743 	   12.1973%
+Total Power:                 0.23872022 
 -----------------------------------------------------------------------------------------
 
 
 Group                           Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-Sequential                        0.4329   0.0004719    0.007124      0.4404       64.84 
-Macro                                  0   2.136e-05           0   2.136e-05    0.003144 
-IO                                     0           0   3.618e-07   3.618e-07   5.327e-05 
-Combinational                   0.006268    0.007458     0.02214     0.03587       5.281 
-Clock (Combinational)            0.06234      0.1403   0.0002661      0.2029       29.87 
-Clock (Sequential)                     0           0           0           0           0 
+Sequential                        0.1293   0.0005052    0.007157      0.1369       57.36 
+Macro                                  0   1.964e-05   3.485e-12   1.964e-05    0.008226 
+IO                                     0           0    3.18e-07    3.18e-07   0.0001332 
+Combinational                   0.006076    0.006365      0.0217     0.03414        14.3 
+Clock (Combinational)            0.02047      0.0465   0.0002579     0.06723       28.16 
+Clock (Sequential)             0.0003894           0   3.434e-06   0.0003928      0.1645 
 -----------------------------------------------------------------------------------------
-Total                             0.5015      0.1482     0.02953      0.6792         100 
+Total                             0.1562     0.05339     0.02912      0.2387         100 
 -----------------------------------------------------------------------------------------
 
 
 Clock                           Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-clk                              0.06234      0.1403   0.0002661      0.2029       29.87 
+clk                              0.02086      0.0465   0.0002613     0.06762       28.33 
 -----------------------------------------------------------------------------------------
-Total (excluding duplicates)     0.06234      0.1403   0.0002661      0.2029       29.87 
+Total (excluding duplicates)     0.02086      0.0465   0.0002613     0.06762       28.33 
 -----------------------------------------------------------------------------------------
 Clock: clk
 Clock Period: 0.083330 usec 
@@ -86,44 +86,44 @@ Clock Static Probability:  0.5002
 Rail                  Voltage   Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-VDD                      1.32     0.5015      0.1482     0.02953      0.6792         100 
+VDD                      1.32     0.1562     0.05339     0.02912      0.2387         100 
 
 
 Total Power 
 -----------------------------------------------------------------------------------------
-Total Internal Power:        0.50146303 	   73.8278%
-Total Switching Power:       0.14823861 	   21.8244%
-Total Leakage Power:         0.02953195 	    4.3478%
-Total Power:                 0.67923359 
+Total Internal Power:        0.15620897 	   65.4360%
+Total Switching Power:       0.05339382 	   22.3667%
+Total Leakage Power:         0.02911743 	   12.1973%
+Total Power:                 0.23872022 
 -----------------------------------------------------------------------------------------
 
 
 Hierarchy                       Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-accel                               0.35     0.08762     0.02048      0.4581       67.44  
-soc                               0.1434      0.0429    0.008997      0.1953       28.75  
-flash_bufs_0_                          0           0    2.02e-06    2.02e-06   0.0002973  
-flash_bufs_1_                          0   0.0001469   1.631e-06   0.0001485     0.02187  
-flash_bufs_2_                          0           0   1.631e-06   1.631e-06   0.0002401  
-flash_bufs_3_                          0           0   1.631e-06   1.631e-06   0.0002401  
-accel/fft                         0.1153     0.03044     0.01448      0.1602       23.59  
-accel/mem                         0.2234     0.04901    0.005439      0.2778        40.9  
-soc/cpu                           0.1165     0.03266    0.007811       0.157       23.11  
-soc/simpleuart                    0.0108   0.0009464   0.0005048     0.01225       1.803  
-soc/spimemio                     0.01385    0.003927   0.0005667     0.01834         2.7  
-soc/memory                     3.382e-06   3.625e-05   5.542e-06   4.518e-05    0.006651  
-soc/cpu/genblk1.pcpi_mul         0.01226   5.289e-05   0.0006719     0.01298       1.912  
-soc/cpu/genblk2.pcpi_div        0.009735   1.702e-05   0.0007029     0.01045       1.539  
-soc/spimemio/xfer               0.005056    0.002247   0.0001626    0.007465       1.099  
+soc                               0.1438     0.04469    0.008869      0.1974       82.68  
+accel                           0.008519   0.0007123     0.02021     0.02945       12.33  
+flash_bufs_0_                          0           0    2.02e-06    2.02e-06    0.000846  
+flash_bufs_1_                          0   0.0001474   1.631e-06    0.000149     0.06241  
+flash_bufs_2_                          0           0   1.631e-06   1.631e-06   0.0006831  
+flash_bufs_3_                          0           0   1.631e-06   1.631e-06   0.0006831  
+soc/cpu                           0.1175     0.03621    0.007699      0.1614        67.6  
+soc/memory                     9.166e-07    2.81e-05   9.764e-06   3.879e-05     0.01625  
+accel/fft                              0           0     0.01416     0.01416       5.933  
+accel/mem                              0           0    0.005443    0.005443        2.28  
+soc/spimemio                     0.01389    0.003881   0.0005528     0.01833       7.677  
+soc/simpleuart                    0.0107   0.0007944   0.0005005       0.012       5.025  
+soc/spimemio/xfer                 0.0053    0.002085   0.0001595    0.007545        3.16  
+soc/cpu/genblk1.pcpi_mul          0.0123   4.413e-05   0.0006467     0.01299        5.44  
+soc/cpu/genblk2.pcpi_div        0.009755   1.654e-05   0.0007201     0.01049       4.395  
 
 
 -----------------------------------------------------------------------------------------
 *	Power Distribution Summary: 
-*                Highest Average Power:   soc/CTS_ccl_a_buf_00004 (CLKBUFX20):         0.001965 
-*                Highest Leakage Power: accel/fft/FE_OFC2464_n_5731 (CLKBUFX20):        2.292e-06 
-*          Total Cap:      3.03692e-10 F
-*          Total instances in design: 74685
+*                Highest Average Power: soc/cpu/CTS_ccl_a_buf_00026 (CLKBUFX20):         0.001994 
+*                Highest Leakage Power: accel/fft/FE_OFC5361_n_2810 (CLKBUFX20):        2.292e-06 
+*          Total Cap:      2.99979e-10 F
+*          Total instances in design: 73849
 *          Total instances in design with no power:     0
 *          Total instances in design with no activity:     0
 *          Total Fillers and Decap:     0

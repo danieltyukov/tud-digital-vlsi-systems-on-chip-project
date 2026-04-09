@@ -38,5 +38,4 @@ source scripts/synth_map.tcl
 # Export
 source scripts/synth_exp.tcl
 
-
-
+exit
