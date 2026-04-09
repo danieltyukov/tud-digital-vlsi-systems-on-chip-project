@@ -2,15 +2,15 @@
 *	Innovus 21.11-s130_1 (64bit) 08/19/2021 16:59 (Linux 3.10.0-693.el7.x86_64)
 *	
 *
-* 	Date & Time:	2026-Apr-08 22:47:46 (2026-Apr-08 20:47:46 GMT)
+* 	Date & Time:	2026-Apr-09 20:44:30 (2026-Apr-09 18:44:30 GMT)
 *
 *----------------------------------------------------------------------------------------
 *
 *	Design: et4351
 *
 *	Liberty Libraries used: 
-*	        analysis_view_power: /home/nfs/asakr/project/design_final/pnr/checkpoints/et4351_done.enc.dat/libs/mmmc/fast_vdd1v2_basicCells.lib
-*	        analysis_view_power: /home/nfs/asakr/project/design_final/pnr/checkpoints/et4351_done.enc.dat/libs/mmmc/saed32sram_tt1p05v125c.lib
+*	        analysis_view_power: /data/Cadence/gpdk045_v60/gsclib045_svt_v4.7/gsclib045/timing/fast_vdd1v2_basicCells.lib
+*	        analysis_view_power: /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram_tt1p05v125c.lib
 *
 *	Power Domain used: 
 *              Rail:        VDD      Voltage:       1.32 
@@ -20,10 +20,10 @@
 *       User-Defined Activity : N.A.
 *
 *	Switching Activity File used: 
-*	        /home/nfs/asakr/project/design_final/pnr/checkpoints/et4351_done.enc.dat/libs/power/et4351.struct.vcd
+*	        ../sim_struct/vcd/et4351.struct.vcd
 *                    Vcd Window used(Start Time, Stop Time):   
 *                     Vcd Scale Factor: 1 
-* *                    Design annotation coverage: 0/79877 = 0% 
+* *                    Design annotation coverage: 0/80396 = 0% 
 *
 *       Hierarchical Global Activity: N.A.
 *
@@ -41,46 +41,40 @@
 *
 *	Time Units = 1e-09 secs 
 *
-*       report_power -outfile finalReports/report_power.rpt
+*       report_power -outfile finalReports/report_power.rpt -hierarchy all
 *
 -----------------------------------------------------------------------------------------
 
 
 Total Power 
 -----------------------------------------------------------------------------------------
-Total Internal Power:        0.11286078 	   71.0837%
-Total Switching Power:       0.01714492 	   10.7985%
-Total Leakage Power:         0.02876594 	   18.1178%
-Total Power:                 0.15877164 
+Total Internal Power:        0.50486313 	   73.8552%
+Total Switching Power:       0.14919641 	   21.8256%
+Total Leakage Power:         0.02952540 	    4.3192%
+Total Power:                 0.68358494 
 -----------------------------------------------------------------------------------------
 
 
 Group                           Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-Sequential                       0.04103   0.0006487    0.006805     0.04848       30.54 
-Macro                                  0   3.326e-05           0   3.326e-05     0.02095 
-IO                                     0           0   3.086e-05   3.086e-05     0.01944 
-Combinational                    0.01399     0.01135     0.02099     0.04633       29.18 
-Clock (Combinational)           0.003501    0.003356   0.0003675    0.007225        4.55 
-Clock (Sequential)               0.05434    0.001758   0.0005741     0.05667       35.69 
+Sequential                        0.4346   0.0003717    0.007124      0.4421       64.68 
+Macro                                  0   2.839e-05           0   2.839e-05    0.004153 
+IO                                     0           0   3.618e-07   3.618e-07   5.293e-05 
+Combinational                   0.007684    0.008499     0.02213     0.03832       5.605 
+Clock (Combinational)            0.06256      0.1403   0.0002661      0.2031       29.72 
+Clock (Sequential)                     0           0           0           0           0 
 -----------------------------------------------------------------------------------------
-Total                             0.1129     0.01714     0.02877      0.1588         100 
+Total                             0.5049      0.1492     0.02953      0.6836         100 
 -----------------------------------------------------------------------------------------
-
-
-Rail                  Voltage   Internal   Switching     Leakage       Total  Percentage 
-                                Power      Power         Power         Power  (%)        
------------------------------------------------------------------------------------------
-VDD                      1.32     0.1129     0.01714     0.02877      0.1588         100 
 
 
 Clock                           Internal   Switching     Leakage       Total  Percentage 
                                 Power      Power         Power         Power  (%)        
 -----------------------------------------------------------------------------------------
-clk                              0.05784    0.005114   0.0009415     0.06389       40.24 
+clk                              0.06256      0.1403   0.0002661      0.2031       29.72 
 -----------------------------------------------------------------------------------------
-Total (excluding duplicates)     0.05784    0.005114   0.0009415     0.06389       40.24 
+Total (excluding duplicates)     0.06256      0.1403   0.0002661      0.2031       29.72 
 -----------------------------------------------------------------------------------------
 Clock: clk
 Clock Period: 0.083330 usec 
@@ -89,12 +83,47 @@ Clock Static Probability:  0.5001
 
 
 
+Rail                  Voltage   Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+VDD                      1.32     0.5049      0.1492     0.02953      0.6836         100 
+
+
+Total Power 
+-----------------------------------------------------------------------------------------
+Total Internal Power:        0.50486313 	   73.8552%
+Total Switching Power:       0.14919641 	   21.8256%
+Total Leakage Power:         0.02952540 	    4.3192%
+Total Power:                 0.68358494 
+-----------------------------------------------------------------------------------------
+
+
+Hierarchy                       Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+accel                             0.3513     0.08767     0.02047      0.4594       67.21  
+soc                               0.1455     0.04397    0.009001      0.1984       29.03  
+flash_bufs_0_                          0           0    2.02e-06    2.02e-06   0.0002954  
+flash_bufs_1_                          0   8.457e-05   1.631e-06    8.62e-05     0.01261  
+flash_bufs_2_                          0           0   1.631e-06   1.631e-06   0.0002385  
+flash_bufs_3_                          0           0   1.631e-06   1.631e-06   0.0002385  
+accel/fft                         0.1157     0.03041     0.01447      0.1606        23.5  
+accel/mem                         0.2242     0.04913    0.005439      0.2788       40.78  
+soc/cpu                           0.1175     0.03316    0.007814      0.1584       23.18  
+soc/simpleuart                   0.01101    0.001146   0.0005049     0.01266       1.852  
+soc/spimemio                     0.01469    0.004242   0.0005666      0.0195       2.853  
+soc/memory                     2.305e-06   4.113e-05   5.522e-06   4.896e-05    0.007162  
+soc/cpu/genblk1.pcpi_mul         0.01227   2.154e-05   0.0006722     0.01296       1.896  
+soc/cpu/genblk2.pcpi_div        0.009744   2.925e-06    0.000703     0.01045       1.529  
+soc/spimemio/xfer               0.005941    0.002538   0.0001627    0.008642       1.264  
+
+
 -----------------------------------------------------------------------------------------
 *	Power Distribution Summary: 
-*                Highest Average Power: soc/cpu/genblk2.pcpi_div/CTS_ccl_a_buf_00004 (CLKBUFX20):         0.002029 
-*                Highest Leakage Power: soc/cpu/genblk2.pcpi_div/RC_CG_HIER_INST665/RC_CGIC_INST (TLATNTSCAX20):        3.075e-06 
-*          Total Cap:      2.57132e-10 F
-*          Total instances in design: 73616
+*                Highest Average Power:   soc/CTS_ccl_a_buf_00004 (CLKBUFX20):          0.00197 
+*                Highest Leakage Power: accel/fft/FE_OFC2464_n_5731 (CLKBUFX20):        2.292e-06 
+*          Total Cap:      3.02221e-10 F
+*          Total instances in design: 74685
 *          Total instances in design with no power:     0
 *          Total instances in design with no activity:     0
 *          Total Fillers and Decap:     0
