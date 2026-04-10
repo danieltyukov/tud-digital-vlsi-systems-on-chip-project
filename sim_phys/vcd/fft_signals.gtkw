@@ -1,0 +1,35 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Fri Apr 10 16:54:06 2026
+[*]
+[dumpfile] "/home/nfs/shanghonglin/project/sim_phys/vcd/et4351.phys.setup.vcd"
+[dumpfile_mtime] "Fri Apr 10 14:46:18 2026"
+[dumpfile_size] 9246785
+[savefile] "/home/nfs/shanghonglin/project/sim_phys/vcd/fft_signals.gtkw"
+[timestart] 7811771696
+[size] 1440 914
+[pos] -40 -63
+*-10.000000 7811773600 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] testbench.
+[treeopen] testbench.dut.
+[treeopen] testbench.dut.accel.
+[sst_width] 345
+[signals_width] 329
+[sst_expanded] 1
+[sst_vpaned_height] 267
+@28
+testbench.dut.accel.fft.state_reg_0_
+testbench.dut.accel.fft.state_reg_1_
+testbench.dut.accel.fft.state_reg_2_
+testbench.dut.clk
+testbench.dut.accel.fft.fft_finished
+@800023
+#{accel_mem_wdata_hi_[23:0]} testbench.dut.accel.accel_mem_wdata_hi_23_ testbench.dut.accel.accel_mem_wdata_hi_22_ testbench.dut.accel.accel_mem_wdata_hi_21_ testbench.dut.accel.accel_mem_wdata_hi_20_ testbench.dut.accel.accel_mem_wdata_hi_19_ testbench.dut.accel.accel_mem_wdata_hi_18_ testbench.dut.accel.accel_mem_wdata_hi_17_ testbench.dut.accel.accel_mem_wdata_hi_16_ testbench.dut.accel.accel_mem_wdata_hi_15_ testbench.dut.accel.accel_mem_wdata_hi_14_ testbench.dut.accel.accel_mem_wdata_hi_13_ testbench.dut.accel.accel_mem_wdata_hi_12_ testbench.dut.accel.accel_mem_wdata_hi_11_ testbench.dut.accel.accel_mem_wdata_hi_10_ testbench.dut.accel.accel_mem_wdata_hi_9_ testbench.dut.accel.accel_mem_wdata_hi_8_ testbench.dut.accel.accel_mem_wdata_hi_7_ testbench.dut.accel.accel_mem_wdata_hi_6_ testbench.dut.accel.accel_mem_wdata_hi_5_ testbench.dut.accel.accel_mem_wdata_hi_4_ testbench.dut.accel.accel_mem_wdata_hi_3_ testbench.dut.accel.accel_mem_wdata_hi_2_ testbench.dut.accel.accel_mem_wdata_hi_1_ testbench.dut.accel.accel_mem_wdata_hi_0_
+@1001201
+-group_end
+@800023
+#{accel_mem_wdata_lo_[23:0]} testbench.dut.accel.accel_mem_wdata_lo_23_ testbench.dut.accel.accel_mem_wdata_lo_22_ testbench.dut.accel.accel_mem_wdata_lo_21_ testbench.dut.accel.accel_mem_wdata_lo_20_ testbench.dut.accel.accel_mem_wdata_lo_19_ testbench.dut.accel.accel_mem_wdata_lo_18_ testbench.dut.accel.accel_mem_wdata_lo_17_ testbench.dut.accel.accel_mem_wdata_lo_16_ testbench.dut.accel.accel_mem_wdata_lo_15_ testbench.dut.accel.accel_mem_wdata_lo_14_ testbench.dut.accel.accel_mem_wdata_lo_13_ testbench.dut.accel.accel_mem_wdata_lo_12_ testbench.dut.accel.accel_mem_wdata_lo_11_ testbench.dut.accel.accel_mem_wdata_lo_10_ testbench.dut.accel.accel_mem_wdata_lo_9_ testbench.dut.accel.accel_mem_wdata_lo_8_ testbench.dut.accel.accel_mem_wdata_lo_7_ testbench.dut.accel.accel_mem_wdata_lo_6_ testbench.dut.accel.accel_mem_wdata_lo_5_ testbench.dut.accel.accel_mem_wdata_lo_4_ testbench.dut.accel.accel_mem_wdata_lo_3_ testbench.dut.accel.accel_mem_wdata_lo_2_ testbench.dut.accel.accel_mem_wdata_lo_1_ testbench.dut.accel.accel_mem_wdata_lo_0_
+@1001201
+-group_end
+[pattern_trace] 1
+[pattern_trace] 0

@@ -27,7 +27,7 @@ vlog ../src/testbench/spiflash.v    +incdir+../src/ +define+PHYS=1 -timescale 1n
 vlog -sv ../src/testbench/tb_et4351.sv    +incdir+../src/ +define+PHYS=1 -timescale 1ns/1ps
 
 # Launch the simulation
-vsim testbench -c -do ./scripts/run_vcd_setup.cmd -t 1ns \
+vsim testbench -c -do ./scripts/run_vcd_setup.cmd -t 1ps \
             -sdfmax /testbench/dut=../pnr/outputs/et4351.phys.sdf \
             +nosdferror -v2k_int_delays +nosdferror +nosdfwarn \
             +firmware=../firmware/accel_audio.hex \
