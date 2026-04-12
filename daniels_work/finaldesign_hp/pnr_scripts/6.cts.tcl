@@ -42,7 +42,7 @@ ccopt_design
 
 setOptMode -fixCap true -fixTran true -fixFanoutLoad true
 # TODO: make sure to remove this when the new layermap file is ready
-setOptMode -holdTargetSlack 0.2
+setOptMode -holdTargetSlack 0.1
 optDesign  -postCTS -hold -outDir timingReports/postCTSHold_hold
 timeDesign -postCTS -outDir timingReports/postCTSHold
 

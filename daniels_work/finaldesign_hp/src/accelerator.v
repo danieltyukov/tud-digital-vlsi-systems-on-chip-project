@@ -1,43 +1,22 @@
-
 /*##########################################################################
 ###
-### Dummy accelerator module
-###    
-###     This is an accelerator module that implement the iterative (in-place) Cooley-Tukey FFT algorithm using a Moore FSM.
+### Accelerator wrapper (wide-port variant)
 ###
-###     TU Delft ET4351
-###     April 2023, C.Gao, C. Frenkel: 
-###                - Baseline project for count from zero to the value of the input data.
-###                - It is used to demonstrate the use of the accelerator interface.
-###     April 2024, N.Chauvaux: 
-###                - Sorting accelerator + memory interface
-###     December 2024, Ang Li, Yizhuo Wu: 
-###                - Pathfinding accelerator
-###     January 2026, N.Chauvaux and Douwe den Blanken:
-###                - FFT accelerator
+###     Bridges the PicoRV32 iomem bus (32-bit) to the FFT core's wide
+###     paired SRAM interface (64-bit).  The key change from the v6 wrapper:
+###
+###       - The CPU accesses accelerator_mem through the NARROW port
+###         (32-bit, byte-enable writes, combinational reads).
+###       - The FFT core accesses accelerator_mem through the WIDE port
+###         (48-bit paired = 2×24-bit, one re+im pair per cycle).
+###       - No shared address/data mux — the two paths are independent
+###         and mutually exclusive (CPU writes before enable, FFT after).
+###
+###     CSR interface, twiddle packing, and memory map are unchanged.
+###
+###     TU Delft ET4351 – 2026 Project
 ###
 ##########################################################################*/
-
-/* Accelerator Memory Map
-    // CONFIGURATION FILE
-	iomem_accel[0] | 0x0300_0000: 32-bit Config & Status Register (CSR)
-        --Bit [31:3] <xxxxxx>  : Undefined. You can use these bits for your own purposes.
-        --Bit 2      <Status>  : Done Flag (FFT finished)           | 0 = Not finished, 1 = Finished
-        --Bit 1      <Config>  : Enable Accelerator (Active High)   | 0 = Disable, 1 = Enable
-        --Bit 0      <Config>  : Reset Accelerator  (Active High)   | 0 = Assert,  1 = Release
-    iomem_accel[1] | 0x300_0004: 32-bit Number data
-    iomem_accel[2] | 0x300_0008: 32-bit General Purpose Input/Output (GPIO)
-    iomem_accel[3] | 0x300_000C: 32-bit General Purpose Input/Output (GPIO)
-
-    // MEMORY FILE
-    MEM[0] | 0x0300_0010: 32-bit word
-    MEM[1] | 0x0300_0014: 32-bit word
-    ...
-    ...
-    ...
-    ...
-    MEM[31] | 0x0300_08C: 32-bit word
-*/
 
 module accelerator (
     input  wire        clk,
@@ -49,153 +28,212 @@ module accelerator (
     input  wire [31:0] iomem_wdata,
     output wire [31:0] iomem_rdata
 );
+
   /*----------------------------------------------------------------------------------------
-        SIGNALS DECLARATION
+        LOCAL PARAMETERS
     ----------------------------------------------------------------------------------------*/
-  /*
-     * Declare Local Parameters
-     */
-  // Accelerator configuration registers
-  localparam NUM_REGS = 4;  // Number of registers in the accelerator
-  localparam NUM_REGS_WIDTH = $clog2(NUM_REGS);  // Number of bits required to address the registers
-  // Accelerator internal memory
-  localparam MEM_DEPTH = 128;
-  localparam ADDR_WIDTH = $clog2(MEM_DEPTH);  // Number of bits required to address the MEMORY
-  // Application specifications
-  localparam LOG_MAX_N = 32;  // Maximum number of input samples is 2^32
-  localparam LOG_MAX_FFT_STAGES = $clog2(LOG_MAX_N);  // Maximum number of stage in the FFT
+  localparam LOG_MAX_N          = 32;
+  localparam LOG_MAX_FFT_STAGES = $clog2(LOG_MAX_N);    // = 5
+  localparam MAX_FFT_N          = 32;
+  localparam NUM_TW             = MAX_FFT_N / 2;        // = 16
+  localparam DATA_WIDTH         = 24;                    // narrowed from 32
+
+  // CSR configuration registers:  3 config + NUM_TW packed twiddle words
+  //   Each twiddle CSR packs {tw_im[15:0], tw_re[15:0]} into one 32-bit word
+  localparam NUM_CFG_REGS   = 3;
+  localparam NUM_TW_REGS    = NUM_TW;                    // = 16  (was 2*NUM_TW=32)
+  localparam NUM_REGS       = NUM_CFG_REGS + NUM_TW_REGS; // = 19  (was 35)
+  localparam NUM_REGS_WIDTH = $clog2(NUM_REGS);          // = 5
+
+  // Accelerator internal memory (data only — no twiddles)
+  localparam MEM_DEPTH  = 2 * MAX_FFT_N;                // = 64  (re+im interleaved)
+  localparam ADDR_WIDTH = $clog2(MEM_DEPTH);             // = 6
+  localparam PAIR_ADDR_WIDTH = ADDR_WIDTH - 1;           // = 5
+
   integer i;
 
-  /*
-     * Declare internal signals
-     */
-  // Define accelerator execution control signals
+  /*----------------------------------------------------------------------------------------
+        SIGNAL DECLARATIONS
+    ----------------------------------------------------------------------------------------*/
+  // Accelerator control
   wire reset_accel;
   wire enable_accel;
   wire finished_accel;
 
-  // Define FFT variables
-  wire [LOG_MAX_N-1:0] number_data;
+  // FFT configuration
+  wire [LOG_MAX_N-1:0]          number_data;
   wire [LOG_MAX_FFT_STAGES-1:0] fft_stages;
 
-  /// Define signals for the accelerator MEMORY
-  wire [ADDR_WIDTH-1:0] mem_addr;
-  wire [31:0] mem_rdata;
-  wire [31:0] mem_wdata;
-  wire [3:0] mem_wstrb;
+  // ---- Narrow port signals (CPU → memory) ----
+  wire [ADDR_WIDTH-1:0] cpu_mem_addr;
+  wire [31:0]           cpu_mem_rdata;
+  wire [31:0]           cpu_mem_wdata;
+  wire [ 3:0]           cpu_mem_wstrb;
 
-  // Define access signal on the accelerator MEMORY coming from the accelerator itself.
-  wire [3:0] accel_mem_wstrb;
-  wire [31:0] accel_mem_wdata;
-  wire [31:0] accel_mem_addr;
+  // ---- Wide port signals (FFT → memory, DATA_WIDTH per word) ----
+  localparam WSTRB_WIDTH = DATA_WIDTH / 8;          // = 3 for 24-bit
+  wire [WSTRB_WIDTH-1:0]  accel_mem_wstrb_lo;
+  wire [WSTRB_WIDTH-1:0]  accel_mem_wstrb_hi;
+  wire [DATA_WIDTH-1:0]   accel_mem_rdata_lo;
+  wire [DATA_WIDTH-1:0]   accel_mem_rdata_hi;
+  wire [DATA_WIDTH-1:0]   accel_mem_wdata_lo;
+  wire [DATA_WIDTH-1:0]   accel_mem_wdata_hi;
+  wire [31:0]             accel_mem_pair_addr;
 
-  // Define MEMORY/CONF access signal coming from the IOMEM(e.g. PICORV32)
-  wire iomem_access_accelerator;  // Whether the PICO tries to access the accelerator
-  wire iomem_access_conf;  // Whether the PICO tries to access the configuration registers
-  wire iomem_access_mem;  // Whether the PICO tries to access the accelerator memory
-  reg iomem_conf_ready;
-  reg iomem_mem_ready;
-  reg [31:0] iomem_conf_rdata;
+  // CPU → accelerator access decoding
+  wire iomem_access_accelerator;
+  wire iomem_access_conf;
+  wire iomem_access_mem;
+  reg  iomem_conf_ready;
+  reg  iomem_mem_ready;
+  reg  [31:0] iomem_conf_rdata;
 
-  // Define the configuration register array
-  reg [31:0] iomem_accel[NUM_REGS-1:0];  // Accelerator Registers
-  wire [NUM_REGS_WIDTH-1:0] iomem_accel_addr;  // Accelerator Register Address
+  // CSR register array
+  reg [31:0] iomem_accel [NUM_REGS-1:0];
+  wire [NUM_REGS_WIDTH-1:0] iomem_accel_addr;
 
   /*----------------------------------------------------------------------------------------
-        MEMORY AND ACCELERATOR
+        TWIDDLE PACKING:  CSR array → flat bus for FFT core
+        Each CSR word: {tw_im[15:0], tw_re[15:0]}  — packed by firmware
+        Unpack into DATA_WIDTH-strided flat buses, sign-extending 16→DATA_WIDTH
     ----------------------------------------------------------------------------------------*/
-  // Instantiate the MEMORY of the accelerator
+  wire [DATA_WIDTH * NUM_TW - 1 : 0] tw_re_packed;
+  wire [DATA_WIDTH * NUM_TW - 1 : 0] tw_im_packed;
+
+  genvar gi;
+  generate
+    for (gi = 0; gi < NUM_TW; gi = gi + 1) begin : gen_tw_pack
+      assign tw_re_packed[DATA_WIDTH*gi +: DATA_WIDTH] =
+          {{(DATA_WIDTH-16){iomem_accel[NUM_CFG_REGS + gi][15]}},
+           iomem_accel[NUM_CFG_REGS + gi][15:0]};
+      assign tw_im_packed[DATA_WIDTH*gi +: DATA_WIDTH] =
+          {{(DATA_WIDTH-16){iomem_accel[NUM_CFG_REGS + gi][31]}},
+           iomem_accel[NUM_CFG_REGS + gi][31:16]};
+    end
+  endgenerate
+
+  /*----------------------------------------------------------------------------------------
+        MEMORY AND ACCELERATOR INSTANTIATION
+    ----------------------------------------------------------------------------------------*/
   accelerator_mem #(
-      .MEM_DEPTH(MEM_DEPTH)
+      .MEM_DEPTH  (MEM_DEPTH),
+      .DATA_WIDTH (DATA_WIDTH)
   ) mem (
-      .clk  (clk),
-      .wen  (mem_wstrb),
-      .addr (mem_addr),
-      .wdata(mem_wdata),
-      .rdata(mem_rdata)
+      .clk       (clk),
+
+      // Narrow port → CPU
+      .wen       (cpu_mem_wstrb),
+      .addr      (cpu_mem_addr),
+      .wdata     (cpu_mem_wdata),
+      .rdata     (cpu_mem_rdata),
+
+      // Wide port → FFT core
+      .wen_lo    (accel_mem_wstrb_lo),
+      .wen_hi    (accel_mem_wstrb_hi),
+      .pair_addr (accel_mem_pair_addr[PAIR_ADDR_WIDTH-1:0]),
+      .wdata_lo  (accel_mem_wdata_lo),
+      .wdata_hi  (accel_mem_wdata_hi),
+      .rdata_lo  (accel_mem_rdata_lo),
+      .rdata_hi  (accel_mem_rdata_hi)
   );
 
-  // Instantiate the FFT accelerator
   accelerator_fft #(
       .LOG_MAX_N (LOG_MAX_N),
-      .MEM_WIDTH (32),
-      .ADDR_WIDTH(ADDR_WIDTH)
+      .MEM_WIDTH (DATA_WIDTH),
+      .ADDR_WIDTH(ADDR_WIDTH),
+      .NUM_TW    (NUM_TW)
   ) fft (
-      .clk(clk),
-      .resetn(resetn),
+      .clk     (clk),
+      .resetn  (resetn),
 
-      .reset_accel (reset_accel),
-      .enable_accel(enable_accel),
+      .reset_accel  (reset_accel),
+      .enable_accel (enable_accel),
 
-      .number_data(number_data),
-      .fft_stages (fft_stages[LOG_MAX_FFT_STAGES-1:0]),
+      .number_data (number_data),
+      .fft_stages  (fft_stages[LOG_MAX_FFT_STAGES-1:0]),
 
-      .accel_mem_wstrb(accel_mem_wstrb),
-      .accel_mem_rdata(mem_rdata),
-      .accel_mem_wdata(accel_mem_wdata),
-      .accel_mem_addr (accel_mem_addr),
+      // Wide paired SRAM interface
+      .accel_mem_wstrb_lo (accel_mem_wstrb_lo),
+      .accel_mem_wstrb_hi (accel_mem_wstrb_hi),
+      .accel_mem_rdata_lo (accel_mem_rdata_lo),
+      .accel_mem_rdata_hi (accel_mem_rdata_hi),
+      .accel_mem_wdata_lo (accel_mem_wdata_lo),
+      .accel_mem_wdata_hi (accel_mem_wdata_hi),
+      .accel_mem_pair_addr(accel_mem_pair_addr),
 
-      .fft_finished(finished_accel)
+      .tw_re_packed (tw_re_packed),
+      .tw_im_packed (tw_im_packed),
+
+      .fft_finished (finished_accel)
   );
 
   /*----------------------------------------------------------------------------------------
         INTERFACE LOGIC
     ----------------------------------------------------------------------------------------*/
-  // Read paramemeters for the FFT algorithm
-  assign reset_accel = iomem_accel[0][0];
+  // Extract configuration from CSR registers
+  assign reset_accel  = iomem_accel[0][0];
   assign enable_accel = iomem_accel[0][1];
-  assign number_data = iomem_accel[1][LOG_MAX_N-1:0];
-  assign fft_stages = iomem_accel[2][LOG_MAX_FFT_STAGES-1:0];
+  assign number_data  = iomem_accel[1][LOG_MAX_N-1:0];
+  assign fft_stages   = iomem_accel[2][LOG_MAX_FFT_STAGES-1:0];
 
+  // Address decoding (unchanged)
   assign iomem_access_accelerator = iomem_valid && iomem_addr[31:24] == 8'h03;
   assign iomem_access_conf = iomem_access_accelerator && (iomem_addr[23:0] >> 2) < NUM_REGS;
-  assign iomem_access_mem = iomem_access_accelerator && (iomem_addr[23:0] >> 2) >= NUM_REGS;
+  assign iomem_access_mem  = iomem_access_accelerator && (iomem_addr[23:0] >> 2) >= NUM_REGS;
 
-  // Select MEMORY or CONFIGURATION for the IOMEM interface
-  assign iomem_ready                  = iomem_access_conf ? iomem_conf_ready : (iomem_access_mem ? iomem_mem_ready : 1'b0);
-  assign iomem_rdata                  = iomem_access_conf ? iomem_conf_rdata : (iomem_access_mem ? mem_rdata : 32'b0);
+  // Ready/data mux — CPU reads go through the narrow port
+  assign iomem_ready = iomem_access_conf ? iomem_conf_ready
+                     : (iomem_access_mem  ? iomem_mem_ready : 1'b0);
+  assign iomem_rdata = iomem_access_conf ? iomem_conf_rdata
+                     : (iomem_access_mem  ? cpu_mem_rdata : 32'b0);
 
+  // ---- Narrow port routing (CPU only) ----
+  //   Address: convert byte address → word index, subtract CSR offset
   assign iomem_accel_addr = iomem_addr >> 2;
-  assign mem_addr = iomem_access_mem ? {10'b0, iomem_addr[23:2] - NUM_REGS} : accel_mem_addr;
+  assign cpu_mem_addr  = iomem_access_mem ? (iomem_addr[23:2] - NUM_REGS) : {ADDR_WIDTH{1'b0}};
+  assign cpu_mem_wdata = iomem_wdata;
+  assign cpu_mem_wstrb = iomem_access_mem ? iomem_wstrb : 4'b0000;
 
-  // Select IOMEM or ACCELERATOR to access the MEMORY for write operation
-  assign mem_wdata = iomem_access_mem ? iomem_wdata : accel_mem_wdata;
-  assign mem_wstrb = iomem_access_mem ? iomem_wstrb : accel_mem_wstrb;
+  // ---- Wide port routing (FFT only) ----
+  //   Directly driven by accelerator_fft — no mux needed.
+  //   FFT write strobes are only non-zero during S_STORE_DATA,
+  //   which is mutually exclusive with CPU access by protocol.
 
-  // Manage the configuration register accesses.
+  /*----------------------------------------------------------------------------------------
+        IOMEM HANDSHAKE LOGIC  (unchanged from v6)
+    ----------------------------------------------------------------------------------------*/
   always @(posedge clk) begin
     if (!resetn) begin
-      for (i = 0; i < NUM_REGS; i = i + 1) iomem_accel[i] <= 0;
-
       iomem_conf_ready <= 0;
-
       iomem_mem_ready  <= 0;
+      iomem_conf_rdata <= 0;
+      for (i = 0; i < NUM_REGS; i = i + 1)
+        iomem_accel[i] <= 32'd0;
     end else begin
-      iomem_accel[0][2] <= finished_accel;  // Output Finish Flag
+      iomem_conf_ready <= 0;
+      iomem_mem_ready  <= 0;
 
-      /*
-       * Configuration register access control
-       */
+      // CSR read/write
       if (iomem_access_conf && !iomem_conf_ready) begin
         iomem_conf_ready <= 1;
+        if (iomem_accel_addr == 0)
+          iomem_conf_rdata <= {iomem_accel[0][31:3], finished_accel, iomem_accel[0][1:0]};
+        else
+          iomem_conf_rdata <= iomem_accel[iomem_accel_addr];
 
-        iomem_conf_rdata <= iomem_accel[iomem_accel_addr];
-        if (iomem_wstrb[0]) iomem_accel[iomem_accel_addr][7:0] <= iomem_wdata[7:0];
-        if (iomem_wstrb[1]) iomem_accel[iomem_accel_addr][15:8] <= iomem_wdata[15:8];
+        if (iomem_wstrb[0]) iomem_accel[iomem_accel_addr][ 7: 0] <= iomem_wdata[ 7: 0];
+        if (iomem_wstrb[1]) iomem_accel[iomem_accel_addr][15: 8] <= iomem_wdata[15: 8];
         if (iomem_wstrb[2]) iomem_accel[iomem_accel_addr][23:16] <= iomem_wdata[23:16];
         if (iomem_wstrb[3]) iomem_accel[iomem_accel_addr][31:24] <= iomem_wdata[31:24];
-      end else begin
-        iomem_conf_ready <= 0;
       end
 
-      /*
-             * Accelerator memory access control
-             */
+      // Memory read/write — narrow port serves CPU path
       if (iomem_access_mem && !iomem_mem_ready) begin
-        iomem_mem_ready <= 1'b1;
-      end else begin
-        iomem_mem_ready <= 1'b0;
+        iomem_mem_ready <= 1;
+        // Write handled by cpu_mem_wstrb going to the narrow port
+        // Read data available combinationally via cpu_mem_rdata
       end
     end
   end
+
 endmodule

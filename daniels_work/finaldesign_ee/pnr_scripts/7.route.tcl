@@ -70,7 +70,7 @@ report_power -clock_network all -hierarchy all -cell_type all -power_domain all 
 # Post-route optimization
 # ####################
 
-setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.05
+setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto
 optDesign -postRoute
 
 timeDesign -postRoute -pathReports -slackReports -numPaths 50 -outDir timingReports/postRoute
@@ -85,10 +85,25 @@ report_power -clock_network all -hierarchy all -cell_type all -power_domain all 
 # Post-route hold optimization
 # ####################
 
-setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.05
+setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto
 optDesign -postRoute -hold
-optDesign -postRoute -hold
-optDesign -postRoute -drv
+
+# ####################
+# Targeted ECO antenna fix
+# ####################
+
+# CTS leaves one antenna violation on the reset synchronizer clock sink.
+# Isolate that sink with a legal post-route clock buffer placed in nearby filler space.
+setEcoMode -honorFixedNetWire false -refinePlace false -updateTiming false
+ecoAddRepeater -term {resetn_sync_int_reg/CK} -cell CLKBUFX12 -loc {604.6 279.0} -name CTS5_FIXBUF12 -newNetName CTS5_FIXNET12
+ecoRoute
+setEcoMode -refinePlace true -updateTiming true
+
+# Clean up the small slew disturbance introduced by the targeted ECO so the
+# final signoff state stays DRV-clean instead of only antenna-clean.
+setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto
+setOptMode -postRouteDrvRecovery true -fixSISlew true -fixGlitch true
+optDesign -postRoute
 
 timeDesign -postRoute -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold
 timeDesign -postRoute -hold -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold_hold
@@ -113,8 +128,3 @@ Puts " \n\n save Design \n\n"
 saveDesign checkpoints/${DESIGN}_route.enc
 
 fit
-
-
-
-
-

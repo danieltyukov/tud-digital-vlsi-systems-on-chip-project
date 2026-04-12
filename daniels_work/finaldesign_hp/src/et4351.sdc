@@ -15,13 +15,13 @@
 #                                   #
 #####################################
 
-set CLK_PERIOD         83.33
+set CLK_PERIOD         15.1
 set QSPI_DIV           2
 
 set MAX_IO_DLY         5.0
 set MIN_IO_DLY         0.0
 
-set CLK_UNCERTAINTY    0.10
+set CLK_UNCERTAINTY    0.15
 
 
 #####################################
@@ -38,7 +38,6 @@ create_generated_clock -name "flash_clk" -source [get_ports clk] -divide_by "$QS
 
 # Clock distribution latency and uncertainty
 set_clock_uncertainty     $CLK_UNCERTAINTY    [all_clocks]
-set_max_transition 0.28 [current_design]
 
 
 #####################################

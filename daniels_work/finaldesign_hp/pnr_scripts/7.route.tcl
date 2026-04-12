@@ -43,6 +43,7 @@ setNanoRouteMode -quiet -drouteEndIteration 30
 setNanoRouteMode -quiet -routeWithTimingDriven true
 setNanoRouteMode -quiet -routeWithSiDriven true
 setNanoRouteMode -quiet -routeSiEffort high
+setNanoRouteMode -quiet -droutePostRouteSpreadWire true
 setNanoRouteMode -drouteFixAntenna true
 setNanoRouteMode -routeFixTopLayerAntenna false
 setNanoRouteMode -routeInsertAntennaDiode true
@@ -70,7 +71,7 @@ report_power -clock_network all -hierarchy all -cell_type all -power_domain all 
 # Post-route optimization
 # ####################
 
-setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.05
+setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto
 optDesign -postRoute
 
 timeDesign -postRoute -pathReports -slackReports -numPaths 50 -outDir timingReports/postRoute
@@ -85,10 +86,26 @@ report_power -clock_network all -hierarchy all -cell_type all -power_domain all 
 # Post-route hold optimization
 # ####################
 
-setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto -holdTargetSlack 0.05
-optDesign -postRoute -hold
+setOptMode -fixCap true -fixTran true -fixFanoutLoad true -postRouteHoldRecovery auto
 optDesign -postRoute -hold
 optDesign -postRoute -drv
+# Fix SI glitch violations
+setDelayCalMode -engine default -siAware true
+optDesign -postRoute
+
+# ADDED: more aggressive hold fix effort
+
+setOptMode -holdFixingCells {BUFHD1 BUFX1 BUFX2 BUFX4}
+ #use small buffers
+setOptMode -fixHoldAllowResizing true
+setOptMode -fixHoldAllowOverlap true
+setOptMode -holdTargetSlack 0.020
+# Aim for +10ps margin
+setOptMode -holdSlackFixingThreshold 0.000
+# Fix even small violations
+setOptMode -postRouteAreaReclaim holdAndSetupAware
+# Trigger fix action to apply previous opt settings.
+optDesign -postRoute -hold
 
 timeDesign -postRoute -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold
 timeDesign -postRoute -hold -pathReports -slackReports -numPaths 50 -outDir timingReports/postRouteHold_hold
@@ -97,7 +114,6 @@ report_noise -bumpy_waveform -output_file timingReports/bumpyWaves_postRouteHold
 set_power_analysis_mode -method static -corner delay_typ -create_binary_db true -write_static_currents true -honor_negative_energy true -ignore_control_signals true -analysis_view analysis_view_power
 
 report_power -clock_network all -hierarchy all -cell_type all -power_domain all -pg_net all -sort { total } -outfile powerReports/postRouteHold.rpt
-
 
 # ####################
 # # Verify and Save

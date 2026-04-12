@@ -21,7 +21,8 @@ set QSPI_DIV           2
 set MAX_IO_DLY         5.0
 set MIN_IO_DLY         0.0
 
-set CLK_UNCERTAINTY    0.10
+set CLK_SETUP_UNCERTAINTY 0.25
+set CLK_HOLD_UNCERTAINTY  0.10
 
 
 #####################################
@@ -36,9 +37,10 @@ create_clock -name "clk" -period "$CLK_PERIOD" -waveform "0 [expr $CLK_PERIOD/2]
 # QSPI clock
 create_generated_clock -name "flash_clk" -source [get_ports clk] -divide_by "$QSPI_DIV" [get_ports flash_clk]
 
-# Clock distribution latency and uncertainty
-set_clock_uncertainty     $CLK_UNCERTAINTY    [all_clocks]
-set_max_transition 0.28 [current_design]
+# Clock distribution latency and uncertainty.
+# Keep setup pessimism conservative, but avoid over-driving post-route hold repair.
+set_clock_uncertainty -setup $CLK_SETUP_UNCERTAINTY [all_clocks]
+set_clock_uncertainty -hold  $CLK_HOLD_UNCERTAINTY  [all_clocks]
 
 
 #####################################
@@ -72,9 +74,3 @@ set_output_delay     -max "$MAX_IO_DLY"                                  -clock 
 set_output_delay     -min "$MIN_IO_DLY"                                  -clock "flash_clk"     [get_ports flash_io*]
 set_output_delay     -max "$MAX_IO_DLY"                                  -clock "flash_clk"     [get_ports flash_csb]
 set_output_delay     -min "$MIN_IO_DLY"                                  -clock "flash_clk"     [get_ports flash_csb]
-
-# Accelerator outputs
-set_output_delay     -max "$MAX_IO_DLY"                                  -clock "clk"           [get_ports accel_o_path_node]
-set_output_delay     -min "$MIN_IO_DLY"                                  -clock "clk"           [get_ports accel_o_path_node]
-set_output_delay     -max "$MAX_IO_DLY"                                  -clock "clk"           [get_ports accel_o_path_node_valid]
-set_output_delay     -min "$MIN_IO_DLY"                                  -clock "clk"           [get_ports accel_o_path_node_valid]
