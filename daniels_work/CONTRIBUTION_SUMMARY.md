@@ -31,30 +31,52 @@
 - Report section drafts (Sections I-III)
 - Theory reference from course lectures
 - Memory architecture analysis
-- Teammate branch reviews (all branches)
+- Teammate branch reviews (all branches, including all final branches)
 - Decision worklog with timestamps
+
+### Note on EE v3 Signoff
+Daniel's EE v3 (D1+LUT+CG) was the RTL and flow base for the team's cleanest EE
+signoff, achieved by Romeu on `romeu_no_violations`. Romeu identified that Daniel's
+aggressive hold PNR settings (holdTargetSlack 0.2 CTS, 0.05 route) caused collateral
+max_tran DRV damage. Reverting to standard settings (0.1) and applying SDC cleanup
+produced the team's only fully DRV-clean EE design (0.451 nJ, 100% annotation).
 
 ---
 
 ## Teammates' Work
 
-### Shanghong Lin — HP Lead
-- **D1**: Register-file architecture (`accelerator_fft.v`, `accelerator.v`, `accelerator_mem.v`). Bulk LOAD/COMPUTE/STORE replaces per-butterfly SRAM access. 732 → 220 cycles.
-- **D2**: Added second parallel butterfly datapath. 220 → 206 cycles.
-- **D3**: Moved twiddle factors to firmware CSR preload. New firmware (`accel_audio.c`), new CSR interface in wrapper, halved SRAM. 206 → 170 cycles.
+### Shanghong Lin -- HP Lead
+- **D1**: Register-file architecture. Bulk LOAD/COMPUTE/STORE replaces per-butterfly SRAM access. 732 -> 220 cycles.
+- **D2**: Added second parallel butterfly datapath. 220 -> 206 cycles.
+- **D3**: Moved twiddle factors to firmware CSR preload. 206 -> 170 cycles.
 - **D6**: 4-stage pipelined butterfly (FETCH/MUL1/MUL2/ADD). Targets ~60 MHz. 185 cycles at higher clock.
-- **D5**: Wide 64-bit paired memory port in `accelerator_mem.v`. Halves LOAD/STORE. 121 cycles at 48 MHz = 2.52 us.
+- **D5**: Wide 64-bit paired memory port. Halves LOAD/STORE. 121 cycles at 66 MHz.
+- **HP-pnrClean** (FINAL): 24-bit narrowed D5, re-run PnR with tighter hold target. 0 setup violations, 0 hold violations (WNS +0.015 ns). 10 real max_tran DRV issues remain. Total power 0.560 mW (struct VCD). This is the team's final HP submission.
 
-### Romeu — EE Lead
-- **no_recursive_twiddle**: Added `twiddle_lut()` function to baseline `accelerator_fft.v`. Replaced recursive `w = w * w_m` with direct LUT lookup. −3.2% energy.
-- **no_twiddle_mem_reads**: Replaced SRAM reads for `w_m` with stage-local constants. −2.4% energy.
-- **fastpaths**: Added trivial twiddle detection (+1, −1, +j, −j) with sign-flip/swap bypass. −0.3% energy.
-- **comb_3**: Combined all three above in one RTL. −18.4% energy (20.1 nJ).
-- **comb_3_gc**: Added manual clock gating (2 ICG cells in `accelerator.v`) — gates FFT and memory clocks when idle. −95.2% energy (1.19 nJ). 11 ECO iterations for hold closure.
+### Leonardo Castello -- HP Sign-Off
+- **leonardo-final-signoff**: Took Shanghong's clean HP D5 checkpoint. Ran physical sim (setup + hold), VCD extraction, and VCD-annotated power report. Same timing results as HP-pnrClean. VCD power 2.795 mW (possibly incorrect VCD window -- anomalously high).
 
-### FranzJosef
-- **Radix-4**: Single commit on D1 branch. Mixed radix-4/2 FFT (2 radix-4 stages + 1 radix-2). Added `digit_reverse_mixed()` to firmware. 176 cycles claimed. **Unverified** — no sim, no synthesis, no PnR.
+### Romeu Longo Malinski -- EE Signoff Lead
+- **Earlier work**: Combined twiddle LUT + no-mem-reads + fastpaths + clock gating (comb_3_gc). 1.19 nJ.
+- **romeu_no_violations** (FINAL): Took Daniel's EE v3 (D1+LUT+CG) and achieved FULL signoff cleanliness:
+  - Added TLATNCAX2 simulation stub for behavioral sim
+  - Removed stale SDC constraints and IO pin definitions
+  - **Critical fix**: Reverted Daniel's aggressive hold PNR settings (holdTargetSlack 0.2->0.1 CTS, removed 0.05 route target) -- this eliminated hundreds of max_tran violations
+  - ECO clock buffer for last antenna violation
+  - VCD window correction (start 36.181386 ms, runtime 17.4993 us)
+  - **Result**: 0 setup, 0 hold (WNS +0.002 ns), 0 real DRV, 0 DRC, 0 antenna, 100% VCD annotation. Accelerator energy 0.451 nJ. The only fully signoff-clean EE design in the team.
+
+### Ali Sakr -- EE RFFT + Radix-4
+- **Ali_final_final_w_o_cg**: RFFT + pure Radix-4 DIT. 32-point real FFT via 16-point complex FFT + Hermitian recombine. 130 cycles (vs 210 for D1+LUT). No clock gating. 0 timing violations, 487 real max_tran. Power 0.684 mW.
+- **Ali_final_final_with_cg**: Same with manual ICG. 0 timing violations, 316 real max_tran. Power 0.242 mW (VCD). Energy ~2.59 nJ. Architecturally the fastest EE design but NOT DRV clean.
+
+### Franz Josef -- EE_FINAL
+- **EE_FINAL**: Ali's RFFT+Radix-4 design with Franz Josef's manual clock gating. 130 cycles. 0 timing violations, 791 real max_tran (worst DRV of all finals). Power 0.250 mW. Built on Franz Josef's NFS home (`franzjosefzuai`). Density 79.4%.
+
+### Jiahui Que -- EE Clean PnR
+- **Jiahui_FinalEE_cleanpnr**: D1 + hardcoded twiddle LUT + CG (same arch as Daniel EE v2). 210 cycles. 0 timing violations, 237 real max_tran. VCD power 0.236 mW. Good hold margin (+0.119 ns). Some merge conflicts in report files.
 
 ### Alessandro
 - **v1**: Register-file FFT (similar to Shanghong D1). 220 cycles.
 - **v2**: 2-stage pipeline variant targeting 80 MHz. **No PnR or verification.**
+- **Alessandro_D5_pnr**: PnR attempt on D5. No final branch.
