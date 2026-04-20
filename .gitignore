@@ -16,6 +16,7 @@ innovus.log*
 *.vpd
 *.wlf
 workLib/
+workLib_uvm/
 
 # Compiled databases, libraries, and binaries
 INCA_libs/
