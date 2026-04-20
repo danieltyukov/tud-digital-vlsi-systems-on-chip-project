@@ -13,11 +13,19 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
-// Transaction package — must be compiled before the test that uses it.
+// Transaction package — must be compiled before anything that uses it.
 `include "fft_txn_pkg.sv"
 
-// Include the test class so the factory can find it.
-// In later steps this will move into a package.
+// UVM component hierarchy, in dependency order.
+// (driver/sequencer before agent; agent before env; seq/test last.)
+`include "fft_driver.sv"
+`include "fft_sequencer.sv"
+`include "fft_agent.sv"
+`include "fft_env.sv"
+`include "fft_smoke_seq.sv"
+`include "fft_smoke_test.sv"
+
+// Kept for the original smoke check (+UVM_TESTNAME=fft_base_test).
 `include "fft_base_test.sv"
 
 module tb_top;
