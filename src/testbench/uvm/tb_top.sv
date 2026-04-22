@@ -17,13 +17,18 @@ import uvm_pkg::*;
 `include "fft_txn_pkg.sv"
 
 // UVM component hierarchy, in dependency order.
-// (driver/sequencer before agent; agent before env; seq/test last.)
+// (driver/sequencer/monitor before agent; agent+scoreboard before env;
+//  sequences and tests last.)
 `include "fft_driver.sv"
 `include "fft_sequencer.sv"
+`include "fft_monitor.sv"
+`include "fft_scoreboard.sv"
 `include "fft_agent.sv"
 `include "fft_env.sv"
 `include "fft_smoke_seq.sv"
 `include "fft_smoke_test.sv"
+`include "fft_impulse_seq.sv"
+`include "fft_impulse_test.sv"
 
 // Kept for the original smoke check (+UVM_TESTNAME=fft_base_test).
 `include "fft_base_test.sv"

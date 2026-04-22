@@ -42,4 +42,4 @@ UVM_DPI_LIB=$(dirname $(which vlog))/../uvm-1.2/linux_x86_64/uvm_dpi
 vsim tb_top -c \
      -sv_lib ${UVM_DPI_LIB} \
      -do "run -all; quit" \
-     +UVM_TESTNAME=fft_smoke_test
+     +UVM_TESTNAME=fft_impulse_test
