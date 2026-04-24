@@ -3,6 +3,7 @@
 **TU Delft — ET4351 Digital VLSI Design, 2026 Project**
 
 A high-performance 32-point FFT hardware accelerator integrated into a PicoRV32 RISC-V SoC, targeting the SAED32 45nm technology library. The design combines six architectural optimisations to achieve a **~33× end-to-end latency reduction** over the baseline — from 61 µs down to ~1.83 µs per audio chunk.
+![alt text](soc_arch_diagram.png)
 
 For the general project structure, SoC architecture, design flow, and tooling, refer to the [README on the `baseline` branch](../../tree/baseline).
 
@@ -16,7 +17,7 @@ For the general project structure, SoC architecture, design flow, and tooling, r
 | 2 | **SW twiddle preload via CSR** | Firmware pre-computes 16 twiddle pairs (W^k\_32, k=0..15) and writes them to CSR registers before asserting enable. Removes all twiddle accesses from the timed window and reduces accelerator memory from 128→64 words. |
 | 3 | **2× parallel butterfly units** | Two independent butterfly datapaths process two operations per cycle, halving the issue count per FFT stage from 16 to 8 cycles. |
 | 4 | **4-stage micro-pipeline** | The butterfly datapath is split into FETCH → MUL1 → MUL2 → ADD stages. A new butterfly pair enters every clock cycle (1-throughput). Each FFT stage completes in 8 fetch + 3 drain = **11 cycles**. The pipeline also breaks the long combinational multiply-add chain, enabling much higher clock frequencies. |
-| 5 | **Wide paired memory port** | A 64-bit paired memory interface reads/writes one complete complex sample (re + im) per cycle during LOAD and STORE phases, **halving the memory transfer time** from 128 to 64 cycles. |
+| 5 | **Wide paired memory port** | A 48-bit paired memory interface reads/writes one complete complex sample (re + im) per cycle during LOAD and STORE phases, **halving the memory transfer time** from 128 to 64 cycles. |
 | 6 | **24-bit datapath narrowing** | Internal data width narrowed from 32 to 24 bits. Reduces register-file, memory, and multiplier area (24×16 instead of 32×16 per multiply). 24-bit range (±8M) is more than sufficient for the audio FFT signal path. |
 
 Twiddle factors are stored as **16-bit Q12** values and packed into CSR registers — each 32-bit CSR word holds one complete twiddle pair `{tw_im[15:0], tw_re[15:0]}`, halving the CSR count from 32 to 16 (total CSR registers: 35→19).
@@ -30,9 +31,9 @@ Twiddle factors are stored as **16-bit Q12** values and packed into CSR register
 | FSM states | 13 (per-element memory R/W) | 5 (`INIT → LOAD → COMPUTE → STORE → FINISH`) |
 | Compute architecture | Single butterfly, fully combinational, all via accelerator memory | 2× parallel, 4-stage pipelined, 24-bit register-file |
 | Twiddle source | Read from accelerator memory (inside timed window) | Packed CSR registers (firmware preload before enable) |
-| Memory interface | 32-bit single-port (1 word/cycle) | 32-bit narrow (CPU) + 64-bit wide paired (FFT) |
+| Memory interface | 32-bit single-port (1 word/cycle) | 32-bit narrow (CPU) + 48-bit wide paired (FFT) |
 | Internal data width | 32-bit | 24-bit (sign-extended at bus boundaries) |
-| Accelerator memory depth | 128 words (data + twiddles) | 64 words (data only) |
+| Accelerator memory depth | 128 words (data + twiddles) | 64 words (24-bit data only) |
 | CSR registers | N/A | 19 (3 config + 16 packed twiddle) |
 | Cycles per chunk (N=32) | 732 | **121** |
 | PnR-verified frequency | ~12 MHz | **66.2 MHz** (post-route timing clean) |
@@ -48,14 +49,7 @@ The ~33× speedup comes from two independent and multiplicative axes: 6× fewer 
 
 The compute engine is a **4-stage pipeline** with 2× parallel butterfly lanes:
 
-```
- Stage 0 (FETCH)  │ Stage 1 (MUL1)  │ Stage 2 (MUL2)  │ Stage 3 (ADD)
-──────────────────┼─────────────────┼─────────────────┼──────────────────
- Comb: generate    │ rr = v_re×tw_re │ t_re = (rr-ii)  │ e = u + t
- bf0/bf1 indices   │ ii = v_im×tw_im │       >>> SCALE  │ o = u - t
- Latch: u, v, tw   │ ri = v_re×tw_im │ t_im = (ri+ir)  │ Write back to
- from regfile/CSR  │ ir = v_im×tw_re │       >>> SCALE  │ register file
-```
+![alt text](pipeline_butterfly_diagram.png)
 
 A 3-bit shift register (`pipe_vld`) tracks valid data in flight. The pipeline pumps a new butterfly pair every cycle while `bf_cnt < N/2`. After the last fetch, 3 drain cycles flush the pipeline. Stage advancement is triggered on the **last drain cycle** — the same posedge where the final ADD/writeback completes — eliminating dead bubbles between FFT stages.
 
