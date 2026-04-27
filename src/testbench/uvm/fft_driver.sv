@@ -29,6 +29,15 @@ class fft_driver extends uvm_driver #(fft_input_txn);
     super.new(name, parent);
   endfunction
 
+  // 5-bit reversal for N=32. Matches firmware bit_reverse(i, 5) in fft.c.
+  function int bit_reverse5(int x);
+    int r;
+    r = 0;
+    for (int b = 0; b < 5; b++)
+      if (x & (1 << b)) r |= (1 << (4 - b));
+    return r;
+  endfunction
+
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     if (!uvm_config_db#(virtual fft_if)::get(this, "", "vif", vif))
@@ -99,11 +108,15 @@ class fft_driver extends uvm_driver #(fft_input_txn);
 
     `uvm_info(get_type_name(), "phase 4: write 32 complex samples", UVM_MEDIUM)
     for (int k = 0; k < 32; k++) begin
+      // Firmware/RTL contract (see firmware/accel_audio.c): software
+      // bit-reverses inputs BEFORE writing SRAM. The DIT core then expects
+      // bit-reversed-order input and produces natural-order output.
+      // Mirror the firmware here so the scoreboard's compare-against-
+      // natural-order reference works without any unscramble on the output.
       // Sign-extend 24→32 so the low 24 bits land intact in the 24-bit SRAM word.
-      // SRAM layout: re at word 2k, im at word 2k+1 (no bit-reverse here —
-      // predictor/scoreboard owns that convention).
-      re_word = { {8{tx.data_re[k][23]}}, tx.data_re[k] };
-      im_word = { {8{tx.data_im[k][23]}}, tx.data_im[k] };
+      int kr = bit_reverse5(k);
+      re_word = { {8{tx.data_re[kr][23]}}, tx.data_re[kr] };
+      im_word = { {8{tx.data_im[kr][23]}}, tx.data_im[kr] };
       do_write(MEM_BASE + ((2*k    ) << 2), re_word);
       do_write(MEM_BASE + ((2*k + 1) << 2), im_word);
     end

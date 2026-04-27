@@ -35,13 +35,51 @@ package fft_txn_pkg;
     rand bit [31:0] number_data;
     rand bit [4:0]  fft_stages;
 
+    // Stimulus regime: NORMAL = audio-like distribution, BOUNDARY = extremes only.
+    // One enum + one dist constraint replaces having two sequence/test classes.
+    typedef enum {NORMAL, BOUNDARY} stim_mode_e;
+    rand stim_mode_e mode;
+
+    // ~10% of iterations stress the rails; the other 90% stay in the
+    // comfortable region where 100/100 PASS is achievable.
+    constraint mode_dist { mode dist { NORMAL := 9, BOUNDARY := 1 }; }
+
     // --- Constraints ---
 
-    // Realistic audio data: 17-bit values in a 24-bit container.
-    // Leaves 7 bits of headroom for FFT growth (5 bits) + butterfly overflow (2 bits).
-    constraint data_range {
-      foreach (data_re[i]) data_re[i] inside {[-65536 : 65535]};
-      foreach (data_im[i]) data_im[i] inside {[-65536 : 65535]};
+    // NORMAL mode: 17-bit values in a 24-bit container, weighted toward small
+    // magnitudes (mimics real audio energy). 7 bits of headroom remain for
+    // FFT growth (5 bits log2(N)) + butterfly overflow margin (2 bits).
+    // ":/ N" splits weight N across the whole range, so the listed weights
+    // (10/25/30/25/10) read directly as percentages.
+    constraint data_normal {
+      if (mode == NORMAL) {
+        foreach (data_re[i]) data_re[i] dist {
+          [-65536 : -32768] :/ 10,   // outer-negative band
+          [-32767 :  -1024] :/ 25,   // mid-low
+          [-1023  :   1023] :/ 30,   // small / near-zero (most common)
+          [ 1024  :  32767] :/ 25,   // mid-high
+          [ 32768 :  65535] :/ 10    // outer-positive band
+        };
+        foreach (data_im[i]) data_im[i] dist {
+          [-65536 : -32768] :/ 10,
+          [-32767 :  -1024] :/ 25,
+          [-1023  :   1023] :/ 30,
+          [ 1024  :  32767] :/ 25,
+          [ 32768 :  65535] :/ 10
+        };
+      }
+    }
+
+    // BOUNDARY mode: only ±max and 0 — the classic boundary-value triple.
+    // ":=" gives each listed value its own weight; values not listed have
+    // weight 0, so the solver picks ONLY from {-65536, 65535, 0}.
+    // Stresses sign propagation, accumulator overflow, and the scoreboard's
+    // near-zero ABS_TOL floor.
+    constraint data_boundary {
+      if (mode == BOUNDARY) {
+        foreach (data_re[i]) data_re[i] dist { -65536 := 4, 65535 := 4, 0 := 2 };
+        foreach (data_im[i]) data_im[i] dist { -65536 := 4, 65535 := 4, 0 := 2 };
+      }
     }
 
     // Q12 unit-circle twiddles: cos/sin in [-1,1] scaled by 2^12.

@@ -17,6 +17,13 @@ rm -rf ${workLib}
 vlib ${workLib}
 vmap work ${workLib}
 
+# ---------- compile C reference model into a shared object ----------
+# DPI-C: Questa loads this .so at vsim time via -sv_lib (no extension).
+# -fPIC is required for shared objects on x86_64; -lm pulls in cos/sin.
+gcc -fPIC -shared -O2 \
+    ../src/testbench/uvm/ref_model/fft_ref.c \
+    -o fft_ref.so -lm
+
 # ---------- compile DUT (accelerator + sub-modules only) ----------
 vlog /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v \
      ../src/design/accelerator.v \
@@ -41,5 +48,6 @@ vlog -sv \
 UVM_DPI_LIB=$(dirname $(which vlog))/../uvm-1.2/linux_x86_64/uvm_dpi
 vsim tb_top -c \
      -sv_lib ${UVM_DPI_LIB} \
+     -sv_lib ./fft_ref \
      -do "run -all; quit" \
-     +UVM_TESTNAME=fft_impulse_test
+     +UVM_TESTNAME=${1:-fft_random_test}

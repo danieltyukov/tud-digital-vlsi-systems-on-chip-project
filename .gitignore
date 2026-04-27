@@ -27,6 +27,9 @@ simv.daidir/
 work/
 *.history
 
+# DPI-C compiled shared objects (rebuilt by run_uvm_sim.sh)
+sim_behav/*.so
+
 # QuestaSim session transcripts (regenerated every run)
 */transcript
 

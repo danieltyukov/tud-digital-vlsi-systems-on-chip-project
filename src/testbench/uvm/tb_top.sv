@@ -29,6 +29,8 @@ import uvm_pkg::*;
 `include "fft_smoke_test.sv"
 `include "fft_impulse_seq.sv"
 `include "fft_impulse_test.sv"
+`include "fft_random_seq.sv"
+`include "fft_random_test.sv"
 
 // Kept for the original smoke check (+UVM_TESTNAME=fft_base_test).
 `include "fft_base_test.sv"
