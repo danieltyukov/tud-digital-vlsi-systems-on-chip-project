@@ -40,6 +40,12 @@ package fft_txn_pkg;
     typedef enum {NORMAL, BOUNDARY} stim_mode_e;
     rand stim_mode_e mode;
 
+    // Semantic input pattern — classified by the sequence AFTER randomize()
+    // by inspecting data_re/data_im. Not randomized: it's a label, not a knob.
+    // Used solely by the coverage subscriber's cp_pattern coverpoint.
+    typedef enum {GENERIC, ALL_ZERO, IMPULSE, DC, MAX_RANGE} pattern_e;
+    pattern_e pattern = GENERIC;
+
     // ~10% of iterations stress the rails; the other 90% stay in the
     // comfortable region where 100/100 PASS is achievable.
     constraint mode_dist { mode dist { NORMAL := 9, BOUNDARY := 1 }; }
@@ -122,6 +128,46 @@ package fft_txn_pkg;
     endfunction
 
   endclass
+
+
+  // =========================================================================
+  //  classify_pattern — shape-only classifier for fft_input_txn.pattern
+  //
+  // Called by fft_monitor (NOT by sequences) so the label reflects what
+  // actually reached the DUT, not the sequence's intent. This is essential
+  // because the monitor reconstructs the input txn from bus traffic and
+  // publishes a fresh object on ap_in — any pattern field set in the
+  // sequence is discarded long before coverage samples it.
+  //
+  // Order of tests matters: more specific shapes are tested first.
+  //   ALL_ZERO  : every (re,im) pair is exactly (0,0)
+  //   IMPULSE   : exactly one non-zero sample in the whole vector
+  //   DC        : every sample equals the first (and the first is non-zero)
+  //   MAX_RANGE : ≥25% of samples sit on the rails (±2^16 boundary)
+  //   GENERIC   : everything else
+  // =========================================================================
+  function automatic void classify_pattern(fft_input_txn tx);
+    int n_zero, n_nonzero, n_max, n_eq_first;
+    bit signed [DATA_WIDTH-1:0] first_re, first_im;
+
+    n_zero = 0; n_nonzero = 0; n_max = 0; n_eq_first = 0;
+    first_re = tx.data_re[0];
+    first_im = tx.data_im[0];
+
+    foreach (tx.data_re[k]) begin
+      if (tx.data_re[k] == 0 && tx.data_im[k] == 0)              n_zero++;
+      else                                                       n_nonzero++;
+      if (tx.data_re[k] == -65536 || tx.data_re[k] == 65535 ||
+          tx.data_im[k] == -65536 || tx.data_im[k] == 65535)     n_max++;
+      if (tx.data_re[k] == first_re && tx.data_im[k] == first_im) n_eq_first++;
+    end
+
+    if      (n_zero    == MAX_FFT_N)        tx.pattern = fft_input_txn::ALL_ZERO;
+    else if (n_nonzero == 1)                tx.pattern = fft_input_txn::IMPULSE;
+    else if (n_eq_first == MAX_FFT_N)       tx.pattern = fft_input_txn::DC;
+    else if (n_max     >= (MAX_FFT_N / 4))  tx.pattern = fft_input_txn::MAX_RANGE;
+    else                                    tx.pattern = fft_input_txn::GENERIC;
+  endfunction
 
 
   // =========================================================================

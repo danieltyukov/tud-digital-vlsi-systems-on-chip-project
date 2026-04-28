@@ -45,6 +45,9 @@ class fft_random_seq extends uvm_sequence #(fft_input_txn);
         tx.tw_im[i] = $rtoi($floor(-$sin(theta) * 4096.0 + 0.5));
       end
 
+      // Pattern classification used to live here, but the monitor rebuilds
+      // the txn from bus traffic and publishes a fresh object — so any
+      // pattern set here was lost. Classification now lives in the monitor.
       start_item(tx);
       finish_item(tx);
     end

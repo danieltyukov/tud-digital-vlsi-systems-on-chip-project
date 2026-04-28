@@ -23,6 +23,8 @@ import uvm_pkg::*;
 `include "fft_sequencer.sv"
 `include "fft_monitor.sv"
 `include "fft_scoreboard.sv"
+`include "fft_coverage.sv"
+`include "fft_fsm_coverage.sv"
 `include "fft_agent.sv"
 `include "fft_env.sv"
 `include "fft_smoke_seq.sv"
@@ -31,6 +33,8 @@ import uvm_pkg::*;
 `include "fft_impulse_test.sv"
 `include "fft_random_seq.sv"
 `include "fft_random_test.sv"
+`include "fft_pattern_seq.sv"
+`include "fft_coverage_test.sv"
 
 // Kept for the original smoke check (+UVM_TESTNAME=fft_base_test).
 `include "fft_base_test.sv"

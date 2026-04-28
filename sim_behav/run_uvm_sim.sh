@@ -25,7 +25,10 @@ gcc -fPIC -shared -O2 \
     -o fft_ref.so -lm
 
 # ---------- compile DUT (accelerator + sub-modules only) ----------
-vlog /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v \
+# -cover sbceft enables Statement, Branch, Condition, Expression, FSM, Toggle
+# coverage in addition to functional coverage from covergroups in the TB.
+vlog -cover sbceft \
+     /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v \
      ../src/design/accelerator.v \
      ../src/design/accelerator_fft.v \
      ../src/design/accelerator_mem.v \
@@ -33,7 +36,7 @@ vlog /data/Cadence/gpdk045_v60/Synopsys_sram/saed32sram.v \
 
 # ---------- compile UVM testbench ----------
 # +incdir supplies both UVM source dir and our uvm/ dir (for `include)
-vlog -sv \
+vlog -sv -cover sbceft \
      +incdir+${UVM_HOME} \
      +incdir+../src/testbench/uvm \
      ${UVM_HOME}/uvm_pkg.sv \
@@ -45,9 +48,27 @@ vlog -sv \
 # -sv_lib loads the pre-compiled UVM DPI shared library (.so without extension).
 # This provides C functions like uvm_dpi_get_next_arg_c that UVM calls
 # for command-line parsing — without it, run_test() crashes on a null pointer.
+# -coverage activates collection at sim-time; coverage save -onexit writes
+# the unified coverage database (.ucdb) which is then turned into HTML by
+# vcover report -html.
 UVM_DPI_LIB=$(dirname $(which vlog))/../uvm-1.2/linux_x86_64/uvm_dpi
-vsim tb_top -c \
+TESTNAME=${1:-fft_random_test}
+shift || true   # drop $1 so remaining args ($@) become +plusargs
+
+vsim tb_top -c -coverage \
      -sv_lib ${UVM_DPI_LIB} \
      -sv_lib ./fft_ref \
-     -do "run -all; quit" \
-     +UVM_TESTNAME=${1:-fft_random_test}
+     -do "onfinish stop; run -all; coverage save fft_cov.ucdb; quit -f" \
+     +UVM_TESTNAME=${TESTNAME} \
+     "$@"
+
+# ---------- post-process coverage ----------
+# Generate both a one-line summary (for CI/log) and a navigable HTML report
+# (for the deliverable screenshot). The HTML lands in cov_html/index.html.
+if [ -f fft_cov.ucdb ]; then
+  vcover report -summary fft_cov.ucdb
+  # vcover refuses to overwrite an existing -output directory, so wipe it first.
+  # -htmldir was deprecated in 2020.4 → use -output for forward compatibility.
+  rm -rf cov_html
+  vcover report -details -html -output cov_html fft_cov.ucdb
+fi

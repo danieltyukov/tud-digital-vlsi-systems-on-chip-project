@@ -152,6 +152,11 @@ class fft_monitor extends uvm_monitor;
     txn.number_data = stg_number_data;
     txn.fft_stages  = stg_fft_stages;
 
+    // Classify the rebuilt vector so coverage sees a faithful pattern label.
+    // Done here (not in the sequence) because the monitor publishes a fresh
+    // object — any tag the sequence set has already been discarded.
+    classify_pattern(txn);
+
     `uvm_info(get_type_name(),
               {"observed enable_accel — publishing input txn\n", txn.convert2string()},
               UVM_LOW)

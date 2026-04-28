@@ -12,4 +12,8 @@
   // Active-high "FFT done" strobe driven by accelerator_fft.
   `define FFT_FINISHED_PATH tb_top.dut.finished_accel
 
+  // FSM state register inside accelerator_fft (instance name: dut.fft).
+  // Encoding: 0=S_INIT, 1=S_LOAD_DATA, 2=S_COMPUTE, 3=S_STORE_DATA, 4=S_FINISH.
+  `define FFT_STATE_PATH    tb_top.dut.fft.state_reg
+
 `endif
