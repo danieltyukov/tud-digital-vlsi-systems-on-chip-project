@@ -39,6 +39,8 @@ import uvm_pkg::*;
 // Kept for the original smoke check (+UVM_TESTNAME=fft_base_test).
 `include "fft_base_test.sv"
 
+`include "sva/fft_sva_bind.sv"
+
 module tb_top;
 
   // ---------------------------------------------------------------
