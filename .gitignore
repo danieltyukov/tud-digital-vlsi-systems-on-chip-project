@@ -43,6 +43,9 @@ genus.cmd*
 # Parasitics and Timing Formats (Huge files)
 *.spef
 *.sdf
+# ...but the signoff SDF is a required graded deliverable: keep it tracked.
+!Group9/finaldesign_hp/et4351.phys.sdf
+!Group9/finaldesign_ee/et4351.phys.sdf
 
 # Synthesis/Logic databases
 *.db
