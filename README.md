@@ -12,8 +12,20 @@ Two complete tape-out-ready designs were delivered against a common SoC:
 > TU Delft, Faculty of EEMCS — Academic Year 2025/2026. Final submission delivered
 > 10 April 2026. This repository is the personal archive of **Daniel Tyukov** (team of 8).
 
-📊 **[See SHOWCASE.md](SHOWCASE.md)** for an illustrated tour of both architectures with
-diagrams and results.
+<p align="center">
+  <img alt="HP latency" src="https://img.shields.io/badge/HP_latency-~1.83_us_(~33x)-1f6feb">
+  <img alt="EE energy"  src="https://img.shields.io/badge/EE_energy-2.59_nJ_(9.5x)-2ea043">
+  <img alt="signoff"    src="https://img.shields.io/badge/setup_%26_hold-0_violations-6f42c1">
+  <img alt="pdk"        src="https://img.shields.io/badge/PDK-gpdk045_45nm-555">
+  <img alt="flow"       src="https://img.shields.io/badge/flow-Genus_%2B_Innovus-orange">
+</p>
+
+<p align="center">
+  <img src="docs/figures/soc_block_diagram.png" alt="ET4351 SoC block diagram" width="74%">
+  <br><sub><b>The <code>et4351</code> SoC</b> — PicoRV32 + FFT accelerator on a shared 32-bit <code>iomem</code> bus.</sub>
+</p>
+
+📊 **[See SHOWCASE.md](SHOWCASE.md)** for the full illustrated tour with design reasoning.
 
 ---
 
@@ -44,6 +56,30 @@ Baseline (given): 596.4 µm × 596.4 µm core, 12 MHz, 732 cycles, **61.00 µs**
 > HP trades higher instantaneous power for a ~33× latency cut, so its *energy* still
 > drops 4.8×. EE keeps the 12 MHz baseline clock and attacks power directly via a
 > Radix-4 real-FFT datapath plus manual integrated clock gating (TLATNCAX2 ICG cells).
+
+---
+
+## Architecture at a glance
+
+**High-Performance** — register-file operand storage feeding a 4-phase pipelined butterfly,
+clocked at 66.2 MHz:
+
+<p align="center">
+  <img src="docs/figures/hp_accelerator_core.png" alt="HP FFT accelerator core" width="92%">
+  <br>
+  <img src="docs/figures/hp_pipelined_butterfly.png" alt="HP pipelined butterfly datapath" width="92%">
+</p>
+
+**Energy-Efficient** — real-input packing into a 16-point FFT done as two Radix-4 stages
+(stage 1 multiplier-free) + Hermitian recombination + manual clock gating:
+
+<p align="center">
+  <img src="docs/figures/ee_rfft_dataflow.png" alt="EE Radix-4 RFFT dataflow" width="92%">
+  <br>
+  <img src="docs/figures/ee_rfft_core.png" alt="EE Radix-4 RFFT accelerator core" width="92%">
+</p>
+
+> Full walkthrough with phase-by-phase reasoning is in **[SHOWCASE.md](SHOWCASE.md)**.
 
 ---
 
