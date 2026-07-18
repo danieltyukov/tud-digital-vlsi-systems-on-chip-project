@@ -1,0 +1,305 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+
+%% ---- TU Delft & report colours ----
+\definecolor{tudelft-dark}{RGB}{0,51,102}
+\definecolor{hpcolor}{RGB}{0,100,180}
+\definecolor{eecolor}{RGB}{0,128,0}
+\newcommand{\micron}{\textmu m}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+%% ================================================================
+%%  COVER PAGE  (does NOT count toward the 6-page body limit)
+%% ================================================================
+\onecolumn
+\pagenumbering{Roman}
+\thispagestyle{empty}
+
+\begin{center}
+  \vspace*{0.5cm}
+  {\Large\textbf{Delft University of Technology}}\\[0.15cm]
+  {\normalsize Faculty of Electrical Engineering, Mathematics and Computer Science}\\[1.5cm]
+
+  {\LARGE\textbf{ET4351 Digital VLSI Systems on Chip}}\\[0.15cm]
+  {\Large Project Report\,---\,Academic Year 2025/2026}\\[2cm]
+
+  {\Huge\textbf{Group\,\color{red}XX}}\\[1cm]
+\end{center}
+
+\vspace{0.6cm}
+
+%% ---- Member Table ----
+\noindent\textbf{\large Team Members \& Individual Contributions}
+
+\vspace{2pt}
+
+\noindent
+{\small\renewcommand{\arraystretch}{0.95}
+\begin{tabularx}{\textwidth}{|c|l|l|c|X|}
+\hline
+\rowcolor{lightgray}
+\textbf{\#} & \textbf{First Name} & \textbf{Last Name} & \textbf{Student ID} & \textbf{Individual Contribution} \\
+\hline
+1  & & & & \\
+\hline
+2  & & & & \\
+\hline
+3  & & & & \\
+\hline
+4  & & & & \\
+\hline
+5  & & & & \\
+\hline
+6  & & & & \\
+\hline
+7  & & & & \\
+\hline
+8  & & & & \\
+\hline
+9  & & & & \\
+\hline
+10 & & & & \\
+\hline
+\end{tabularx}
+}
+
+\vspace{1pt}
+\noindent{\scriptsize\textit{``Primary Responsibility'': briefly state each member's main contribution (e.g., ``Butterfly unit RTL'', ``Genus synthesis \& clock gating'', ``Post-layout sim \& VCD'').}}
+
+\vspace{6pt}
+
+%% ---- Guidelines Box ----
+\noindent\fcolorbox{tudelft-dark}{lightgray}{%
+\begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule}
+\vspace{3pt}
+\begin{center}
+{\large\bfseries\color{tudelft-dark} Report Guidelines \& Knock-Out Criteria}
+\end{center}
+\vspace{2pt}
+
+{\small
+\begin{enumerate}[leftmargin=*, itemsep=1pt, parsep=0pt]
+    \item \textbf{Format:} IEEE double-column, compiled to PDF. Font size: 10\,pt (IEEE default). Use this template.
+
+    \item \textbf{Page limit:} The main body (Sections~I--IV) must fit within
+        \textbf{6~pages} ($\approx$3~pages per design). This cover page and all
+        appendices are \textbf{excluded} from the page count.
+
+    \item \textbf{Structure:} You \textbf{must} follow the mandatory section structure defined in this template. Do not add, remove, or rename top-level sections (I--IV).
+
+    \item \textbf{Two designs:} Present both a \textcolor{hpcolor}{\textbf{High-Performance~(HP)}} and an \textcolor{eecolor}{\textbf{Energy-Efficient~(EE)}} accelerator. Shared aspects should be described once; per-design subsections are provided.
+        \textbf{Targets at 12\,MHz:}
+        \textcolor{hpcolor}{HP\,---\,latency ${<}\,61.00\,\mu$s} (baseline);
+        \textcolor{eecolor}{EE\,---\,accelerator power ${<}\,0.403$\,mW} (baseline).
+        Clock period is \textbf{free to change}.
+
+    \item \textbf{Submission checklist} (all mandatory):
+    \begin{itemize}[itemsep=0pt, parsep=0pt, topsep=1pt, leftmargin=2em]
+        \item[\ding{113}] Report (PDF) with cover page filled in
+        \item[\ding{113}] SystemVerilog/Verilog source files (cleaned \& commented)
+        \item[\ding{113}] All synthesis and P\&R scripts
+        \item[\ding{113}] \texttt{finaldesign\_hp/} and \texttt{finaldesign\_ee/} directories (each with \texttt{accel\_audio.hex}, \texttt{et4351.phys.sdf}, \texttt{et4351.phys.v})
+        \item[\ding{113}] All signoff reports: included as files in the project zip \textbf{and} as screenshots/excerpts in the PDF appendix
+        \item[\ding{113}] Activity annotation and full power reports: included as files in the project zip \textbf{and} as screenshots/excerpts in the PDF appendix
+    \end{itemize}
+
+    \item \textbf{Signoff requirements} (per design):
+        core area 596.4\,\micron{} $\times$ 596.4\,\micron;~~
+        setup \& hold timing clean, fully DRV clean
+        (\texttt{max\_tran} violations are acceptable but risky near zero slack);~~
+        connectivity, geometry, antenna reports clean;~~
+        functionally correct FFT on variable-length audio input.
+
+    \item \textbf{Quality:} Proper use of technical terms. Reasonably proofread. Clean, readable diagrams.
+
+    \item \textbf{Deadline:} Friday, April 10, 2026 at 16:59 CET.
+\end{enumerate}
+}
+\vspace{2pt}
+\end{minipage}%
+}
+
+\vfill
+
+\begin{center}
+{\small\color{darkgray} Academic Year 2025--2026 ~|~ Q3 ~|~}
+\end{center}
+
+\clearpage
+
+%% ================================================================
+%%  MAIN BODY  (6 pages maximum, pages 1--6)
+%% ================================================================
+\twocolumn
+\pagenumbering{arabic}
+
+\title{ET4351 Project Report\,---\,Group\,{\color{red}XX}}
+
+\author{}
+
+\maketitle
+
+%% ================================================================
+\section{\textcolor{hpcolor}{High-Performance (HP) Accelerator}}\label{sec:hp}
+%% ================================================================
+
+\subsection{Architecture and Design Methodology}\label{sec:hp:arch}
+
+{\color{hpcolor}Your content here.}
+
+\subsection{Implementation}\label{sec:hp:impl}
+
+{\color{hpcolor}Your content here.}
+
+\subsection{Performance Metrics and Validation}\label{sec:hp:verif}
+
+{\color{hpcolor}Your content here.}
+
+% Example post-layout results table
+\begin{table}[htbp]
+\caption{Example Post-Layout Results (Please improve or organize in your own way)}
+\label{tab:hp_postlayout}
+\centering\footnotesize
+\begin{tabular}{l r}
+  \toprule
+  \textbf{Metric} & \textbf{Value} \\
+  \midrule
+  \multicolumn{2}{l}{\textit{Timing \& Area}} \\
+  Frequency               & {\color{hpcolor}XXX\,MHz} \\
+  Core Area               & 596.4\,$\mu$m $\times$ 596.4\,$\mu$m \\
+  Latency (cycles)        & {\color{hpcolor}XXX} \\
+  Latency ($\mu$s)        & {\color{hpcolor}XXX} \\
+  \midrule
+  \multicolumn{2}{l}{\textit{Sign-off}} \\
+  Setup WNS (ns)          & {\color{hpcolor}XXX} \\
+  Hold WNS (ns)           & {\color{hpcolor}XXX} \\
+  DRC Violations          & {\color{hpcolor}XXX} \\
+  DRV Violations          & {\color{hpcolor}XXX} \\
+  \midrule
+  \multicolumn{2}{l}{\textit{Power (activity-annotated)}} \\
+  Dynamic Power            & {\color{hpcolor}XXX\,mW} \\
+  Leakage Power            & {\color{hpcolor}XXX\,mW} \\
+  Total Power              & {\color{hpcolor}XXX\,mW} \\
+  Energy ($P \times T$)    & {\color{hpcolor}XXX\,nJ} \\
+  Annotation Coverage      & {\color{hpcolor}XXX\,\%} \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+
+%% ================================================================
+\section{\textcolor{eecolor}{Energy-Efficient (EE) Accelerator}}\label{sec:ee}
+%% ================================================================
+
+\subsection{Architecture and Design Methodology}\label{sec:ee:arch}
+
+{\color{eecolor}Your content here.}
+
+\subsection{Implementation}\label{sec:ee:impl}
+
+{\color{eecolor}Your content here.}
+
+\subsection{Performance Metrics and Validation}\label{sec:ee:verif}
+
+{\color{eecolor}Your content here, including a table similar to Table~\ref{tab:hp_postlayout}.}
+
+
+%% ================================================================
+\section{Comparative PPA Trade-off Analysis}\label{sec:ppa}
+%% ================================================================
+
+% Example post-layout PPA comparison table
+\begin{table}[htbp]
+\caption{Example PPA Comparison (Please improve or organize in your own way)}
+\label{tab:ppa}
+\centering\footnotesize
+\begin{tabular}{l r r r}
+  \toprule
+  \textbf{Metric} & \textbf{Baseline} & \textcolor{hpcolor}{\textbf{HP}} & \textcolor{eecolor}{\textbf{EE}} \\
+  \midrule
+  Frequency (MHz)            & 12              & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Core Area ($\mu$m$^2$)     & 596.4$^2$       & 596.4$^2$ & 596.4$^2$ \\
+  \midrule
+  Latency (cycles)           & 732             & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Latency ($\mu$s)           & 61.00           & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  \midrule
+  Accel. Dynamic Power (mW)         & 0.372              & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Accel. Leakage Power (mW)         & 0.013              & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Accel. Power (excl. RISC-V) (mW)  & 0.403           & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Total Power (mW)           & 0.626           & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Energy (nJ)                & 2.46           & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  \midrule
+  Setup WNS (ns)             & --              & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Hold WNS (ns)              & --              & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  DRC Violations             & --              & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  Annotation Coverage (\%)   & --              & {\color{hpcolor}--} & {\color{eecolor}--} \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+You can discuss the trade-offs revealed by Table~\ref{tab:ppa} and any other relevant observations. For example:
+\begin{itemize}
+  \item Which architectural and tool-constraint decisions had the largest
+        impact on each PPA dimension?
+  \item What would you do differently if redesigning?
+  \item Any surprising results or lessons learned.
+\end{itemize}
+
+
+%% ================================================================
+%%  APPENDIX  (no page limit)
+%% ================================================================
+\newpage
+\onecolumn
+\begin{thebibliography}{00}
+\bibitem{b1} {A.\ Author, ``Paper title,'' \textit{Journal},
+  vol.~X, pp.~Y--Z, Year.}
+\bibitem{b2} {B.\ Author, \textit{Book Title}.\ City:
+  Publisher, Year.}
+\end{thebibliography}
+
+\section*{Appendix}
+
+\subsection*{A.\quad \textcolor{hpcolor}{High-Performance (HP) Design}}\label{app:hp}
+
+\subsubsection*{A.1\quad Timing Reports}\label{app:hp:timing}
+\subsubsection*{A.2\quad DRC Reports}\label{app:hp:drc}
+\subsubsection*{A.3\quad DRV Reports}\label{app:hp:drv}
+\subsubsection*{A.4\quad Connectivity Reports}\label{app:hp:conn}
+\subsubsection*{A.5\quad Geometry Reports}\label{app:hp:geom}
+\subsubsection*{A.6\quad Antenna Reports}\label{app:hp:antenna}
+\subsubsection*{A.7\quad Activity Annotation Reports}\label{app:hp:annotation}
+\subsubsection*{A.8\quad Power Analysis Reports}\label{app:hp:power}
+\subsubsection*{A.9\quad Sign-off Simulation Waveforms}\label{app:hp:waves}
+
+\subsection*{B.\quad \textcolor{eecolor}{Energy-Efficient (EE) Design}}\label{app:ee}
+
+\subsubsection*{B.1\quad Timing Reports}\label{app:ee:timing}
+\subsubsection*{B.2\quad DRC Reports}\label{app:ee:drc}
+\subsubsection*{B.3\quad DRV Reports}\label{app:ee:drv}
+\subsubsection*{B.4\quad Connectivity Reports}\label{app:ee:conn}
+\subsubsection*{B.5\quad Geometry Reports}\label{app:ee:geom}
+\subsubsection*{B.6\quad Antenna Reports}\label{app:ee:antenna}
+\subsubsection*{B.7\quad Activity Annotation Reports}\label{app:ee:annotation}
+\subsubsection*{B.8\quad Power Analysis Reports}\label{app:ee:power}
+\subsubsection*{B.9\quad Sign-off Simulation Waveforms}\label{app:ee:waves}
+
+\end{document}
